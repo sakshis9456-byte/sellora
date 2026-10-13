@@ -1,0 +1,232 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Create Draft | Sellora</title>
+<style>
+:root{--ink:#252938;--muted:#737b89;--line:#e7e9ef;--paper:#f7f8fb;--accent:#6254d9;--soft:#eeecff}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:Arial,Helvetica,sans-serif}
+a{color:inherit;text-decoration:none}
+header{height:72px;background:white;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 6%}
+.brand{font-size:25px;font-weight:800;letter-spacing:-1px}.brand span{color:var(--accent)}
+nav{display:flex;gap:22px;color:var(--muted);font-size:14px}
+nav a:hover{color:var(--accent)}
+main{max-width:1160px;margin:38px auto;padding:0 22px 55px}
+.eyebrow{color:var(--accent);font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:1.5px}
+h1{font-size:clamp(28px,4vw,40px);letter-spacing:-1.4px;margin:10px 0}
+.intro{color:var(--muted);line-height:1.7;margin:0 0 28px}
+.layout{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:start}
+.panel{background:white;border:1px solid var(--line);border-radius:17px;padding:24px;box-shadow:0 5px 24px #20283a05}
+.panel h2{font-size:18px;margin:0 0 7px}.sub{font-size:13px;color:var(--muted);line-height:1.6;margin:0 0 22px}
+.field{margin-bottom:18px}.field label{display:block;font-size:13px;font-weight:700;margin-bottom:8px}
+input,select,textarea{width:100%;border:1px solid #dfe3ea;border-radius:10px;padding:12px;background:white;color:var(--ink);font:inherit;font-size:14px;outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px #6254d918}
+textarea{resize:vertical;min-height:85px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.upload{border:1.5px dashed #c8c5ed;background:#faf9ff;border-radius:13px;min-height:180px;display:flex;align-items:center;justify-content:center;text-align:center;padding:16px;cursor:pointer;overflow:hidden}
+.upload:hover{border-color:var(--accent)}.upload input{display:none}
+.upload img{max-width:100%;max-height:240px;object-fit:contain;border-radius:8px}
+.upload-icon{width:43px;height:43px;margin:auto auto 10px;border-radius:13px;background:var(--soft);display:grid;place-items:center;color:var(--accent);font-size:24px}
+.upload strong{display:block;margin-bottom:6px}.upload small{color:var(--muted);line-height:1.6}
+.templates{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+.template{border:1px solid var(--line);border-radius:11px;padding:9px;cursor:pointer;text-align:center;font-size:12px}
+.template input{width:auto;margin:0 4px 0 0;padding:0}
+.template:has(input:checked){border-color:var(--accent);background:#f8f7ff}
+.swatch{height:58px;border-radius:7px;margin-bottom:8px;display:grid;place-items:center;font-weight:800;font-size:10px}
+.lilac{background:linear-gradient(135deg,#e8e4ff,#b9b0fa);color:#40358e}
+.sand{background:linear-gradient(135deg,#f7e8d3,#e3bd8e);color:#5d3f29}
+.clean{background:linear-gradient(135deg,#fff,#e8edf1);color:#263343}
+.button{border:0;border-radius:10px;padding:14px 18px;background:var(--accent);color:white;font-size:14px;font-weight:750;cursor:pointer;width:100%}
+.button:hover{background:#5042c4}
+.note{font-size:12px;color:var(--muted);line-height:1.6;margin-top:12px}
+.preview-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}.pill{font-size:11px;background:#f0f1f5;padding:6px 9px;border-radius:20px;color:#68707e}
+.poster{aspect-ratio:4/5;overflow:hidden;border-radius:12px;padding:22px;display:flex;flex-direction:column;align-items:center;justify-content:space-between;text-align:center;background:linear-gradient(145deg,#e8e4ff,#c8c0ff)}
+.poster[data-style="sand"]{background:linear-gradient(145deg,#f7e8d3,#e4c19a)}
+.poster[data-style="clean"]{background:linear-gradient(145deg,#fff,#e8edf1)}
+.mini-brand{align-self:flex-start;font-size:10px;letter-spacing:2px;font-weight:800}
+.poster img{width:100%;height:55%;object-fit:contain;filter:drop-shadow(0 10px 12px #00000012)}
+.poster-copy{width:100%}.poster h3{font-size:clamp(20px,2.6vw,29px);line-height:1.15;margin:5px 0 8px;overflow-wrap:anywhere}
+.poster p{font-size:12px;margin:0 0 8px;overflow-wrap:anywhere}.price{font-size:20px;font-weight:800}
+.offer{font-size:10px;background:#ffffffaa;padding:7px 11px;border-radius:30px;display:inline-block;margin-top:8px}
+.score-head{display:flex;align-items:center;gap:14px;margin:22px 0 12px}
+.score-circle{width:62px;height:62px;border-radius:50%;border:5px solid #d9d5ff;display:grid;place-items:center;color:var(--accent);font-weight:800;flex-shrink:0;font-size:14px}
+.score-head h3{font-size:15px;margin:0 0 5px}.score-head p{font-size:12px;color:var(--muted);margin:0;line-height:1.5}
+.tips{list-style:none;padding:0;margin:0}.tips li{font-size:12px;color:#515968;line-height:1.6;padding:9px 0;border-top:1px solid var(--line)}
+.tips li:before{content:"•";color:var(--accent);font-weight:bold;margin-right:8px}
+.status{font-size:13px;color:#3c6f53;margin:12px 0 0;min-height:18px}
+footer{text-align:center;padding:24px;color:var(--muted);font-size:12px}
+@media(max-width:780px){.layout{grid-template-columns:1fr}header{padding:0 20px}nav{gap:12px}main{margin-top:26px}.panel{padding:18px}}
+@media(max-width:420px){nav{gap:10px;font-size:12px}.two{grid-template-columns:1fr}.templates{gap:5px}}
+</style>
+</head>
+<body>
+<header>
+<a class="brand" href="index.html">sellora<span>.</span></a>
+<nav><a href="index.html">Home</a><a href="create.html">Create Draft</a><a href="editor.html">Editor</a></nav>
+</header>
+
+<main>
+<div class="eyebrow">Your creative workspace</div>
+<h1>Let's create something that sells.</h1>
+<p class="intro">Upload your product, add the details, and prepare a beautiful product poster.</p>
+
+<div class="layout">
+<section class="panel">
+<h2>Product details</h2>
+<p class="sub">Use your own photo and customise your product information.</p>
+
+<div class="field">
+<label for="photo">Product photo *</label>
+<label class="upload" for="photo" id="uploadArea">
+<span id="uploadHint"><span class="upload-icon">↑</span><strong>Upload your product photo</strong><small>Click here to select an image<br>PNG, JPG or WEBP · Max 8 MB</small></span>
+<img id="uploadedImage" alt="Uploaded product" hidden>
+</label>
+<input id="photo" type="file" accept="image/png,image/jpeg,image/webp" hidden>
+</div>
+
+<div class="field"><label for="productName">Product name *</label><input id="productName" maxlength="70" placeholder="e.g. Handmade Lavender Candle"></div>
+
+<div class="two">
+<div class="field"><label for="category">Category</label>
+<select id="category"><option>Home & Living</option><option>Jewelry & Accessories</option><option>Fashion</option><option>Kitchen & Dining</option><option>Beauty & Wellness</option><option>Food & Gifts</option><option>Other</option></select>
+</div>
+<div class="field"><label for="price">Selling price</label><input id="price" type="number" min="0" step="0.01" placeholder="499"></div>
+</div>
+
+<div class="two">
+<div class="field"><label for="currency">Currency</label><select id="currency"><option value="₹">INR — ₹</option><option value="$">USD — $</option><option value="€">EUR — €</option><option value="£">GBP — £</option></select></div>
+<div class="field"><label for="offer">Offer (optional)</label><input id="offer" maxlength="50" placeholder="e.g. 10% off this week"></div>
+</div>
+
+<div class="field"><label for="description">Product description</label><textarea id="description" maxlength="240" placeholder="What makes your product special?"></textarea></div>
+<div class="field"><label for="tagline">Poster tagline</label><input id="tagline" maxlength="90" placeholder="e.g. A little comfort in every corner"></div>
+
+<div class="field"><label>Choose a poster style</label>
+<div class="templates">
+<label class="template"><div class="swatch lilac">FEATURED</div><input type="radio" name="style" value="lilac" checked> Modern</label>
+<label class="template"><div class="swatch sand">HANDMADE</div><input type="radio" name="style" value="sand"> Warm</label>
+<label class="template"><div class="swatch clean">NEW ARRIVAL</div><input type="radio" name="style" value="clean"> Minimal</label>
+</div>
+</div>
+
+<button class="button" id="generate">Generate my draft →</button>
+<p class="note">Your draft is processed in your browser. The score is a checklist, not a real AI evaluation.</p>
+<p class="status" id="status" role="status"></p>
+</section>
+
+<aside class="panel">
+<div class="preview-title"><h2>Live poster preview</h2><span class="pill">DRAFT</span></div>
+<div class="poster" id="poster" data-style="lilac">
+<div class="mini-brand">YOUR BRAND</div>
+<img id="posterImage" alt="Poster preview" hidden>
+<div class="poster-copy">
+<p id="posterCategory">HOME & LIVING</p>
+<h3 id="posterName">Your product name</h3>
+<p id="posterTagline">Your tagline goes here</p>
+<div class="price" id="posterPrice">Set your price</div>
+<div class="offer" id="posterOffer" hidden></div>
+</div>
+</div>
+<div class="score-head"><div class="score-circle" id="score">0/100</div><div><h3>Draft quality score</h3><p id="scoreText">Add details to get your checklist score.</p></div></div>
+<ul class="tips" id="tips"><li>Upload a clear product photo.</li><li>Add a product name and price.</li><li>Describe your product's benefits.</li></ul>
+<p class="note">The score checks how complete your information is. It does not predict sales.</p>
+</aside>
+</div>
+</main>
+<footer>Sellora · Thoughtful tools for independent sellers</footer>
+
+<script>
+const $ = id => document.getElementById(id);
+let imageData = "";
+
+function updatePreview(){
+ const name=$("productName").value.trim();
+ const desc=$("description").value.trim();
+ const tagline=$("tagline").value.trim();
+ const price=Number($("price").value);
+ const currency=$("currency").value;
+ const offer=$("offer").value.trim();
+ $("poster").dataset.style=document.querySelector('input[name="style"]:checked').value;
+ $("posterName").textContent=name||"Your product name";
+ $("posterCategory").textContent=$("category").value.toUpperCase();
+ $("posterTagline").textContent=tagline||desc||"Your tagline goes here";
+ $("posterPrice").textContent=$("price").value!==""&&price>=0?currency+price.toLocaleString("en-IN"):"Set your price";
+ $("posterOffer").textContent=offer;
+ $("posterOffer").hidden=!offer;
+
+ const checks=[
+ [!!imageData,25,"Upload a clear product photo."],
+ [!!name,20,"Add a clear product name."],
+ [$("price").value!==""&&price>0,15,"Enter a price greater than zero."],
+ [!!desc,15,"Describe your product's benefits."],
+ [!!tagline,10,"Add a short, memorable tagline."],
+ [!!offer,5,"Consider adding a genuine offer if available."],
+ [!!imageData&&!!name&&!!desc,10,"Review the photo and product description together."]
+ ];
+ const total=checks.reduce((sum,item)=>sum+(item[0]?item[1]:0),0);
+ $("score").textContent=total+"/100";
+ $("scoreText").textContent=total>=80?"Your draft has a strong starting point.":total>=50?"Good start. A few details could help.":"Complete more details to strengthen your draft.";
+ $("tips").innerHTML="";
+ const missing=checks.filter(item=>!item[0]);
+ (missing.length?missing:[[true,0,"All checklist items are complete. Review the layout before exporting."]]).forEach(item=>{
+  const li=document.createElement("li");li.textContent=item[2];$("tips").appendChild(li);
+ });
+ return total;
+}
+
+["productName","description","tagline","price","currency","category","offer"].forEach(id=>{
+ $(id).addEventListener("input",updatePreview);
+ $(id).addEventListener("change",updatePreview);
+});
+document.querySelectorAll('input[name="style"]').forEach(el=>el.addEventListener("change",updatePreview));
+
+$("photo").addEventListener("change",event=>{
+ const file=event.target.files&&event.target.files[0];
+ if(!file)return;
+ if(!["image/png","image/jpeg","image/webp"].includes(file.type)){
+  $("status").textContent="Please choose a PNG, JPG or WEBP image.";return;
+ }
+ if(file.size>8*1024*1024){
+  $("status").textContent="Please choose an image smaller than 8 MB.";event.target.value="";return;
+ }
+ const reader=new FileReader();
+ reader.onload=()=>{
+  imageData=reader.result;
+  $("uploadedImage").src=imageData;
+  $("uploadedImage").hidden=false;
+  $("uploadHint").hidden=true;
+  $("posterImage").src=imageData;
+  $("posterImage").hidden=false;
+  $("status").textContent="Photo added successfully.";
+  updatePreview();
+ };
+ reader.readAsDataURL(file);
+});
+
+$("generate").addEventListener("click",()=>{
+ const name=$("productName").value.trim();
+ if(!imageData){$("status").textContent="Please upload your product photo first.";return;}
+ if(!name){$("status").textContent="Please enter your product name."; $("productName").focus();return;}
+ const draft={
+  image:imageData,name,category:$("category").value,
+  price:$("price").value,currency:$("currency").value,
+  offer:$("offer").value.trim(),description:$("description").value.trim(),
+  tagline:$("tagline").value.trim(),
+  style:document.querySelector('input[name="style"]:checked').value,
+  score:updatePreview(),createdAt:new Date().toISOString()
+ };
+ try{
+  localStorage.setItem("selloraDraft",JSON.stringify(draft));
+  $("status").textContent="Draft saved. Opening the editor…";
+  window.location.href="editor.html";
+ }catch(error){
+  $("status").textContent="Image storage is full. Please try a smaller image.";
+ }
+});
+updatePreview();
+</script>
+</body>
+</html>
