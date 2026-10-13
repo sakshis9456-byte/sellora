@@ -4,461 +4,995 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sellora | Product Poster & Seller Content Studio</title>
-<meta name="description" content="Create product posters and marketing content for your small business with Sellora.">
+<title>Sellora — Create. Promote. Sell.</title>
+<meta name="description" content="Create beautiful product posters and marketing content for your small business with Sellora.">
+
 <style>
-:root{--bg:#f7f6fc;--card:#fff;--text:#24213a;--muted:#77758a;--primary:#7057e8;--dark:#523bc4;--border:#e8e5f2}
-*{box-sizing:border-box}
-body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text)}
-button,input,select,textarea{font:inherit}
-button{cursor:pointer}
-.navbar{position:sticky;top:0;z-index:10;display:flex;justify-content:space-between;align-items:center;gap:15px;padding:16px 6%;background:#fff;border-bottom:1px solid var(--border)}
-.logo{font-size:25px;font-weight:800;color:var(--primary)}
-.nav-links{display:flex;align-items:center;gap:18px}
-.nav-links a{font-size:14px;color:var(--text);text-decoration:none}
-.btn{border:0;border-radius:9px;padding:12px 16px;font-weight:700}
-.btn-primary{background:var(--primary);color:#fff}
-.btn-primary:hover{background:var(--dark)}
-.btn-light{background:#efecff;color:var(--dark)}
-.btn-outline{background:#fff;color:var(--text);border:1px solid var(--border)}
-.hero{text-align:center;padding:70px 6%;background:radial-gradient(circle at top,#e8e2ff,transparent 65%)}
-.eyebrow{display:inline-block;padding:8px 13px;border-radius:30px;background:#eae5ff;color:var(--dark);font-size:12px;font-weight:800;letter-spacing:1px}
-.hero h1{max-width:850px;margin:22px auto 16px;font-size:clamp(36px,6vw,64px);line-height:1.1;letter-spacing:-2px}
-.hero h1 span{color:var(--primary)}
-.hero p{max-width:640px;margin:0 auto 25px;color:var(--muted);line-height:1.8;font-size:17px}
-.hero-actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
-.section{padding:55px 6%}
-.heading{text-align:center;margin-bottom:30px}
-.heading h2{font-size:clamp(27px,4vw,38px);margin:0 0 10px}
-.heading p{max-width:620px;margin:auto;color:var(--muted);line-height:1.7}
-.features{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
-.feature,.panel{background:#fff;border:1px solid var(--border);border-radius:16px;padding:22px}
-.feature{box-shadow:0 10px 30px #3020600b}
-.feature .number{display:grid;place-items:center;width:44px;height:44px;border-radius:12px;background:#efecff;color:var(--primary);font-weight:800}
-.feature h3{margin:16px 0 8px}
-.feature p,.intro{color:var(--muted);font-size:14px;line-height:1.7}
-.workspace{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px;align-items:start}
-.panel{min-width:0;box-shadow:0 10px 30px #3020600b}
-.panel h3{margin:0 0 8px}
-.intro{margin:0 0 20px}
-.field{margin-bottom:16px}
-.field label{display:block;margin-bottom:7px;font-size:13px;font-weight:700}
-.field input:not([type=color]):not([type=range]):not([type=file]),.field select,.field textarea{display:block;width:100%;padding:12px;border:1px solid #dedbea;border-radius:9px;background:#fff;color:var(--text);outline:none}
-.field textarea{min-height:85px;resize:vertical;line-height:1.5}
-.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--primary)}
-.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.upload{display:block!important;padding:24px 14px;text-align:center;background:#faf9ff;border:2px dashed #cfc7f4;border-radius:12px;cursor:pointer}
-.upload input{display:none}
-.upload strong{display:block;margin:8px}
-.upload span{color:var(--muted);font-size:12px}
-#photoWrap{display:none;margin-top:12px}
-#photoPreview{display:block;max-width:100%;max-height:200px;object-fit:contain;border-radius:8px;margin-bottom:8px}
-.templates{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.template{padding:12px 5px;border:1px solid var(--border);border-radius:8px;background:#fff;font-size:12px;font-weight:700}
-.template.active{border:2px solid var(--primary);background:#f0edff;color:var(--dark)}
-.colors{display:flex;gap:15px;flex-wrap:wrap}
-.colors label{display:flex;align-items:center;gap:7px;font-size:13px}
-.colors input{width:35px;height:30px;padding:0;border:0;background:none}
-.control{display:flex;align-items:center;gap:10px;margin:14px 0}
-.control label{min-width:85px;font-size:13px;font-weight:700}
-.control input{flex:1;min-width:0;accent-color:var(--primary)}
-.control output{min-width:42px;text-align:right;font-size:12px}
-.canvas-holder{padding:10px;background:#f0eef7;border-radius:12px}
-#posterCanvas{display:block;width:100%;height:auto;background:#f0eaff;border-radius:5px}
-.actions{display:flex;gap:9px;margin-top:14px;flex-wrap:wrap}
-.actions button{flex:1}
-.status{min-height:18px;margin-top:10px;font-size:12px;color:var(--muted);line-height:1.5}
-.content-kit{margin-top:25px}
-.content-item{padding:14px;border:1px solid var(--border);border-radius:11px;margin-top:12px}
-.content-item h4{margin:0 0 9px;font-size:14px}
-.content-item textarea{width:100%;min-height:80px;padding:10px;border:1px solid var(--border);border-radius:8px;resize:vertical;line-height:1.5}
-.content-item button{margin-top:8px;padding:9px 12px;font-size:12px}
-.footer{text-align:center;padding:30px 6%;background:#fff;border-top:1px solid var(--border);color:var(--muted);font-size:13px}
-.toast{display:none;position:fixed;z-index:100;bottom:20px;left:50%;transform:translateX(-50%);max-width:90%;padding:12px 18px;border-radius:9px;background:#25213b;color:#fff;text-align:center}
-@media(max-width:850px){.features,.workspace{grid-template-columns:1fr}}
-@media(max-width:560px){.navbar{padding:14px 5%}.nav-links{gap:8px}.nav-links a{display:none}.hero{padding:50px 5%}.section{padding:40px 5%}.panel{padding:16px}.two-col{grid-template-columns:1fr;gap:0}.hero h1{letter-spacing:-1px}}
+:root {
+  --bg: #0b0d14;
+  --panel: #121622;
+  --panel2: #191e2d;
+  --text: #f7f8ff;
+  --muted: #a4abc0;
+  --accent: #a78bfa;
+  --accent2: #7c5cf0;
+  --border: #292f42;
+  --green: #72e0b0;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  line-height: 1.6;
+}
+button, input, select, textarea { font: inherit; }
+button { cursor: pointer; }
+a { color: inherit; text-decoration: none; }
+img { max-width: 100%; }
+.container { width: min(1160px, calc(100% - 40px)); margin: auto; }
+.section { padding: 88px 0; }
+.eyebrow {
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 12px;
+  font-weight: 800;
+}
+h1, h2, h3, p { margin-top: 0; }
+h1 { font-size: clamp(42px, 6vw, 70px); line-height: 1.06; letter-spacing: -2.8px; }
+h2 { font-size: clamp(30px, 4vw, 43px); line-height: 1.15; letter-spacing: -1.2px; }
+h3 { line-height: 1.3; }
+p { color: var(--muted); }
+.gradient {
+  background: linear-gradient(100deg, #c4b5fd, #a78bfa 45%, #6ee7c2);
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+.btn {
+  border: 1px solid transparent;
+  border-radius: 12px;
+  padding: 12px 19px;
+  font-weight: 750;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: transform .2s, background .2s;
+}
+.btn:hover { transform: translateY(-2px); }
+.btn-primary { background: var(--accent); color: #171025; }
+.btn-primary:hover { background: #c4b5fd; }
+.btn-secondary { background: #1a1f2e; border-color: var(--border); color: var(--text); }
+.btn-small { padding: 8px 12px; font-size: 13px; }
+.btn:disabled { opacity: .45; cursor: not-allowed; transform: none; }
+
+header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(11,13,20,.92);
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+.nav {
+  min-height: 74px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+.logo { display: flex; align-items: center; gap: 10px; font-size: 23px; font-weight: 900; letter-spacing: -1px; }
+.logo-mark {
+  width: 36px; height: 36px; border-radius: 11px;
+  display: grid; place-items: center;
+  color: #161025; background: linear-gradient(135deg,#c4b5fd,#72e0b0);
+  font-weight: 1000;
+}
+.nav-links { display: flex; align-items: center; gap: 28px; }
+.nav-links a { color: #c0c5d6; font-size: 14px; font-weight: 650; }
+.nav-links a:hover { color: white; }
+.menu-toggle { display: none; }
+
+.hero { padding: 78px 0 75px; overflow: hidden; }
+.hero-grid { display: grid; grid-template-columns: 1.05fr .95fr; gap: 60px; align-items: center; }
+.hero-copy p { font-size: 17px; max-width: 530px; margin: 22px 0 27px; }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.trust { margin-top: 25px; font-size: 12px; color: #aab0c2; }
+.hero-visual {
+  border: 1px solid #33344c;
+  background: radial-gradient(ellipse at top right, #393060 0%, #1b2031 44%, #121622 80%);
+  border-radius: 28px; padding: 22px;
+  box-shadow: 0 35px 100px #0006;
+  transform: rotate(1deg);
+}
+.window-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 17px; }
+.window-dots { display: flex; gap: 6px; }
+.window-dots span { width: 8px; height: 8px; border-radius: 50%; background: #5c6175; }
+.window-label { color: #aeb4c8; font-size: 11px; }
+.demo-poster {
+  aspect-ratio: 4 / 3;
+  border-radius: 16px;
+  overflow: hidden;
+  padding: 25px;
+  display: flex; flex-direction: column; justify-content: space-between;
+  background: linear-gradient(145deg,#d8c9b7,#8e7868);
+  color: #221b18;
+  position: relative;
+}
+.demo-poster::before {
+  content: ""; position: absolute; width: 190px; height: 190px;
+  background: #f5eee4; border-radius: 50%; right: 8%; top: 18%;
+  box-shadow: 0 20px 50px #4e392c45;
+}
+.demo-poster::after {
+  content: ""; position: absolute; width: 110px; height: 160px;
+  background: linear-gradient(130deg,#b3a18c,#655547);
+  border-radius: 22px 22px 40px 40px; right: 23%; top: 25%;
+  box-shadow: 0 15px 35px #392c2445;
+}
+.poster-kicker, .poster-heading, .poster-bottom { position: relative; z-index: 1; }
+.poster-kicker { font-size: 10px; letter-spacing: 3px; font-weight: 800; }
+.poster-heading { font-family: Georgia, serif; font-size: clamp(27px,3.5vw,44px); line-height: 1; max-width: 230px; }
+.poster-bottom { display: flex; justify-content: space-between; align-items: end; font-size: 11px; font-weight: 800; }
+.hero-chips { display: flex; gap: 9px; flex-wrap: wrap; margin-top: 15px; }
+.chip { border: 1px solid #34394d; border-radius: 999px; padding: 6px 10px; font-size: 11px; color: #d1d4e2; }
+
+.section-heading { max-width: 690px; margin: 0 auto 42px; text-align: center; }
+.section-heading p { max-width: 580px; margin: 14px auto 0; }
+.features { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
+.feature-card, .panel, .content-card, .step-card {
+  background: var(--panel); border: 1px solid var(--border); border-radius: 18px;
+}
+.feature-card { padding: 25px; }
+.feature-icon {
+  width: 44px; height: 44px; display: grid; place-items: center;
+  border-radius: 13px; background: #292340; color: #c4b5fd;
+  font-size: 21px; margin-bottom: 20px;
+}
+.feature-card p { font-size: 14px; margin-bottom: 0; }
+
+.studio-section { background: linear-gradient(180deg,transparent,#10131e 20%,#10131e 80%,transparent); }
+.studio-layout { display: grid; grid-template-columns: minmax(0, .92fr) minmax(0, 1.08fr); gap: 22px; align-items: start; }
+.panel { padding: 23px; min-width: 0; }
+.panel-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 22px; }
+.panel-header h3 { margin: 0; font-size: 18px; }
+.status { color: var(--green); font-size: 11px; font-weight: 800; }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+.field { min-width: 0; }
+.field.full { grid-column: 1 / -1; }
+.field label { display: block; font-size: 12px; font-weight: 750; color: #d9dced; margin-bottom: 7px; }
+.field input, .field select, .field textarea, .text-output {
+  width: 100%; color: var(--text); background: #0d1019;
+  border: 1px solid #30364a; border-radius: 10px;
+  padding: 11px 12px; outline: none;
+}
+.field input:focus, .field select:focus, .field textarea:focus, .text-output:focus { border-color: var(--accent); }
+.field textarea { resize: vertical; min-height: 84px; }
+.field input[type="color"] { height: 43px; padding: 4px; }
+.field input[type="range"] { padding: 0; accent-color: var(--accent); }
+.field input[type="file"] { font-size: 12px; padding: 10px; }
+.field input[type="file"]::file-selector-button {
+  background: #252a3b; color: white; border: 0; padding: 7px 9px;
+  border-radius: 6px; margin-right: 8px; cursor: pointer;
+}
+.upload-box { border: 1px dashed #535574; border-radius: 12px; padding: 14px; background: #0d1019; }
+.upload-hint { font-size: 11px; margin: 7px 0 0; }
+.control-group { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 14px; }
+.control-group .field label span { color: var(--accent); }
+.template-options { display: grid; grid-template-columns: repeat(3,1fr); gap: 9px; }
+.template-option {
+  background: #0d1019; border: 1px solid #34394b; color: #cdd1e0;
+  border-radius: 10px; padding: 10px 4px; font-size: 12px; font-weight: 750;
+}
+.template-option.active { border-color: var(--accent); background: #28213d; color: #e9e1ff; }
+.template-mini { width: 100%; height: 40px; border-radius: 5px; margin-bottom: 6px; display: block; }
+.template-modern { background: linear-gradient(135deg,#d6c5ad,#6c5748); }
+.template-bold { background: linear-gradient(135deg,#f0cb43 50%,#ee654a 50%); }
+.template-minimal { background: #f1eee7; border: 1px solid #c9c4b9; }
+.form-actions { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
+.form-actions .btn { flex: 1; }
+
+.preview-panel { position: sticky; top: 94px; }
+.preview-stage {
+  background: #0c0f18; border: 1px solid #292f42; border-radius: 14px;
+  padding: 15px; display: grid; place-items: center; min-height: 320px;
+}
+#posterCanvas { width: 100%; height: auto; max-width: 540px; border-radius: 5px; display: block; }
+.preview-caption { display: flex; justify-content: space-between; gap: 10px; font-size: 11px; color: var(--muted); margin-top: 12px; }
+.preview-caption strong { color: var(--green); }
+.preview-actions { display: flex; gap: 10px; margin-top: 16px; }
+.preview-actions .btn { flex: 1; }
+.preview-empty { color: var(--muted); font-size: 13px; text-align: center; margin-top: 12px; }
+
+.content-layout { display: grid; grid-template-columns: .8fr 1.2fr; gap: 25px; align-items: start; }
+.content-intro { padding-top: 10px; }
+.content-intro p { max-width: 400px; }
+.content-cards { display: grid; gap: 15px; }
+.content-card { padding: 19px; }
+.content-card-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 10px; }
+.content-card-top h3 { margin: 0; font-size: 15px; }
+.content-card textarea { min-height: 85px; font-size: 13px; }
+.content-card .btn { margin-top: 10px; }
+.steps { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
+.step-card { padding: 23px; }
+.step-number { font-size: 13px; color: var(--accent); font-weight: 900; margin-bottom: 15px; }
+.step-card p { font-size: 13px; margin-bottom: 0; }
+.cta {
+  text-align: center; padding: 54px 25px; border: 1px solid #393252;
+  border-radius: 24px; background: radial-gradient(ellipse at top,#2b2447,#151725 70%);
+}
+.cta p { max-width: 560px; margin: 12px auto 23px; }
+
+footer { border-top: 1px solid var(--border); padding: 27px 0; }
+.footer-inner { display: flex; justify-content: space-between; align-items: center; gap: 18px; }
+.footer-inner p { margin: 0; font-size: 12px; }
+.toast {
+  position: fixed; bottom: 22px; left: 50%; transform: translate(-50%,20px);
+  background: #f1ecff; color: #1c1530; padding: 12px 18px; border-radius: 12px;
+  box-shadow: 0 10px 40px #0006; z-index: 300; opacity: 0; pointer-events: none;
+  transition: .2s; font-size: 13px; font-weight: 750; max-width: calc(100% - 30px);
+}
+.toast.show { opacity: 1; transform: translate(-50%,0); }
+
+@media (max-width: 850px) {
+  .hero-grid, .studio-layout, .content-layout { grid-template-columns: 1fr; }
+  .hero-grid { gap: 35px; }
+  .hero-visual { max-width: 650px; width: 100%; margin: auto; }
+  .preview-panel { position: static; }
+  .features { grid-template-columns: repeat(2,1fr); }
+  .studio-layout { gap: 17px; }
+}
+@media (max-width: 600px) {
+  .container { width: min(100% - 28px,1160px); }
+  .section { padding: 60px 0; }
+  .hero { padding: 55px 0 50px; }
+  h1 { letter-spacing: -1.8px; }
+  .nav { min-height: 66px; flex-wrap: wrap; }
+  .menu-toggle { display: inline-flex; background: none; border: 1px solid var(--border); color: white; border-radius: 9px; padding: 8px 11px; }
+  .nav-links {
+    display: none; width: 100%; padding: 4px 0 16px;
+    flex-direction: column; align-items: stretch; gap: 0;
+  }
+  .nav-links.open { display: flex; }
+  .nav-links a { padding: 10px 4px; }
+  .nav-links .btn { margin-top: 8px; }
+  .features, .steps { grid-template-columns: 1fr; }
+  .feature-card, .step-card { padding: 21px; }
+  .panel { padding: 16px; }
+  .form-grid, .control-group { grid-template-columns: 1fr 1fr; gap: 11px; }
+  .field.full { grid-column: 1 / -1; }
+  .hero-visual { padding: 13px; }
+  .demo-poster { padding: 17px; }
+  .preview-stage { padding: 8px; min-height: 0; }
+  .footer-inner { flex-direction: column; align-items: flex-start; }
+  .preview-actions .btn, .form-actions .btn { padding: 11px 8px; font-size: 12px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition: none !important; }
+}
 </style>
 </head>
+
 <body>
-<header class="navbar">
-  <div class="logo">Sellora.</div>
-  <nav class="nav-links">
-    <a href="#features">Features</a>
-    <a href="#studio">Poster Studio</a>
-    <a href="#content-kit">Content Kit</a>
-    <button class="btn btn-primary" onclick="goToStudio()">Get Started</button>
-  </nav>
+<header>
+  <div class="container nav">
+    <a href="#home" class="logo" aria-label="Sellora home">
+      <span class="logo-mark">S</span><span>sellora<span class="gradient">.</span></span>
+    </a>
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation" aria-expanded="false">☰ Menu</button>
+    <nav class="nav-links" id="navLinks">
+      <a href="#home">Home</a>
+      <a href="#features">Features</a>
+      <a href="#studio">Poster Studio</a>
+      <a href="#content-kit">Content Kit</a>
+      <a href="#studio" class="btn btn-primary btn-small">Create a Poster ↗</a>
+    </nav>
+  </div>
 </header>
 
-<section class="hero">
-  <span class="eyebrow">SMART TOOLS FOR SMALL SELLERS</span>
-  <h1>Make your products look <span>ready to sell.</span></h1>
-  <p>Create attractive product posters and marketing content in one simple workspace. Built for small sellers, makers, artisans and growing brands.</p>
-  <div class="hero-actions">
-    <button class="btn btn-primary" onclick="goToStudio()">Create My Poster</button>
-    <a class="btn btn-outline" href="#features" style="text-decoration:none">Explore Features</a>
-  </div>
-</section>
-
-<section class="section" id="features">
-  <div class="heading">
-    <h2>Everything your product needs</h2>
-    <p>Useful seller tools together in one place, without switching between multiple design and writing websites.</p>
-  </div>
-  <div class="features">
-    <article class="feature"><div class="number">01</div><h3>Product Poster Studio</h3><p>Upload your own product image, customize your poster and download it for your shop or social media.</p></article>
-    <article class="feature"><div class="number">02</div><h3>Seller Content Kit</h3><p>Prepare editable product titles, descriptions and promotional captions based on your product details.</p></article>
-    <article class="feature"><div class="number">03</div><h3>Design Customization</h3><p>Choose a layout, adjust your image and change colors to match your product and brand.</p></article>
-  </div>
-</section>
-
-<section class="section" id="studio">
-  <div class="heading"><h2>Create your product poster</h2><p>Add your details, upload a photo and watch the preview update as you customize your design.</p></div>
-  <div class="workspace">
-    <div class="panel">
-      <h3>Product details</h3>
-      <p class="intro">Add your own product information. Your image is processed in this browser.</p>
-
-      <div class="field">
-        <label>Product photo</label>
-        <label class="upload" for="productImage"><span style="font-size:28px;color:#7057e8">↑</span><strong>Choose your product image</strong><span>JPG, PNG or WebP — maximum 10 MB</span><input id="productImage" type="file" accept="image/png,image/jpeg,image/webp"></label>
-        <div id="photoWrap"><img id="photoPreview" alt="Your uploaded product"><button class="btn btn-outline" id="removePhoto" type="button">Remove photo</button></div>
+<main>
+  <section class="hero" id="home">
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <div class="eyebrow">Your business deserves to stand out</div>
+        <h1>Make your products look <span class="gradient">unforgettable.</span></h1>
+        <p>Create eye-catching product posters and ready-to-use marketing content in one simple workspace. Made for small sellers, home businesses, and creative brands.</p>
+        <div class="hero-actions">
+          <a href="#studio" class="btn btn-primary">Create Your Poster <span>↗</span></a>
+          <a href="#features" class="btn btn-secondary">Explore Features</a>
+        </div>
+        <div class="trust">No design experience needed · Free to try · Works in your browser</div>
       </div>
-
-      <div class="field"><label for="productName">Product name *</label><input id="productName" maxlength="70" placeholder="e.g. Handmade Soy Candle"></div>
-      <div class="two-col">
-        <div class="field"><label for="productCategory">Category</label><select id="productCategory"><option>Home & Living</option><option>Jewelry & Accessories</option><option>Fashion</option><option>Kitchen & Dining</option><option>Beauty & Personal Care</option><option>Food & Gifts</option><option>Art & Handmade</option><option>Other</option></select></div>
-        <div class="field"><label for="currency">Currency</label><select id="currency"><option value="₹">INR (₹)</option><option value="$">USD ($)</option><option value="£">GBP (£)</option><option value="€">EUR (€)</option><option value="د.إ">AED (د.إ)</option><option value="A$">AUD (A$)</option><option value="C$">CAD (C$)</option></select></div>
-      </div>
-      <div class="field"><label for="productPrice">Selling price</label><input id="productPrice" type="number" min="0" step="0.01" placeholder="e.g. 499"></div>
-      <div class="field"><label for="productDescription">Short product description</label><textarea id="productDescription" maxlength="350" placeholder="Describe materials, benefits or what makes your product special."></textarea></div>
-      <div class="field"><label for="productOffer">Offer or tagline</label><input id="productOffer" maxlength="70" placeholder="e.g. Handcrafted with love"></div>
-
-      <h3 style="margin-top:25px">Design your poster</h3>
-      <p class="intro">Choose a style and adjust your image appearance.</p>
-      <div class="field"><label>Poster template</label><div class="templates"><button type="button" class="template active" data-template="modern">Modern</button><button type="button" class="template" data-template="bold">Bold</button><button type="button" class="template" data-template="minimal">Minimal</button></div></div>
-      <div class="field"><label>Poster colors</label><div class="colors"><label>Background <input id="bgColor" type="color" value="#f0eaff"></label><label>Text <input id="textColor" type="color" value="#28203b"></label><label>Accent <input id="accentColor" type="color" value="#7057e8"></label></div></div>
-
-      <div class="control"><label for="zoom">Image zoom</label><input id="zoom" type="range" min="1" max="2" step=".05" value="1"><output id="zoomValue">1.00×</output></div>
-      <div class="control"><label for="brightness">Brightness</label><input id="brightness" type="range" min="50" max="150" value="100"><output id="brightnessValue">100%</output></div>
-      <div class="control"><label for="contrast">Contrast</label><input id="contrast" type="range" min="50" max="150" value="100"><output id="contrastValue">100%</output></div>
-      <div class="control"><label for="rotation">Rotate</label><input id="rotation" type="range" min="-180" max="180" value="0"><output id="rotationValue">0°</output></div>
-      <button class="btn btn-primary" style="width:100%;margin-top:12px" id="generateContent" type="button">Generate Seller Content</button>
-    </div>
-
-    <div class="panel">
-      <h3>Live poster preview</h3><p class="intro">Your design updates when you change product details or settings.</p>
-      <div class="canvas-holder"><canvas id="posterCanvas" width="900" height="1100"></canvas></div>
-      <div class="actions"><button type="button" class="btn btn-primary" id="downloadPoster">Download PNG</button><button type="button" class="btn btn-outline" id="resetDesign">Reset design</button></div>
-      <div class="status" id="posterStatus" role="status">Add a product name and photo to get started.</div>
-
-      <div class="content-kit" id="content-kit">
-        <h3>Seller Content Kit</h3><p class="intro">Generate editable marketing text from your product details.</p>
-        <div class="content-item"><h4>Product title</h4><textarea id="generatedTitle" placeholder="Your suggested title appears here."></textarea><button class="btn btn-light copy-btn" data-copy="generatedTitle" type="button">Copy title</button></div>
-        <div class="content-item"><h4>Product description</h4><textarea id="generatedDescription" placeholder="Your suggested description appears here."></textarea><button class="btn btn-light copy-btn" data-copy="generatedDescription" type="button">Copy description</button></div>
-        <div class="content-item"><h4>Social media caption</h4><textarea id="generatedCaption" placeholder="Your suggested caption appears here."></textarea><button class="btn btn-light copy-btn" data-copy="generatedCaption" type="button">Copy caption</button></div>
-        <p class="status">These are built-in text suggestions, not live AI results. You can edit them before using them.</p>
+      <div class="hero-visual">
+        <div class="window-bar">
+          <div class="window-dots"><span></span><span></span><span></span></div>
+          <div class="window-label">SELLORA / POSTER PREVIEW</div>
+        </div>
+        <div class="demo-poster">
+          <div class="poster-kicker">HANDMADE • THOUGHTFULLY MADE</div>
+          <div class="poster-heading">Little things.<br>Beautiful living.</div>
+          <div class="poster-bottom"><span>THE EVERYDAY COLLECTION</span><span>DISCOVER MORE ↗</span></div>
+        </div>
+        <div class="hero-chips">
+          <span class="chip">✦ Custom templates</span>
+          <span class="chip">↗ Product marketing</span>
+          <span class="chip">↓ PNG download</span>
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<footer class="footer"><strong>Sellora.</strong> — Practical tools for small sellers.<br><br>Project prototype. Poster creation and content suggestions run in your browser.</footer>
-<div class="toast" id="toast" role="status"></div>
+  <section class="section" id="features">
+    <div class="container">
+      <div class="section-heading">
+        <div class="eyebrow">Everything in one place</div>
+        <h2>From product photo to <span class="gradient">promotion-ready.</span></h2>
+        <p>Skip switching between multiple design tools. Create your visual and prepare your product messaging in one place.</p>
+      </div>
+      <div class="features">
+        <article class="feature-card">
+          <div class="feature-icon">▧</div>
+          <h3>Product Poster Maker</h3>
+          <p>Upload your own product image and create a shareable promotional poster with product details and pricing.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon">◈</div>
+          <h3>Creative Templates</h3>
+          <p>Choose Modern, Bold, or Minimal layouts and customize colors to match your brand.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon">✎</div>
+          <h3>Seller Content Kit</h3>
+          <p>Generate editable product titles, descriptions, and social captions from built-in writing templates.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon">☼</div>
+          <h3>Image Controls</h3>
+          <p>Adjust zoom, rotation, brightness, and contrast to improve how your product appears.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon">↓</div>
+          <h3>Download and Share</h3>
+          <p>Export your finished poster as a PNG image, ready to share on social media or messaging apps.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon">⌘</div>
+          <h3>Simple Workspace</h3>
+          <p>Use one clean, responsive workspace on your laptop, tablet, or mobile browser.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section studio-section" id="studio">
+    <div class="container">
+      <div class="section-heading">
+        <div class="eyebrow">Your creative workspace</div>
+        <h2>Meet your <span class="gradient">Poster Studio.</span></h2>
+        <p>Add your product details, customize the design, and download your poster.</p>
+      </div>
+
+      <div class="studio-layout">
+        <section class="panel">
+          <div class="panel-header">
+            <h3>Customize your poster</h3>
+            <span class="status">● LIVE EDITOR</span>
+          </div>
+          <form id="posterForm">
+            <div class="form-grid">
+              <div class="field full">
+                <label for="productImage">Product photo</label>
+                <div class="upload-box">
+                  <input id="productImage" type="file" accept="image/*">
+                  <p class="upload-hint">Choose a JPG, PNG, or WebP image from your device.</p>
+                </div>
+              </div>
+              <div class="field full">
+                <label for="productName">Product name *</label>
+                <input id="productName" maxlength="65" placeholder="e.g. Handmade Soy Candle" required>
+              </div>
+              <div class="field">
+                <label for="category">Category</label>
+                <select id="category">
+                  <option>Home & Living</option>
+                  <option>Jewelry & Accessories</option>
+                  <option>Fashion</option>
+                  <option>Kitchen & Dining</option>
+                  <option>Beauty & Skincare</option>
+                  <option>Food & Beverage</option>
+                  <option>Art & Crafts</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="price">Price</label>
+                <input id="price" type="number" min="0" step="0.01" placeholder="499">
+              </div>
+              <div class="field">
+                <label for="currency">Currency</label>
+                <select id="currency">
+                  <option value="INR">INR ₹</option>
+                  <option value="USD">USD $</option>
+                  <option value="GBP">GBP £</option>
+                  <option value="EUR">EUR €</option>
+                  <option value="AED">AED د.إ</option>
+                  <option value="AUD">AUD A$</option>
+                  <option value="CAD">CAD C$</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="offer">Offer / tagline</label>
+                <input id="offer" maxlength="65" placeholder="e.g. Made with love">
+              </div>
+              <div class="field full">
+                <label for="description">Short product description</label>
+                <textarea id="description" maxlength="250" placeholder="What makes your product special?"></textarea>
+              </div>
+              <div class="field full">
+                <label>Poster template</label>
+                <div class="template-options">
+                  <button type="button" class="template-option active" data-template="modern"><span class="template-mini template-modern"></span>Modern</button>
+                  <button type="button" class="template-option" data-template="bold"><span class="template-mini template-bold"></span>Bold</button>
+                  <button type="button" class="template-option" data-template="minimal"><span class="template-mini template-minimal"></span>Minimal</button>
+                </div>
+              </div>
+              <div class="field">
+                <label for="backgroundColor">Background color</label>
+                <input id="backgroundColor" type="color" value="#d8c9b7">
+              </div>
+              <div class="field">
+                <label for="textColor">Text color</label>
+                <input id="textColor" type="color" value="#292018">
+              </div>
+              <div class="field full">
+                <label for="zoom">Image zoom <span id="zoomValue">100%</span></label>
+                <input id="zoom" type="range" min="50" max="180" value="100">
+              </div>
+              <div class="field">
+                <label for="rotation">Rotate <span id="rotationValue">0°</span></label>
+                <input id="rotation" type="range" min="-180" max="180" value="0">
+              </div>
+              <div class="field">
+                <label for="brightness">Brightness <span id="brightnessValue">100%</span></label>
+                <input id="brightness" type="range" min="50" max="150" value="100">
+              </div>
+              <div class="field full">
+                <label for="contrast">Contrast <span id="contrastValue">100%</span></label>
+                <input id="contrast" type="range" min="50" max="160" value="100">
+              </div>
+            </div>
+            <div class="form-actions">
+              <button type="button" class="btn btn-secondary" id="resetButton">Reset Design</button>
+              <button type="button" class="btn btn-primary" id="generateContentButton">Create Content Kit ↗</button>
+            </div>
+          </form>
+        </section>
+
+        <section class="panel preview-panel">
+          <div class="panel-header">
+            <h3>Live poster preview</h3>
+            <span class="status">● LIVE</span>
+          </div>
+          <div class="preview-stage">
+            <canvas id="posterCanvas" width="1080" height="1080" aria-label="Your product poster preview"></canvas>
+          </div>
+          <div class="preview-caption">
+            <span>Square format · 1080 × 1080 px</span>
+            <strong>PNG ready</strong>
+          </div>
+          <div class="preview-actions">
+            <button type="button" class="btn btn-primary" id="downloadButton">↓ Download PNG</button>
+            <button type="button" class="btn btn-secondary" id="clearImageButton">Remove Photo</button>
+          </div>
+          <p class="preview-empty" id="previewMessage">Your product photo will appear in the poster when you upload one.</p>
+        </section>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="content-kit">
+    <div class="container content-layout">
+      <div class="content-intro">
+        <div class="eyebrow">More than a poster</div>
+        <h2>Your Seller <span class="gradient">Content Kit.</span></h2>
+        <p>Create a useful first draft for your product listing and social media. Edit every suggestion to match your brand before sharing.</p>
+        <button class="btn btn-primary" id="refreshContentButton">Generate Suggestions ↗</button>
+        <p style="font-size:12px;margin-top:14px;">Suggestions use built-in templates and your product details. They do not require an AI API.</p>
+      </div>
+      <div class="content-cards">
+        <article class="content-card">
+          <div class="content-card-top"><h3>01 / Product Title</h3><button class="btn btn-secondary btn-small copy-button" data-target="generatedTitle">Copy</button></div>
+          <textarea id="generatedTitle" class="text-output" aria-label="Generated product title" placeholder="Your product title will appear here."></textarea>
+        </article>
+        <article class="content-card">
+          <div class="content-card-top"><h3>02 / Product Description</h3><button class="btn btn-secondary btn-small copy-button" data-target="generatedDescription">Copy</button></div>
+          <textarea id="generatedDescription" class="text-output" aria-label="Generated product description" placeholder="Your product description will appear here."></textarea>
+        </article>
+        <article class="content-card">
+          <div class="content-card-top"><h3>03 / Social Media Caption</h3><button class="btn btn-secondary btn-small copy-button" data-target="generatedCaption">Copy</button></div>
+          <textarea id="generatedCaption" class="text-output" aria-label="Generated social caption" placeholder="Your social caption will appear here."></textarea>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-heading">
+        <div class="eyebrow">A simpler way to sell</div>
+        <h2>Three steps. One <span class="gradient">workspace.</span></h2>
+      </div>
+      <div class="steps">
+        <article class="step-card"><div class="step-number">STEP 01</div><h3>Add your product</h3><p>Upload your photo and enter your product name, category, price, and description.</p></article>
+        <article class="step-card"><div class="step-number">STEP 02</div><h3>Make it yours</h3><p>Choose a template, adjust your image and colors, and review the live preview.</p></article>
+        <article class="step-card"><div class="step-number">STEP 03</div><h3>Download and share</h3><p>Save your poster as a PNG and copy your product marketing text wherever you need it.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="container">
+      <div class="cta">
+        <div class="eyebrow">Your next product deserves this</div>
+        <h2>Ready to create something <span class="gradient">beautiful?</span></h2>
+        <p>Turn your product details into a promotional poster and a set of editable marketing drafts.</p>
+        <a href="#studio" class="btn btn-primary">Start Creating — It's Free ↗</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container footer-inner">
+    <a href="#home" class="logo"><span class="logo-mark">S</span><span>sellora<span class="gradient">.</span></span></a>
+    <p>Built for creators, makers, and small business sellers.</p>
+    <p>© <span id="year"></span> Sellora</p>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
   const $ = id => document.getElementById(id);
   const canvas = $("posterCanvas");
   const ctx = canvas.getContext("2d");
+
+  const fields = {
+    name: $("productName"),
+    category: $("category"),
+    price: $("price"),
+    currency: $("currency"),
+    offer: $("offer"),
+    description: $("description"),
+    background: $("backgroundColor"),
+    text: $("textColor"),
+    zoom: $("zoom"),
+    rotation: $("rotation"),
+    brightness: $("brightness"),
+    contrast: $("contrast")
+  };
+
   let productImage = null;
-  let selectedTemplate = "modern";
+  let template = "modern";
+  let imageUrl = null;
   let toastTimer;
 
+  $("year").textContent = new Date().getFullYear();
+
   function notify(message) {
-    $("toast").textContent = message;
-    $("toast").style.display = "block";
+    const toast = $("toast");
+    toast.textContent = message;
+    toast.classList.add("show");
     clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => $("toast").style.display = "none", 2400);
+    toastTimer = setTimeout(() => toast.classList.remove("show"), 2600);
   }
 
-  function value(id) { return $(id).value.trim(); }
+  function safeText(value) {
+    return String(value || "").trim();
+  }
 
-  function drawWrapped(text, x, y, maxWidth, lineHeight, maxLines) {
-    const words = String(text || "").split(/\s+/);
-    let line = "";
-    let count = 0;
-    for (let i = 0; i < words.length; i++) {
-      const test = line ? line + " " + words[i] : words[i];
-      if (ctx.measureText(test).width > maxWidth && line) {
-        ctx.fillText(line, x, y);
-        y += lineHeight;
-        count++;
-        line = words[i];
-        if (count >= maxLines - 1) {
-          while (line.length && ctx.measureText(line + "…").width > maxWidth) line = line.slice(0, -1);
-          ctx.fillText(line + "…", x, y);
-          return;
-        }
-      } else line = test;
+  function formatPrice() {
+    if (fields.price.value === "") return "";
+    const amount = Number(fields.price.value);
+    if (!Number.isFinite(amount) || amount < 0) return "";
+    try {
+      return new Intl.NumberFormat("en", {
+        style: "currency",
+        currency: fields.currency.value,
+        maximumFractionDigits: 2
+      }).format(amount);
+    } catch {
+      return fields.currency.value + " " + amount.toFixed(2);
     }
-    if (line) ctx.fillText(line, x, y);
   }
 
-  function drawImage() {
-    if (!productImage) return;
-    const x = 75, y = 105, w = 750, h = 570;
-    const zoom = Number($("zoom").value);
-    const angle = Number($("rotation").value) * Math.PI / 180;
+  function roundedRect(context, x, y, width, height, radius) {
+    context.beginPath();
+    context.roundRect(x, y, width, height, radius);
+  }
+
+  function wrapText(text, maxWidth, font) {
+    ctx.font = font;
+    const words = safeText(text).split(/\s+/).filter(Boolean);
+    const lines = [];
+    let line = "";
+    for (const word of words) {
+      const next = line ? line + " " + word : word;
+      if (ctx.measureText(next).width > maxWidth && line) {
+        lines.push(line);
+        line = word;
+      } else {
+        line = next;
+      }
+    }
+    if (line) lines.push(line);
+    return lines;
+  }
+
+  function drawLines(text, x, y, maxWidth, font, lineHeight, maxLines, color) {
+    const lines = wrapText(text, maxWidth, font).slice(0, maxLines);
+    ctx.font = font;
+    ctx.fillStyle = color;
+    lines.forEach((line, index) => {
+      let output = line;
+      if (index === maxLines - 1 && wrapText(text, maxWidth, font).length > maxLines) {
+        while (ctx.measureText(output + "…").width > maxWidth && output.length > 3) {
+          output = output.slice(0, -1);
+        }
+        output += "…";
+      }
+      ctx.fillText(output, x, y + index * lineHeight);
+    });
+    return lines.length * lineHeight;
+  }
+
+  function drawProductImage(x, y, width, height) {
+    if (!productImage) {
+      ctx.save();
+      ctx.fillStyle = template === "bold" ? "#fff0b7" : "#ffffff50";
+      roundedRect(ctx, x, y, width, height, 26);
+      ctx.fill();
+      ctx.strokeStyle = template === "minimal" ? "#c8c0b2" : "#ffffff70";
+      ctx.setLineDash([9, 8]);
+      ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.fillStyle = fields.text.value;
+      ctx.textAlign = "center";
+      ctx.font = "700 27px Arial";
+      ctx.fillText("YOUR PRODUCT PHOTO", x + width / 2, y + height / 2 - 8);
+      ctx.font = "20px Arial";
+      ctx.fillText("Upload an image to begin", x + width / 2, y + height / 2 + 30);
+      ctx.restore();
+      return;
+    }
+
     ctx.save();
     ctx.beginPath();
-    ctx.rect(x, y, w, h);
+    ctx.rect(x, y, width, height);
     ctx.clip();
-    ctx.translate(x + w / 2, y + h / 2);
-    ctx.rotate(angle);
-    const rw = Math.abs(w * Math.cos(angle)) + Math.abs(h * Math.sin(angle));
-    const rh = Math.abs(w * Math.sin(angle)) + Math.abs(h * Math.cos(angle));
-    const scale = Math.max(rw / productImage.width, rh / productImage.height) * zoom;
+
+    const zoom = Number(fields.zoom.value) / 100;
+    const rotation = Number(fields.rotation.value) * Math.PI / 180;
+    const scale = Math.max(width / productImage.width, height / productImage.height) * zoom;
     const dw = productImage.width * scale;
     const dh = productImage.height * scale;
-    ctx.filter = "brightness(" + $("brightness").value + "%) contrast(" + $("contrast").value + "%)";
+
+    ctx.translate(x + width / 2, y + height / 2);
+    ctx.rotate(rotation);
+    ctx.filter = `brightness(${fields.brightness.value}%) contrast(${fields.contrast.value}%)`;
     ctx.drawImage(productImage, -dw / 2, -dh / 2, dw, dh);
     ctx.filter = "none";
     ctx.restore();
   }
 
   function drawPoster() {
-    const name = value("productName") || "Your Product";
-    const description = value("productDescription") || "Made with care, designed for you.";
-    const offer = value("productOffer");
-    const price = value("productPrice");
-    const bg = $("bgColor").value;
-    const text = $("textColor").value;
-    const accent = $("accentColor").value;
+    const W = canvas.width, H = canvas.height;
+    const bg = fields.background.value;
+    const fg = fields.text.value;
+    const name = safeText(fields.name.value) || "Your Product Name";
+    const offer = safeText(fields.offer.value);
+    const description = safeText(fields.description.value);
+    const price = formatPrice();
 
-    ctx.clearRect(0, 0, 900, 1100);
+    ctx.clearRect(0, 0, W, H);
     ctx.fillStyle = bg;
-    ctx.fillRect(0, 0, 900, 1100);
+    ctx.fillRect(0, 0, W, H);
 
-    if (selectedTemplate === "bold") {
-      ctx.fillStyle = accent;
-      ctx.fillRect(0, 0, 900, 110);
-      ctx.fillStyle = "#fff";
-      ctx.textAlign = "center";
-      ctx.font = "bold 34px Arial";
-      ctx.fillText("SPECIAL PRODUCT", 450, 70);
+    if (template === "modern") {
+      ctx.fillStyle = "#ffffff20";
+      ctx.beginPath(); ctx.arc(920, 165, 260, 0, Math.PI * 2); ctx.fill();
+      ctx.beginPath(); ctx.arc(80, 990, 210, 0, Math.PI * 2); ctx.fill();
+
+      ctx.textAlign = "left";
+      ctx.fillStyle = fg;
+      ctx.font = "800 25px Arial";
+      ctx.fillText((fields.category.value || "YOUR COLLECTION").toUpperCase(), 75, 85);
+      ctx.fillStyle = fg + "bb";
+      ctx.fillRect(75, 110, 95, 5);
+
+      drawProductImage(75, 145, 930, 470);
+
+      ctx.fillStyle = fg;
+      const nameHeight = drawLines(name, 75, 700, 930, "bold 64px Arial", 72, 2, fg);
+      if (description) {
+        drawLines(description, 75, 700 + nameHeight + 14, 900, "27px Arial", 36, 2, fg);
+      }
+      if (offer) {
+        ctx.fillStyle = fg;
+        ctx.font = "bold 25px Arial";
+        ctx.fillText(offer.toUpperCase(), 75, 955);
+      }
+      if (price) {
+        ctx.textAlign = "right";
+        ctx.font = "bold 38px Arial";
+        ctx.fillText(price, 1005, 1000);
+      }
+      ctx.textAlign = "left";
+      ctx.fillStyle = fg;
+      ctx.font = "bold 20px Arial";
+      ctx.fillText("MADE TO STAND OUT  /  SELLORA", 75, 1030);
     }
 
-    if (selectedTemplate === "minimal") {
-      ctx.strokeStyle = accent;
-      ctx.lineWidth = 3;
-      ctx.strokeRect(28, 28, 844, 1044);
-    }
+    if (template === "bold") {
+      ctx.fillStyle = "#171717";
+      ctx.fillRect(0, 0, W, 190);
+      ctx.fillStyle = "#ffffff";
+      ctx.font = "900 31px Arial";
+      ctx.fillText("NEW ARRIVAL  /  " + (fields.category.value || "COLLECTION").toUpperCase(), 55, 73);
 
-    if (productImage) {
-      drawImage();
-    } else {
-      ctx.fillStyle = "#e5defb";
-      ctx.fillRect(75, 105, 750, 570);
-      ctx.fillStyle = accent;
-      ctx.beginPath();
-      ctx.arc(450, 365, 85, 0, Math.PI * 2);
+      ctx.fillStyle = "#ffffff";
+      ctx.font = "900 77px Arial";
+      drawLines(name.toUpperCase(), 55, 150, 970, "900 77px Arial", 82, 1, "#ffffff");
+
+      drawProductImage(55, 220, 970, 510);
+
+      ctx.fillStyle = "#171717";
+      roundedRect(ctx, 55, 765, 970, 185, 18);
       ctx.fill();
-      ctx.fillStyle = "#fff";
-      ctx.textAlign = "center";
-      ctx.font = "bold 60px Arial";
-      ctx.fillText("S", 450, 385);
+
+      ctx.fillStyle = "#ffffff";
+      if (offer) drawLines(offer.toUpperCase(), 85, 825, 850, "bold 30px Arial", 36, 2, "#ffffff");
+      if (description) drawLines(description, 85, offer ? 875 : 825, 850, "23px Arial", 31, 2, "#ffffff");
+
+      if (price) {
+        ctx.fillStyle = bg;
+        roundedRect(ctx, 55, 960, 350, 75, 14);
+        ctx.fill();
+        ctx.fillStyle = "#171717";
+        ctx.font = "900 36px Arial";
+        ctx.fillText(price, 80, 1008);
+      }
+      ctx.fillStyle = "#171717";
+      ctx.font = "bold 22px Arial";
+      ctx.textAlign = "right";
+      ctx.fillText("SHOP SMALL. LOVE BIG.", 1025, 1010);
+      ctx.textAlign = "left";
     }
 
-    ctx.fillStyle = selectedTemplate === "bold" ? accent : bg;
-    ctx.fillRect(0, 700, 900, 400);
-    ctx.textAlign = "center";
-    ctx.fillStyle = selectedTemplate === "bold" ? "#fff" : text;
-    ctx.font = "bold 48px Arial";
-    drawWrapped(name, 450, 775, 760, 56, 2);
-    ctx.font = "24px Arial";
-    drawWrapped(description, 450, 870, 730, 34, 3);
+    if (template === "minimal") {
+      ctx.fillStyle = fg;
+      ctx.fillRect(60, 60, 5, 960);
+      ctx.textAlign = "left";
+      ctx.font = "700 22px Arial";
+      ctx.fillText((fields.category.value || "COLLECTION").toUpperCase(), 100, 100);
 
-    if (price !== "") {
-      ctx.font = "bold 39px Arial";
-      ctx.fillText(value("currency") + price, 450, 1000);
+      drawProductImage(100, 145, 880, 535);
+
+      const nameHeight = drawLines(name, 100, 755, 880, "52px Georgia", 61, 2, fg);
+      if (description) {
+        drawLines(description, 100, 755 + nameHeight + 8, 850, "25px Arial", 34, 2, fg);
+      }
+      if (offer) {
+        ctx.font = "bold 22px Arial";
+        ctx.fillText(offer.toUpperCase(), 100, 955);
+      }
+      if (price) {
+        ctx.textAlign = "right";
+        ctx.font = "bold 34px Arial";
+        ctx.fillText(price, 980, 1000);
+      }
+      ctx.textAlign = "left";
+      ctx.font = "18px Arial";
+      ctx.fillStyle = fg;
+      ctx.fillText("SELLORA  ·  THOUGHTFULLY PRESENTED", 100, 1010);
     }
 
-    if (offer) {
-      ctx.font = "bold 21px Arial";
-      ctx.fillStyle = selectedTemplate === "bold" ? "#fff" : accent;
-      drawWrapped(offer, 450, 1050, 760, 26, 1);
-    }
-
-    ctx.textAlign = "left";
-    ctx.fillStyle = selectedTemplate === "bold" ? "#fff" : accent;
-    ctx.font = "bold 20px Arial";
-    ctx.fillText("SELLORA", 42, 60);
-    $("posterStatus").textContent = productImage
-      ? "Your poster is ready to download."
-      : "Preview mode: upload your product photo to personalize the poster.";
+    $("previewMessage").textContent = productImage
+      ? "Your uploaded product image is included in the preview."
+      : "Preview your design now, then upload your own product photo.";
+    updateSliderLabels();
   }
 
-  $("productImage").addEventListener("change", function () {
-    const file = this.files[0];
+  function updateSliderLabels() {
+    $("zoomValue").textContent = fields.zoom.value + "%";
+    $("rotationValue").textContent = fields.rotation.value + "°";
+    $("brightnessValue").textContent = fields.brightness.value + "%";
+    $("contrastValue").textContent = fields.contrast.value + "%";
+  }
+
+  function loadImage(file) {
     if (!file) return;
-    if (!["image/jpeg", "image/png", "image/webp"].includes(file.type)) {
-      notify("Choose a JPG, PNG or WebP image.");
-      this.value = "";
+    if (!file.type.startsWith("image/")) {
+      notify("Please choose a valid image file.");
       return;
     }
-    if (file.size > 10 * 1024 * 1024) {
-      notify("Choose an image smaller than 10 MB.");
-      this.value = "";
+    if (file.size > 12 * 1024 * 1024) {
+      notify("Please choose an image smaller than 12 MB.");
       return;
     }
     const reader = new FileReader();
-    reader.onload = function (event) {
-      const img = new Image();
-      img.onload = function () {
-        productImage = img;
-        $("photoPreview").src = event.target.result;
-        $("photoWrap").style.display = "block";
+    reader.onload = event => {
+      const image = new Image();
+      image.onload = () => {
+        productImage = image;
+        imageUrl = event.target.result;
         drawPoster();
-        notify("Photo uploaded successfully!");
+        notify("Product photo added!");
       };
-      img.onerror = () => notify("Unable to open this image. Try another.");
-      img.src = event.target.result;
+      image.onerror = () => notify("This image could not be opened. Try another file.");
+      image.src = event.target.result;
     };
+    reader.onerror = () => notify("Could not read this file. Please try again.");
     reader.readAsDataURL(file);
+  }
+
+  function generateContent() {
+    const name = safeText(fields.name.value) || "your product";
+    const category = safeText(fields.category.value);
+    const description = safeText(fields.description.value);
+    const offer = safeText(fields.offer.value);
+    const price = formatPrice();
+    const cleanName = name.replace(/[.!?]+$/, "");
+    const title = `${cleanName} | ${category} Collection`;
+
+    let body = `${cleanName} is made for people who appreciate thoughtful details and quality.`;
+    if (description) body += ` ${description}`;
+    body += ` Explore this ${category.toLowerCase()} find and bring something special into your everyday life.`;
+    if (price) body += ` Price: ${price}.`;
+    if (offer) body += ` ${offer}.`;
+
+    const caption = `${offer ? offer + " ✨\n\n" : "A little something special ✨\n\n"}Meet ${cleanName}! ${description || "Thoughtfully chosen to bring something special to your day."}\n${price ? "\nPrice: " + price + "\n" : "\n"}Save this post or message us to learn more.\n\n#SmallBusiness #ShopSmall #${category.replace(/[^a-zA-Z0-9]/g, "")} #ProductLove`;
+
+    $("generatedTitle").value = title;
+    $("generatedDescription").value = body;
+    $("generatedCaption").value = caption;
+  }
+
+  fields.name.addEventListener("input", drawPoster);
+  fields.category.addEventListener("change", drawPoster);
+  fields.price.addEventListener("input", drawPoster);
+  fields.currency.addEventListener("change", drawPoster);
+  fields.offer.addEventListener("input", drawPoster);
+  fields.description.addEventListener("input", drawPoster);
+  fields.background.addEventListener("input", drawPoster);
+  fields.text.addEventListener("input", drawPoster);
+  ["zoom", "rotation", "brightness", "contrast"].forEach(id => {
+    fields[id].addEventListener("input", drawPoster);
   });
 
-  $("removePhoto").addEventListener("click", function () {
-    productImage = null;
-    $("productImage").value = "";
-    $("photoPreview").removeAttribute("src");
-    $("photoWrap").style.display = "none";
-    drawPoster();
-    notify("Photo removed.");
-  });
+  $("productImage").addEventListener("change", event => loadImage(event.target.files[0]));
 
-  [
-    "productName", "productCategory", "currency", "productPrice",
-    "productDescription", "productOffer", "bgColor", "textColor",
-    "accentColor", "zoom", "brightness", "contrast", "rotation"
-  ].forEach(id => {
-    $(id).addEventListener("input", drawPoster);
-    $(id).addEventListener("change", drawPoster);
-  });
-
-  [
-    ["zoom", "zoomValue", v => Number(v).toFixed(2) + "×"],
-    ["brightness", "brightnessValue", v => v + "%"],
-    ["contrast", "contrastValue", v => v + "%"],
-    ["rotation", "rotationValue", v => v + "°"]
-  ].forEach(([input, output, format]) => {
-    $(input).addEventListener("input", () => {
-      $(output).textContent = format($(input).value);
-    });
-  });
-
-  document.querySelectorAll(".template").forEach(button => {
-    button.addEventListener("click", function () {
-      selectedTemplate = this.dataset.template;
-      document.querySelectorAll(".template").forEach(b => b.classList.toggle("active", b === this));
+  document.querySelectorAll(".template-option").forEach(button => {
+    button.addEventListener("click", () => {
+      template = button.dataset.template;
+      document.querySelectorAll(".template-option").forEach(item => {
+        item.classList.toggle("active", item === button);
+      });
+      if (template === "modern") {
+        fields.background.value = "#d8c9b7";
+        fields.text.value = "#292018";
+      } else if (template === "bold") {
+        fields.background.value = "#f0cb43";
+        fields.text.value = "#171717";
+      } else {
+        fields.background.value = "#f1eee7";
+        fields.text.value = "#39352e";
+      }
       drawPoster();
     });
   });
 
-  $("downloadPoster").addEventListener("click", function () {
-    drawPoster();
-    canvas.toBlob(function (blob) {
-      if (!blob) {
-        notify("Could not create the PNG. Try again.");
-        return;
-      }
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      const filename = (value("productName") || "sellora-poster").replace(/[^a-z0-9_-]/gi, "-").slice(0, 50);
-      link.href = url;
-      link.download = filename + ".png";
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-      setTimeout(() => URL.revokeObjectURL(url), 1500);
-      notify("Poster PNG downloaded!");
-    }, "image/png");
-  });
-
-  $("resetDesign").addEventListener("click", function () {
-    $("bgColor").value = "#f0eaff";
-    $("textColor").value = "#28203b";
-    $("accentColor").value = "#7057e8";
-    $("zoom").value = 1;
-    $("brightness").value = 100;
-    $("contrast").value = 100;
-    $("rotation").value = 0;
-    $("zoomValue").textContent = "1.00×";
-    $("brightnessValue").textContent = "100%";
-    $("contrastValue").textContent = "100%";
-    $("rotationValue").textContent = "0°";
-    selectedTemplate = "modern";
-    document.querySelectorAll(".template").forEach(b => b.classList.toggle("active", b.dataset.template === "modern"));
+  $("resetButton").addEventListener("click", () => {
+    fields.zoom.value = 100;
+    fields.rotation.value = 0;
+    fields.brightness.value = 100;
+    fields.contrast.value = 100;
+    template = "modern";
+    fields.background.value = "#d8c9b7";
+    fields.text.value = "#292018";
+    document.querySelectorAll(".template-option").forEach(item => {
+      item.classList.toggle("active", item.dataset.template === template);
+    });
     drawPoster();
     notify("Design settings reset.");
   });
 
-  $("generateContent").addEventListener("click", function () {
-    const name = value("productName");
-    if (!name) {
-      notify("Enter your product name first.");
-      $("productName").focus();
-      return;
-    }
-
-    const category = value("productCategory");
-    const description = value("productDescription");
-    const offer = value("productOffer");
-    const price = value("productPrice");
-    const currency = value("currency");
-
-    $("generatedTitle").value = name + " | Quality " + category;
-    $("generatedDescription").value = description
-      ? name + " is a " + category.toLowerCase() + " product. " + description + (offer ? " " + offer + "." : "")
-      : name + " is a " + category.toLowerCase() + " product designed for customers who value quality and thoughtful design." + (offer ? " " + offer + "." : "");
-
-    $("generatedCaption").value =
-      "Meet " + name + "!\n\n" +
-      (description || "Discover something special for your everyday needs.") +
-      (price ? "\n\nPrice: " + currency + price : "") +
-      (offer ? "\n\n" + offer : "") +
-      "\n\nMessage us to learn more!\n\n#SmallBusiness #ShopSmall #ProductLove";
-
-    $("content-kit").scrollIntoView({behavior:"smooth", block:"start"});
-    notify("Your seller content suggestions are ready!");
+  $("clearImageButton").addEventListener("click", () => {
+    productImage = null;
+    imageUrl = null;
+    $("productImage").value = "";
+    drawPoster();
+    notify("Product photo removed.");
   });
 
-  document.querySelectorAll(".copy-btn").forEach(button => {
-    button.addEventListener("click", async function () {
-      const target = $(this.dataset.copy);
+  $("downloadButton").addEventListener("click", () => {
+    if (!safeText(fields.name.value)) {
+      fields.name.focus();
+      notify("Enter a product name before downloading.");
+      return;
+    }
+    try {
+      canvas.toBlob(blob => {
+        if (!blob) {
+          notify("Could not create the PNG. Please try again.");
+          return;
+        }
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        const filename = safeText(fields.name.value)
+          .toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "sellora-poster";
+        link.href = url;
+        link.download = filename + ".png";
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 1500);
+        notify("Your poster download has started!");
+      }, "image/png");
+    } catch {
+      notify("Download failed. Please refresh and try again.");
+    }
+  });
+
+  $("generateContentButton").addEventListener("click", () => {
+    generateContent();
+    $("content-kit").scrollIntoView({ behavior: "smooth" });
+    notify("Your content kit is ready to edit.");
+  });
+  $("refreshContentButton").addEventListener("click", () => {
+    generateContent();
+    notify("Fresh content suggestions created.");
+  });
+
+  document.querySelectorAll(".copy-button").forEach(button => {
+    button.addEventListener("click", async () => {
+      const target = $(button.dataset.target);
       if (!target.value.trim()) {
-        notify("Generate the content first.");
+        notify("Generate your content first.");
         return;
       }
       try {
         await navigator.clipboard.writeText(target.value);
-        notify("Copied to clipboard!");
-      } catch (error) {
+        notify("Text copied to clipboard!");
+      } catch {
         target.focus();
         target.select();
-        try {
-          notify(document.execCommand("copy") ? "Copied to clipboard!" : "Copy manually using Ctrl+C.");
-        } catch (e) {
-          notify("Select the text and press Ctrl+C.");
-        }
+        const copied = document.execCommand("copy");
+        notify(copied ? "Text copied!" : "Select the text and copy it manually.");
       }
     });
   });
 
-  window.goToStudio = function () {
-    $("studio").scrollIntoView({behavior:"smooth", block:"start"});
-  };
+  const menuToggle = $("menuToggle");
+  const navLinks = $("navLinks");
+  menuToggle.addEventListener("click", () => {
+    const open = navLinks.classList.toggle("open");
+    menuToggle.setAttribute("aria-expanded", String(open));
+  });
+  navLinks.querySelectorAll("a").forEach(link => {
+    link.addEventListener("click", () => {
+      navLinks.classList.remove("open");
+      menuToggle.setAttribute("aria-expanded", "false");
+    });
+  });
 
+  generateContent();
   drawPoster();
 });
 </script>
