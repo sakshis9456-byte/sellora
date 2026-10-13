@@ -1,0 +1,527 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Poster Editor | Sellora</title>
+<style>
+:root{--ink:#252938;--muted:#737b89;--line:#e5e8ef;--paper:#f6f7fb;--accent:#6254d9;--soft:#efedff}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:Arial,Helvetica,sans-serif}
+a{text-decoration:none;color:inherit}
+header{height:70px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 5%}
+.brand{font-size:25px;font-weight:800;letter-spacing:-1px}.brand span{color:var(--accent)}
+nav{display:flex;gap:20px;font-size:14px;color:var(--muted)}
+main{max-width:1380px;margin:auto;padding:30px 22px 55px}
+.topline{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:24px}
+h1{font-size:30px;letter-spacing:-1px;margin:0 0 8px}
+.sub{font-size:13px;color:var(--muted);line-height:1.6;margin:0}
+.actions{display:flex;gap:9px;flex-wrap:wrap}
+button{cursor:pointer;font-weight:700;font-size:13px;border:0;border-radius:9px;padding:12px 15px}
+.primary{background:var(--accent);color:white}.primary:hover{background:#5042c4}
+.secondary{background:white;border:1px solid var(--line);color:var(--ink)}
+.layout{display:grid;grid-template-columns:minmax(275px,.82fr) minmax(300px,1fr) minmax(260px,.82fr);gap:18px;align-items:start}
+.panel{background:white;border:1px solid var(--line);border-radius:15px;padding:19px;min-width:0}
+.panel h2{font-size:16px;margin:0 0 6px}
+.panel-intro{font-size:12px;color:var(--muted);line-height:1.5;margin:0 0 18px}
+.group{padding:15px 0;border-top:1px solid var(--line)}
+.group:first-of-type{border-top:0;padding-top:0}
+.group h3{font-size:13px;margin:0 0 12px}
+.field{margin-bottom:13px}
+.field label{display:flex;justify-content:space-between;gap:8px;font-size:12px;font-weight:700;margin-bottom:7px}
+input[type=text],input[type=number],select,textarea{width:100%;padding:10px;border:1px solid #dfe3ea;border-radius:8px;font:inherit;font-size:13px;background:white;color:var(--ink)}
+input[type=color]{width:38px;height:31px;padding:2px;border:1px solid var(--line);border-radius:6px;background:white;cursor:pointer}
+input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
+input[type=checkbox]{accent-color:var(--accent)}
+.field small{font-weight:400;color:var(--muted)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.color-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.color-choice{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted)}
+.range-label{font-size:11px;color:var(--muted);display:flex;justify-content:space-between;margin-top:4px}
+.preview-panel{background:#e9ebf2;padding:15px;border-radius:15px;min-width:0}
+.preview-top{display:flex;justify-content:space-between;align-items:center;font-size:12px;margin:0 0 12px;gap:10px}
+.preview-top span{color:var(--muted)}
+.canvas-wrap{width:100%;max-width:490px;margin:auto;background:#fff;box-shadow:0 8px 30px #1b234015}
+canvas{display:block;width:100%;height:auto}
+.preview-foot{font-size:11px;color:#6f7584;line-height:1.5;text-align:center;margin:13px 0 0}
+.status{font-size:12px;color:#4a6f58;line-height:1.5;min-height:16px;margin:12px 0 0}
+.section-divider{height:1px;background:var(--line);margin:18px 0}
+.platforms{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:12px 0}
+.platform{border:1px solid var(--line);background:white;border-radius:9px;padding:10px 3px;font-size:11px}
+.platform.active{border-color:var(--accent);background:var(--soft);color:var(--accent)}
+textarea{min-height:155px;resize:vertical;line-height:1.6}
+.small-button{width:100%;margin-top:9px}
+.info{font-size:11px;color:var(--muted);line-height:1.6}
+.empty{max-width:520px;margin:65px auto;background:white;padding:30px;border:1px solid var(--line);border-radius:16px;text-align:center}
+.empty p{color:var(--muted);line-height:1.7;font-size:14px}
+[hidden]{display:none!important}
+@media(max-width:1050px){.layout{grid-template-columns:1fr 1fr}.preview-panel{grid-column:1/-1;grid-row:1}.canvas-wrap{max-width:410px}}
+@media(max-width:650px){header{padding:0 16px}nav{gap:12px;font-size:12px}main{padding:23px 12px}.layout{grid-template-columns:1fr}.preview-panel{grid-column:auto;grid-row:auto}.topline{align-items:flex-start;flex-direction:column}h1{font-size:26px}}
+</style>
+</head>
+<body>
+<header>
+<a class="brand" href="index.html">sellora<span>.</span></a>
+<nav><a href="index.html">Home</a><a href="create.html">Create Draft</a></nav>
+</header>
+
+<main>
+<section id="emptyState" class="empty" hidden>
+<h2>No saved draft found</h2>
+<p>First create a draft and upload your product photo. Your saved draft will appear here automatically.</p>
+<a class="primary" style="display:inline-block;padding:12px 17px;border-radius:9px" href="create.html">Create a draft</a>
+</section>
+
+<div id="workspace" hidden>
+<div class="topline">
+<div><h1>Make it yours.</h1><p class="sub">Edit your product poster, preview every change, and export your design.</p></div>
+<div class="actions">
+<button class="secondary" id="resetBtn">Reset design</button>
+<button class="primary" id="downloadBtn">Download PNG ↓</button>
+</div>
+</div>
+
+<div class="layout">
+<section class="panel">
+<h2>Design controls</h2>
+<p class="panel-intro">Changes appear on your poster immediately.</p>
+
+<div class="group">
+<h3>Product information</h3>
+<div class="field"><label for="name">Product name</label><input id="name" type="text" maxlength="70"></div>
+<div class="field"><label for="tagline">Tagline</label><input id="tagline" type="text" maxlength="100"></div>
+<div class="field"><label for="description">Description</label><textarea id="description" rows="3" style="min-height:70px" maxlength="220"></textarea></div>
+<div class="two">
+<div class="field"><label for="price">Price</label><input id="price" type="number" min="0" step="0.01"></div>
+<div class="field"><label for="currency">Currency</label><select id="currency"><option value="₹">INR ₹</option><option value="$">USD $</option><option value="€">EUR €</option><option value="£">GBP £</option></select></div>
+</div>
+<div class="field"><label for="offer">Offer text</label><input id="offer" type="text" maxlength="55" placeholder="e.g. Special launch offer"></div>
+<div class="field"><label for="brand">Brand name</label><input id="brand" type="text" maxlength="35" value="YOUR BRAND"></div>
+</div>
+
+<div class="group">
+<h3>Background and colours</h3>
+<div class="field"><label for="background">Background style</label>
+<select id="background">
+<option value="lilac">Lavender gradient</option>
+<option value="sand">Warm beige</option>
+<option value="clean">Clean white</option>
+<option value="pink">Soft pink</option>
+<option value="mint">Fresh mint</option>
+<option value="dark">Midnight dark</option>
+<option value="solid">Custom solid colour</option>
+</select></div>
+<div class="two">
+<div class="field"><label for="customBg">Background colour</label><input id="customBg" type="color" value="#e8e4ff"></div>
+<div class="field"><label for="textColor">Text colour</label><input id="textColor" type="color" value="#292543"></div>
+</div>
+<div class="field"><label for="accentColor">Accent colour</label><input id="accentColor" type="color" value="#6254d9"></div>
+<div class="field"><label for="font">Typography</label>
+<select id="font"><option value="Arial">Modern</option><option value="Georgia">Elegant</option><option value="Trebuchet MS">Friendly</option><option value="Verdana">Clean</option></select></div>
+</div>
+
+<div class="group">
+<h3>Image adjustments</h3>
+<div class="field"><label for="zoom">Image zoom <small id="zoomValue">100%</small></label><input id="zoom" type="range" min="50" max="180" value="100"></div>
+<div class="field"><label for="rotate">Rotation <small id="rotateValue">0°</small></label><input id="rotate" type="range" min="-180" max="180" value="0"></div>
+<div class="field"><label for="brightness">Brightness <small id="brightnessValue">100%</small></label><input id="brightness" type="range" min="50" max="150" value="100"></div>
+<div class="field"><label for="contrast">Contrast <small id="contrastValue">100%</small></label><input id="contrast" type="range" min="50" max="160" value="100"></div>
+<div class="two">
+<div class="field"><label for="horizontal">Horizontal position</label><select id="horizontal"><option value="center">Center</option><option value="left">Left</option><option value="right">Right</option></select></div>
+<div class="field"><label for="vertical">Vertical position</label><select id="vertical"><option value="center">Center</option><option value="top">Higher</option><option value="bottom">Lower</option></select></div>
+</div>
+<div class="field"><label><span>Flip image horizontally</span><input id="flip" type="checkbox"></label></div>
+</div>
+
+<div class="group">
+<h3>Poster layout</h3>
+<div class="field"><label for="alignment">Text alignment</label><select id="alignment"><option value="center">Centered</option><option value="left">Left aligned</option><option value="right">Right aligned</option></select></div>
+<div class="field"><label for="textSize">Text size <small id="textSizeValue">100%</small></label><input id="textSize" type="range" min="75" max="130" value="100"></div>
+<div class="field"><label><span>Show product description</span><input id="showDescription" type="checkbox" checked></label></div>
+<div class="field"><label><span>Show offer badge</span><input id="showOffer" type="checkbox" checked></label></div>
+</div>
+</section>
+
+<section class="preview-panel">
+<div class="preview-top"><strong>Live poster preview</strong><span>4:5 · Portrait</span></div>
+<div class="canvas-wrap"><canvas id="canvas" width="900" height="1125"></canvas></div>
+<p class="preview-foot">Your downloaded PNG uses the full-resolution canvas. Review the design before exporting.</p>
+<p id="exportStatus" class="status" role="status"></p>
+</section>
+
+<section class="panel">
+<h2>Social media studio</h2>
+<p class="panel-intro">Prepare a caption that suits your selected platform. This generates suggestions from your product details, not live trend data.</p>
+<div class="group">
+<h3>Choose your platform</h3>
+<div class="platforms">
+<button class="platform active" data-platform="Instagram">Instagram</button>
+<button class="platform" data-platform="Facebook">Facebook</button>
+<button class="platform" data-platform="Pinterest">Pinterest</button>
+<button class="platform" data-platform="WhatsApp">WhatsApp</button>
+<button class="platform" data-platform="LinkedIn">LinkedIn</button>
+<button class="platform" data-platform="X">X</button>
+</div>
+<div class="field"><label for="tone">Caption tone</label><select id="tone"><option value="friendly">Friendly and warm</option><option value="premium">Premium and elegant</option><option value="playful">Fun and playful</option><option value="professional">Professional</option></select></div>
+<button id="captionBtn" class="primary" style="width:100%">Generate social content</button>
+</div>
+<div class="group">
+<h3>Your suggested caption</h3>
+<textarea id="caption" placeholder="Your platform-specific caption will appear here."></textarea>
+<button class="secondary small-button" id="copyCaption">Copy caption</button>
+<p class="info" id="platformTip">Instagram: use an attractive visual, a concise caption and relevant hashtags.</p>
+</div>
+<div class="group">
+<h3>Hashtag suggestions</h3>
+<textarea id="hashtags" style="min-height:75px" placeholder="Hashtags will appear here."></textarea>
+<button class="secondary small-button" id="copyTags">Copy hashtags</button>
+<p class="info">Hashtags are suggested from your category and product name. They are not verified live trending hashtags.</p>
+</div>
+<div class="group">
+<h3>Engagement prompt</h3>
+<textarea id="engagement" style="min-height:75px" placeholder="A question to invite comments will appear here."></textarea>
+<button class="secondary small-button" id="copyAll">Copy all social content</button>
+</div>
+<p class="status" id="socialStatus" role="status"></p>
+</section>
+</div>
+</div>
+</main>
+
+<script>
+const $=id=>document.getElementById(id);
+let draft=null;
+let productImage=new Image();
+let imageReady=false;
+let platform="Instagram";
+let undoStack=[];
+let redoStack=[];
+let restoring=false;
+
+try{
+ draft=JSON.parse(localStorage.getItem("selloraDraft")||"null");
+}catch(e){draft=null;}
+
+if(!draft||!draft.image){
+ $("emptyState").hidden=false;
+}else{
+ $("workspace").hidden=false;
+ loadDraft();
+}
+
+function loadDraft(){
+ $("name").value=draft.name||"";
+ $("tagline").value=draft.tagline||"";
+ $("description").value=draft.description||"";
+ $("price").value=draft.price||"";
+ $("currency").value=draft.currency||"₹";
+ $("offer").value=draft.offer||"";
+ $("brand").value="YOUR BRAND";
+ $("background").value=draft.style||"lilac";
+ const styles={lilac:"#e8e4ff",sand:"#f2dfc6",clean:"#ffffff"};
+ $("customBg").value=styles[$("background").value]||"#e8e4ff";
+ productImage.onload=()=>{imageReady=true;renderPoster();};
+ productImage.onerror=()=>{$("exportStatus").textContent="Could not load the saved photo. Return to Create Draft and upload it again.";};
+ productImage.src=draft.image;
+ bindControls();
+ renderPoster();
+}
+
+function bindControls(){
+ const ids=["name","tagline","description","price","currency","offer","brand","background","customBg","textColor","accentColor","font","zoom","rotate","brightness","contrast","horizontal","vertical","flip","alignment","textSize","showDescription","showOffer"];
+ ids.forEach(id=>{
+  $(id).addEventListener("input",()=>{updateRangeLabels();renderPoster();});
+  $(id).addEventListener("change",()=>{updateRangeLabels();renderPoster();});
+ });
+ $("downloadBtn").addEventListener("click",downloadPoster);
+ $("resetBtn").addEventListener("click",resetDesign);
+ $("captionBtn").addEventListener("click",generateSocial);
+ $("copyCaption").addEventListener("click",()=>copyText($("caption").value));
+ $("copyTags").addEventListener("click",()=>copyText($("hashtags").value));
+ $("copyAll").addEventListener("click",()=>copyText("Caption:\n"+$("caption").value+"\n\nHashtags:\n"+$("hashtags").value+"\n\nEngagement prompt:\n"+$("engagement").value));
+ document.querySelectorAll("[data-platform]").forEach(button=>{
+  button.addEventListener("click",()=>{
+   platform=button.dataset.platform;
+   document.querySelectorAll("[data-platform]").forEach(b=>b.classList.toggle("active",b===button));
+   updatePlatformTip();
+   generateSocial();
+  });
+ });
+}
+
+function updateRangeLabels(){
+ ["zoom","rotate","brightness","contrast","textSize"].forEach(id=>{
+  const labels={zoom:"zoomValue",rotate:"rotateValue",brightness:"brightnessValue",contrast:"contrastValue",textSize:"textSizeValue"};
+  const value=$(id).value;
+  $(labels[id]).textContent=id==="rotate"?value+"°":value+(id==="textSize"||id==="zoom"?"%":"%");
+ });
+}
+
+function getBackground(){
+ const bg=$("background").value;
+ const presets={
+  lilac:["#eeeaff","#c9c0ff"],
+  sand:["#fff0d9","#e7c59b"],
+  clean:["#ffffff","#e9edf2"],
+  pink:["#fff0f4","#f1c9dc"],
+  mint:["#e6f8ee","#b5e3cf"],
+  dark:["#28283e","#10101e"]
+ };
+ if(bg==="solid")return[$("customBg").value,$("customBg").value];
+ if(presets[bg])return presets[bg];
+ return[$("customBg").value,$("customBg").value];
+}
+
+function roundedRect(ctx,x,y,w,h,r){
+ const radius=Math.min(r,w/2,h/2);
+ ctx.beginPath();
+ ctx.moveTo(x+radius,y);
+ ctx.arcTo(x+w,y,x+w,y+h,radius);
+ ctx.arcTo(x+w,y+h,x,y+h,radius);
+ ctx.arcTo(x,y+h,x,y,radius);
+ ctx.arcTo(x,y,x+w,y,radius);
+ ctx.closePath();
+}
+
+function wrapText(ctx,text,maxWidth,maxLines){
+ const words=String(text||"").split(/\s+/).filter(Boolean);
+ const lines=[];
+ let line="";
+ for(const word of words){
+  const test=line?line+" "+word:word;
+  if(ctx.measureText(test).width>maxWidth&&line){
+   lines.push(line);line=word;
+  }else line=test;
+ }
+ if(line)lines.push(line);
+ if(maxLines&&lines.length>maxLines){
+  const trimmed=lines.slice(0,maxLines);
+  let last=trimmed[maxLines-1];
+  while(ctx.measureText(last+"…").width>maxWidth&&last.length>1)last=last.slice(0,-1);
+  trimmed[maxLines-1]=last+"…";
+  return trimmed;
+ }
+ return lines;
+}
+
+function renderPoster(){
+ if(!$("canvas"))return;
+ const canvas=$("canvas"),ctx=canvas.getContext("2d");
+ const W=canvas.width,H=canvas.height;
+ const dark=$("background").value==="dark";
+ const fg=$("textColor").value;
+ const accent=$("accentColor").value;
+ const scale=Number($("textSize").value)/100;
+ const align=$("alignment").value;
+ const left=align==="left"?72:W/2;
+ const right=align==="right"?W-72:W/2;
+ const anchor=align==="left"?"left":align==="right"?"right":"center";
+ const [bg1,bg2]=getBackground();
+
+ const gradient=ctx.createLinearGradient(0,0,W,H);
+ gradient.addColorStop(0,bg1);gradient.addColorStop(1,bg2);
+ ctx.fillStyle=gradient;ctx.fillRect(0,0,W,H);
+
+ const safeFg=dark&&fg.toLowerCase()==="#292543"?"#ffffff":fg;
+ ctx.fillStyle=safeFg;
+ ctx.textAlign=anchor;
+ ctx.textBaseline="alphabetic";
+ ctx.font="bold 25px "+$("font").value;
+ ctx.fillText(($("brand").value.trim()||"YOUR BRAND").toUpperCase().slice(0,35),left,75);
+ ctx.fillStyle=accent;
+ ctx.fillRect(72,96,90,5);
+
+ const imgBox={x:65,y:130,w:770,h:540};
+ if(imageReady){
+  ctx.save();
+  ctx.beginPath();
+  roundedRect(ctx,imgBox.x,imgBox.y,imgBox.w,imgBox.h,28);
+  ctx.clip();
+  ctx.translate(imgBox.x+imgBox.w/2,imgBox.y+imgBox.h/2);
+  ctx.rotate(Number($("rotate").value)*Math.PI/180);
+  ctx.scale(($("flip").checked?-1:1)*Number($("zoom").value)/100,Number($("zoom").value)/100);
+  ctx.filter="brightness("+$("brightness").value+"%) contrast("+$("contrast").value+"%)";
+  const fit=Math.min(imgBox.w/productImage.width,imgBox.h/productImage.height);
+  const iw=productImage.width*fit,ih=productImage.height*fit;
+  let px=0,py=0;
+  if($("horizontal").value==="left")px=-imgBox.w*.16;
+  if($("horizontal").value==="right")px=imgBox.w*.16;
+  if($("vertical").value==="top")py=-imgBox.h*.16;
+  if($("vertical").value==="bottom")py=imgBox.h*.16;
+  ctx.drawImage(productImage,px-iw/2,py-ih/2,iw,ih);
+  ctx.restore();
+  ctx.filter="none";
+ }else{
+  ctx.fillStyle="#ffffff80";
+  roundedRect(ctx,65,130,770,540,28);ctx.fill();
+  ctx.fillStyle=safeFg;ctx.font="26px "+$("font").value;ctx.textAlign="center";
+  ctx.fillText("Your product photo",W/2,400);
+ }
+
+ const category=(draft.category||"PRODUCT").toUpperCase();
+ ctx.fillStyle=accent;
+ ctx.textAlign=anchor;
+ ctx.font="bold "+Math.round(21*scale)+"px "+$("font").value;
+ ctx.fillText(category.slice(0,55),anchor==="left"?72:anchor==="right"?828:W/2,720);
+
+ ctx.fillStyle=safeFg;
+ ctx.font="bold "+Math.round(54*scale)+"px "+$("font").value;
+ const name=$("name").value.trim()||"Your product name";
+ const nameLines=wrapText(ctx,name,770,2);
+ let y=785;
+ nameLines.forEach(line=>{ctx.fillText(line,left,y);y+=Math.round(59*scale);});
+
+ const tagline=$("tagline").value.trim();
+ if(tagline){
+  ctx.font=Math.round(26*scale)+"px "+$("font").value;
+  ctx.fillStyle=safeFg;
+  wrapText(ctx,tagline,750,2).forEach(line=>{ctx.fillText(line,left,y+3);y+=Math.round(34*scale);});
+ }
+
+ if($("showDescription").checked&&$("description").value.trim()){
+  ctx.font=Math.round(20*scale)+"px "+$("font").value;
+  ctx.fillStyle=safeFg;
+  wrapText(ctx,$("description").value.trim(),750,2).forEach(line=>{ctx.fillText(line,left,y+5);y+=Math.round(27*scale);});
+ }
+
+ const price=$("price").value;
+ if(price!==""&&Number(price)>=0){
+  const priceText=$("currency").value+Number(price).toLocaleString("en-IN");
+  ctx.font="bold "+Math.round(43*scale)+"px "+$("font").value;
+  ctx.fillStyle=accent;
+  ctx.fillText(priceText,left,1030);
+ }
+
+ const offer=$("offer").value.trim();
+ if(offer&&$("showOffer").checked){
+  const badgeText=offer.slice(0,45);
+  ctx.font="bold 20px "+$("font").value;
+  const bw=Math.min(660,ctx.measureText(badgeText).width+48),bh=46;
+  const bx=anchor==="left"?72:anchor==="right"?W-72-bw:(W-bw)/2;
+  roundedRect(ctx,bx,1050,bw,bh,23);
+  ctx.fillStyle=accent;ctx.fill();
+  ctx.fillStyle="#ffffff";ctx.textAlign="center";
+  ctx.fillText(badgeText,bx+bw/2,1080);
+ }
+}
+
+function downloadPoster(){
+ if(!imageReady){$("exportStatus").textContent="Your product image is not ready yet.";return;}
+ renderPoster();
+ $("canvas").toBlob(blob=>{
+  if(!blob){$("exportStatus").textContent="Could not export the poster. Please try again.";return;}
+  const url=URL.createObjectURL(blob);
+  const link=document.createElement("a");
+  link.href=url;
+  link.download=($("name").value.trim()||"sellora-poster").replace(/[^\w-]+/g,"-")+".png";
+  document.body.appendChild(link);link.click();link.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),1500);
+  $("exportStatus").textContent="Your poster has been downloaded as a PNG image.";
+ },"image/png");
+}
+
+function resetDesign(){
+ if(!confirm("Reset the editor to the original draft design?"))return;
+ $("name").value=draft.name||"";
+ $("tagline").value=draft.tagline||"";
+ $("description").value=draft.description||"";
+ $("price").value=draft.price||"";
+ $("currency").value=draft.currency||"₹";
+ $("offer").value=draft.offer||"";
+ $("brand").value="YOUR BRAND";
+ $("background").value=draft.style||"lilac";
+ $("customBg").value="#e8e4ff";
+ $("textColor").value="#292543";
+ $("accentColor").value="#6254d9";
+ $("font").value="Arial";
+ $("zoom").value=100;$("rotate").value=0;
+ $("brightness").value=100;$("contrast").value=100;
+ $("horizontal").value="center";$("vertical").value="center";
+ $("flip").checked=false;$("alignment").value="center";
+ $("textSize").value=100;$("showDescription").checked=true;$("showOffer").checked=true;
+ updateRangeLabels();renderPoster();
+ $("exportStatus").textContent="Design reset.";
+}
+
+function updatePlatformTip(){
+ const tips={
+  Instagram:"Best for: visual product discovery, concise captions, and relevant hashtags.",
+  Facebook:"Best for: product details, promotions, community posts, and sharing.",
+  Pinterest:"Best for: searchable product descriptions and useful keywords.",
+  WhatsApp:"Best for: short personal messages, clear pricing, and direct enquiries.",
+  LinkedIn:"Best for: professional brand stories, craftsmanship, and business updates.",
+  X:"Best for: short announcements, clear benefits, and concise calls to action."
+ };
+ $("platformTip").textContent=tips[platform];
+}
+
+function generateSocial(){
+ const name=$("name").value.trim()||"this product";
+ const desc=$("description").value.trim();
+ const category=(draft.category||"products").toLowerCase();
+ const price=$("price").value;
+ const priceText=price!==""?" It is priced at "+$("currency").value+Number(price).toLocaleString("en-IN")+".":"";
+ const tone=$("tone").value;
+ const openings={
+  friendly:"Meet "+name+" — made to bring a little something special to your day.",
+  premium:"Discover "+name+", thoughtfully presented for those who appreciate the details.",
+  playful:"Something lovely just caught your eye! Meet "+name+".",
+  professional:"Introducing "+name+", created with care for customers who value quality."
+ };
+ const open=openings[tone];
+ const description=desc?" "+desc.replace(/[.!?]+$/,"")+".":"";
+ const cta={
+  Instagram:"Save this post or send us a message to learn more.",
+  Facebook:"Tell us what you think, or message us for more details.",
+  Pinterest:"Save this idea for later and explore the product details.",
+  WhatsApp:"Reply to this message to enquire or place an order.",
+  LinkedIn:"Contact us to discuss the product or a business enquiry.",
+  X:"Interested? Reply or message us to find out more."
+ };
+ let caption=open+description+priceText+"\n\n"+cta[platform];
+ if(platform==="WhatsApp")caption=open+description+priceText+"\n\n"+cta[platform];
+ const cleanName=name.toLowerCase().replace(/[^a-z0-9 ]/g," ").trim().split(/\s+/).filter(Boolean);
+ const safeTags=cleanName.map(word=>"#"+word);
+ const categoryTag={
+  "home & living":["#HomeDecor","#HandmadeHome"],
+  "jewelry & accessories":["#Jewelry","#Accessories"],
+  "fashion":["#Fashion","#Style"],
+  "kitchen & dining":["#Kitchen","#Dining"],
+  "beauty & wellness":["#Beauty","#SelfCare"],
+  "food & gifts":["#GiftIdeas","#SmallBusiness"],
+  "other":["#ProductFinds","#SmallBusiness"]
+ }[category]||["#SmallBusiness","#ProductFinds"];
+ let tags=[...new Set([...safeTags,...categoryTag,"#ShopSmall"])].slice(0,8).join(" ");
+ if(platform==="LinkedIn")tags=[...new Set([...safeTags,"#SmallBusiness","#Entrepreneurship"])].slice(0,5).join(" ");
+ if(platform==="WhatsApp")tags=[...new Set([...safeTags,...categoryTag])].slice(0,4).join(" ");
+ const prompts={
+  Instagram:"Which detail do you love most about this product?",
+  Facebook:"Would you use this yourself or gift it to someone?",
+  Pinterest:"Where would you use or display this?",
+  WhatsApp:"Would you like more photos or details?",
+  LinkedIn:"What do you value most when choosing a product like this?",
+  X:"What is your favourite feature?"
+ };
+ $("caption").value=caption;
+ $("hashtags").value=tags;
+ $("engagement").value=prompts[platform];
+ $("socialStatus").textContent="Suggestions created for "+platform+". Review them before posting.";
+ updatePlatformTip();
+}
+
+async function copyText(value){
+ if(!value.trim()){$("socialStatus").textContent="Generate or enter some content first.";return;}
+ try{
+  await navigator.clipboard.writeText(value);
+  $("socialStatus").textContent="Copied to clipboard.";
+ }catch(e){
+  const area=document.createElement("textarea");
+  area.value=value;document.body.appendChild(area);area.select();
+  const success=document.execCommand("copy");area.remove();
+  $("socialStatus").textContent=success?"Copied to clipboard.":"Select the text and copy it manually.";
+ }
+}
+</script>
+</body>
+</html>
