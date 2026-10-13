@@ -1,0 +1,556 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Sellora helps independent sellers create polished product posters from their own product photos.">
+  <title>Sellora | Make Your Products Stand Out</title>
+  <style>
+    :root {
+      --green: #285c45;
+      --green-dark: #1e4534;
+      --ink: #20251f;
+      --muted: #687168;
+      --cream: #f8f7f2;
+      --line: #e3e7df;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: #fff;
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.6;
+    }
+    a { color: inherit; text-decoration: none; }
+    button, input, select, textarea { font: inherit; }
+    button, .btn { cursor: pointer; }
+    .nav {
+      min-height: 74px;
+      padding: 14px 7%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+      border-bottom: 1px solid var(--line);
+      background: #fff;
+    }
+    .logo { font-size: 28px; font-weight: 800; letter-spacing: -1.2px; }
+    .logo span { color: var(--green); }
+    .nav-links { display: flex; align-items: center; gap: 24px; }
+    .nav-links a:not(.btn) { font-size: 14px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border: 1px solid var(--green);
+      border-radius: 8px;
+      padding: 12px 19px;
+      background: var(--green);
+      color: #fff;
+      font-weight: 700;
+      transition: background .2s, transform .2s;
+    }
+    .btn:hover { background: var(--green-dark); transform: translateY(-1px); }
+    .btn-light { background: #fff; color: var(--green); border-color: #cbd8ce; }
+    .btn-light:hover { background: #f2f6f1; color: var(--green-dark); }
+    .hero {
+      padding: 76px 7%;
+      background: var(--cream);
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 50px;
+      align-items: center;
+    }
+    .eyebrow {
+      margin: 0 0 17px;
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    h1 {
+      margin: 0 0 22px;
+      max-width: 650px;
+      font-size: clamp(42px, 5.2vw, 68px);
+      line-height: 1.08;
+      letter-spacing: -2.6px;
+    }
+    .hero-copy { max-width: 500px; color: var(--muted); font-size: 17px; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 27px; }
+    .small-note { margin-top: 14px; font-size: 12px; color: var(--muted); }
+    .showcase {
+      position: relative;
+      min-height: 410px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 25px;
+      border-radius: 20px;
+      background: #e5e9dc;
+      overflow: hidden;
+    }
+    .sample-poster {
+      width: min(78%, 310px);
+      padding: 15px;
+      background: #f7f0e4;
+      text-align: center;
+      box-shadow: 0 18px 48px #263a2a20;
+      transform: rotate(2deg);
+    }
+    .sample-art {
+      height: 235px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(145deg, #d8c2a3, #eee3d0);
+      font-size: 40px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      color: #285c45;
+    }
+    .sample-poster small { display: block; margin-top: 15px; font-size: 10px; letter-spacing: 2px; }
+    .sample-poster h2 { margin: 3px 0; font: 500 28px Georgia, serif; }
+    .sample-poster p { margin: 4px 0 8px; font-size: 11px; color: #555; }
+    .float-note {
+      position: absolute;
+      bottom: 24px;
+      left: 10px;
+      max-width: 220px;
+      padding: 12px 15px;
+      border-radius: 9px;
+      background: white;
+      box-shadow: 0 5px 25px #00000012;
+      font-size: 12px;
+    }
+    section.content-section { padding: 76px 7%; }
+    .section-heading { max-width: 660px; margin: 0 auto 38px; text-align: center; }
+    .section-heading h2 { margin: 0; font-size: clamp(30px, 3.5vw, 43px); line-height: 1.2; letter-spacing: -1.3px; }
+    .section-heading > p:last-child { margin: 12px 0 0; color: var(--muted); }
+    .feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .feature-card { padding: 26px; border: 1px solid var(--line); border-radius: 12px; }
+    .feature-num { color: var(--green); font-size: 12px; font-weight: 800; letter-spacing: 1px; }
+    .feature-card h3 { margin: 12px 0 8px; font-size: 19px; }
+    .feature-card p { margin: 0; color: var(--muted); font-size: 14px; }
+    .demo-section { background: var(--cream); }
+    .demo-panel {
+      max-width: 790px;
+      margin: auto;
+      padding: 28px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fff;
+    }
+    .field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    label { display: block; margin: 15px 0 7px; font-size: 13px; font-weight: 700; }
+    input, select, textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #d6ddd5;
+      border-radius: 7px;
+      background: #fff;
+      color: var(--ink);
+    }
+    input:focus, select:focus, textarea:focus { outline: 2px solid #9bbba6; outline-offset: 1px; }
+    input[type="file"] { padding: 10px; }
+    .image-preview {
+      min-height: 155px;
+      margin-top: 13px;
+      padding: 14px;
+      border: 1px dashed #bfcdbf;
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: var(--muted);
+      background: #fafbf8;
+      overflow: hidden;
+    }
+    .image-preview img { display: block; max-width: 100%; max-height: 320px; object-fit: contain; }
+    .form-error { min-height: 20px; margin: 10px 0 0; color: #b42318; font-size: 13px; }
+    .full-width { width: 100%; margin-top: 15px; }
+    .poster-result { display: none; margin-top: 28px; padding-top: 24px; border-top: 1px solid var(--line); }
+    .poster-result h3 { margin: 0 0 15px; text-align: center; }
+    #poster-canvas { display: block; width: 100%; max-width: 432px; height: auto; margin: auto; border: 1px solid var(--line); background: #f8f4eb; }
+    .poster-actions { max-width: 432px; margin: 15px auto 0; display: grid; gap: 10px; }
+    .cta { padding: 62px 7%; background: var(--green); color: white; text-align: center; }
+    .cta h2 { margin: 0; font-size: clamp(29px, 3.5vw, 42px); line-height: 1.2; }
+    .cta p { max-width: 560px; margin: 14px auto 24px; color: #e4eee7; }
+    .cta .btn { background: white; color: var(--green); border-color: white; }
+    footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 14px;
+      padding: 24px 7%;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    footer p { margin: 0; }
+    @media (max-width: 760px) {
+      .nav { padding: 13px 5%; }
+      .nav-links { gap: 12px; }
+      .nav-links a:not(.btn) { display: none; }
+      .nav-links .btn { padding: 10px 12px; font-size: 13px; }
+      .hero { grid-template-columns: 1fr; padding: 50px 6%; gap: 32px; }
+      h1 { letter-spacing: -1.8px; }
+      .showcase { min-height: 360px; }
+      section.content-section { padding: 56px 6%; }
+      .feature-grid { grid-template-columns: 1fr; }
+      .field-grid { grid-template-columns: 1fr; gap: 0; }
+      .demo-panel { padding: 20px; }
+      footer { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+  <header class="nav">
+    <a class="logo" href="#home" aria-label="Sellora home">sell<span>ora</span></a>
+    <nav class="nav-links" aria-label="Main navigation">
+      <a href="#how-it-works">How it works</a>
+      <a href="#create">Create a poster</a>
+      <a class="btn" href="#create">Get started</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div>
+        <p class="eyebrow">Made for independent sellers</p>
+        <h1>Your product deserves to stand out.</h1>
+        <p class="hero-copy">Turn an ordinary product photo into a polished product poster. Sellora helps small businesses present their products with confidence.</p>
+        <div class="hero-actions">
+          <a class="btn" href="#create">Create your poster</a>
+          <a class="btn btn-light" href="#how-it-works">See how it works</a>
+        </div>
+        <p class="small-note">Designed for home businesses, artisans and small online shops.</p>
+      </div>
+      <div class="showcase" aria-label="Example product poster design">
+        <div class="sample-poster">
+          <div class="sample-art">HANDMADE</div>
+          <small>HANDMADE COLLECTION</small>
+          <h2>Slow Living</h2>
+          <p>Thoughtfully made. Beautifully presented.</p>
+        </div>
+        <div class="float-note">A more professional way to present your products</div>
+      </div>
+    </section>
+
+    <section class="content-section" id="how-it-works">
+      <div class="section-heading">
+        <p class="eyebrow">Simple by design</p>
+        <h2>Everything starts with your product.</h2>
+        <p>No design experience needed. Start with the photo you already have.</p>
+      </div>
+      <div class="feature-grid">
+        <article class="feature-card">
+          <div class="feature-num">01 / UPLOAD</div>
+          <h3>Add your product</h3>
+          <p>Upload a product photo and enter its name, description and selling price.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-num">02 / PERSONALISE</div>
+          <h3>Review your details</h3>
+          <p>Choose a currency and check the information that will appear on your poster.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-num">03 / DOWNLOAD</div>
+          <h3>Ready to share</h3>
+          <p>Create a poster image you can save and use in your product promotions.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="content-section demo-section" id="create">
+      <div class="section-heading">
+        <p class="eyebrow">Try the prototype</p>
+        <h2>Create your product poster</h2>
+        <p>Enter your product details and generate a downloadable poster using your own image.</p>
+      </div>
+      <div class="demo-panel">
+        <form id="product-form">
+          <label for="photo">Product photo</label>
+          <input id="photo" type="file" accept="image/*" required>
+          <div class="image-preview" id="image-preview">Your selected product photo will appear here.</div>
+
+          <div class="field-grid">
+            <div>
+              <label for="product-name">Product name</label>
+              <input id="product-name" maxlength="60" placeholder="e.g. Handmade Soy Candle" required>
+            </div>
+            <div>
+              <label for="category">Category</label>
+              <select id="category">
+                <option>Home &amp; Living</option>
+                <option>Jewellery &amp; Accessories</option>
+                <option>Fashion</option>
+                <option>Kitchen &amp; Dining</option>
+                <option>Beauty</option>
+                <option>Art &amp; Crafts</option>
+                <option>Other</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field-grid">
+            <div>
+              <label for="price">Selling price</label>
+              <input id="price" type="number" min="0" step="0.01" placeholder="e.g. 499" required>
+            </div>
+            <div>
+              <label for="currency">Currency</label>
+              <select id="currency">
+                <option value="INR">Indian Rupee (₹)</option>
+                <option value="USD">US Dollar ($)</option>
+                <option value="GBP">British Pound (£)</option>
+                <option value="EUR">Euro (€)</option>
+                <option value="AED">UAE Dirham (د.إ)</option>
+                <option value="AUD">Australian Dollar (A$)</option>
+                <option value="CAD">Canadian Dollar (C$)</option>
+              </select>
+            </div>
+          </div>
+
+          <label for="description">Short product description</label>
+          <textarea id="description" maxlength="180" rows="3" placeholder="What makes your product special?"></textarea>
+
+          <p class="form-error" id="form-error" role="alert"></p>
+          <button class="btn full-width" type="submit">Generate my poster</button>
+        </form>
+
+        <div class="poster-result" id="poster-result">
+          <h3>Your product poster</h3>
+          <canvas id="poster-canvas" width="1080" height="1350" aria-label="Generated product poster preview"></canvas>
+          <div class="poster-actions">
+            <button class="btn" id="download-poster" type="button">Download poster (PNG)</button>
+            <button class="btn btn-light" id="edit-details" type="button">Edit product details</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta">
+      <h2>Small business. Big presentation.</h2>
+      <p>Give your products a clearer, more polished way to meet their next customer.</p>
+      <a class="btn" href="#create">Create your first poster</a>
+    </section>
+  </main>
+
+  <footer>
+    <a class="logo" href="#home">sell<span>ora</span></a>
+    <p>Made to help small sellers show their work beautifully.</p>
+    <p>Sellora Prototype · 2026</p>
+  </footer>
+
+  <script>
+    const photoInput = document.getElementById("photo");
+    const imagePreview = document.getElementById("image-preview");
+    const productForm = document.getElementById("product-form");
+    const posterResult = document.getElementById("poster-result");
+    const posterCanvas = document.getElementById("poster-canvas");
+    const posterContext = posterCanvas.getContext("2d");
+    const formError = document.getElementById("form-error");
+    let selectedImage = null;
+
+    photoInput.addEventListener("change", () => {
+      formError.textContent = "";
+      const file = photoInput.files && photoInput.files[0];
+      selectedImage = null;
+
+      if (!file) {
+        imagePreview.textContent = "Your selected product photo will appear here.";
+        return;
+      }
+      if (!file.type.startsWith("image/")) {
+        formError.textContent = "Please choose a valid image file.";
+        photoInput.value = "";
+        imagePreview.textContent = "Your selected product photo will appear here.";
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        const image = new Image();
+        image.onload = () => {
+          selectedImage = image;
+          imagePreview.replaceChildren();
+          const previewImage = document.createElement("img");
+          previewImage.src = reader.result;
+          previewImage.alt = "Preview of your uploaded product";
+          imagePreview.appendChild(previewImage);
+        };
+        image.onerror = () => {
+          formError.textContent = "This image could not be opened. Please choose another image.";
+        };
+        image.src = reader.result;
+      };
+      reader.onerror = () => {
+        formError.textContent = "The image could not be read. Please try another file.";
+      };
+      reader.readAsDataURL(file);
+    });
+
+    function drawWrappedText(context, text, x, y, maxWidth, lineHeight, maxLines) {
+      const words = String(text || "").split(/\s+/).filter(Boolean);
+      let line = "";
+      let linesDrawn = 0;
+
+      for (const word of words) {
+        const testLine = line ? line + " " + word : word;
+        if (context.measureText(testLine).width > maxWidth && line) {
+          context.fillText(line, x, y);
+          y += lineHeight;
+          linesDrawn++;
+          line = word;
+          if (linesDrawn >= maxLines - 1) break;
+        } else {
+          line = testLine;
+        }
+      }
+
+      if (line && linesDrawn < maxLines) context.fillText(line, x, y);
+    }
+
+    function drawPoster() {
+      const productName = document.getElementById("product-name").value.trim();
+      const category = document.getElementById("category").value;
+      const price = Number(document.getElementById("price").value);
+      const currency = document.getElementById("currency").value;
+      const description = document.getElementById("description").value.trim();
+
+      const width = posterCanvas.width;
+      const height = posterCanvas.height;
+
+      posterContext.clearRect(0, 0, width, height);
+      posterContext.fillStyle = "#f7f2e8";
+      posterContext.fillRect(0, 0, width, height);
+
+      posterContext.fillStyle = "#285c45";
+      posterContext.fillRect(0, 0, width, 18);
+
+      posterContext.textAlign = "center";
+      posterContext.fillStyle = "#285c45";
+      posterContext.font = "bold 27px Arial";
+      posterContext.fillText("SELLORA  /  " + category.toUpperCase(), width / 2, 75);
+
+      posterContext.fillStyle = "#e8e5d9";
+      posterContext.fillRect(65, 110, width - 130, 790);
+
+      const image = selectedImage;
+      const boxY = 135;
+      const boxWidth = width - 180;
+      const boxHeight = 740;
+      const scale = Math.min(boxWidth / image.width, boxHeight / image.height);
+      const drawWidth = image.width * scale;
+      const drawHeight = image.height * scale;
+      const drawX = (width - drawWidth) / 2;
+      const drawY = boxY + (boxHeight - drawHeight) / 2;
+
+      posterContext.drawImage(image, drawX, drawY, drawWidth, drawHeight);
+
+      posterContext.fillStyle = "#20251f";
+      posterContext.font = "bold 54px Arial";
+      drawWrappedText(posterContext, productName, width / 2, 990, width - 130, 62, 2);
+
+      posterContext.fillStyle = "#285c45";
+      posterContext.font = "bold 45px Arial";
+      let formattedPrice;
+      try {
+        formattedPrice = new Intl.NumberFormat("en", {
+          style: "currency",
+          currency: currency,
+          maximumFractionDigits: 2
+        }).format(price);
+      } catch (error) {
+        formattedPrice = currency + " " + price.toFixed(2);
+      }
+      posterContext.fillText(formattedPrice, width / 2, 1105);
+
+      if (description) {
+        posterContext.fillStyle = "#5d665e";
+        posterContext.font = "28px Arial";
+        drawWrappedText(posterContext, description, width / 2, 1165, width - 150, 38, 3);
+      }
+
+      posterContext.fillStyle = "#285c45";
+      posterContext.fillRect(65, 1280, width - 130, 3);
+      posterContext.fillStyle = "#5d665e";
+      posterContext.font = "22px Arial";
+      posterContext.fillText("THOUGHTFULLY MADE. BEAUTIFULLY PRESENTED.", width / 2, 1320);
+      posterContext.textAlign = "start";
+    }
+
+    productForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      formError.textContent = "";
+
+      if (!selectedImage) {
+        formError.textContent = "Please upload your product photo first.";
+        photoInput.focus();
+        return;
+      }
+
+      const productName = document.getElementById("product-name").value.trim();
+      const priceValue = document.getElementById("price").value;
+      const price = Number(priceValue);
+
+      if (!productName) {
+        formError.textContent = "Please enter your product name.";
+        return;
+      }
+      if (priceValue === "" || !Number.isFinite(price) || price < 0) {
+        formError.textContent = "Please enter a valid price.";
+        return;
+      }
+
+      try {
+        drawPoster();
+        posterResult.style.display = "block";
+        posterResult.scrollIntoView({ behavior: "smooth", block: "start" });
+      } catch (error) {
+        formError.textContent = "The poster could not be generated. Please try another image.";
+      }
+    });
+
+    document.getElementById("download-poster").addEventListener("click", () => {
+      try {
+        const productName = document.getElementById("product-name").value.trim()
+          .replace(/[^a-z0-9-_ ]/gi, "")
+          .trim()
+          .replace(/\s+/g, "-") || "product";
+
+        posterCanvas.toBlob((blob) => {
+          if (!blob) {
+            formError.textContent = "The poster could not be downloaded. Please generate it again.";
+            return;
+          }
+
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement("a");
+          link.href = url;
+          link.download = "sellora-" + productName + "-poster.png";
+          document.body.appendChild(link);
+          link.click();
+          link.remove();
+          URL.revokeObjectURL(url);
+          formError.textContent = "";
+        }, "image/png");
+      } catch (error) {
+        formError.textContent = "Download failed. Please generate the poster again.";
+      }
+    });
+
+    document.getElementById("edit-details").addEventListener("click", () => {
+      posterResult.style.display = "none";
+      productForm.scrollIntoView({ behavior: "smooth", block: "start" });
+      document.getElementById("product-name").focus();
+    });
+  </script>
+</body>
+</html>
