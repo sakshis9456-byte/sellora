@@ -221,7 +221,7 @@ $("generate").addEventListener("click",()=>{
  try{
   localStorage.setItem("selloraDraft",JSON.stringify(draft));
   $("status").textContent="Draft saved. Opening the editor…";
-  window.location.href="editor.html";
+  window.location.href = "review.html";
  }catch(error){
   $("status").textContent="Image storage is full. Please try a smaller image.";
  }
