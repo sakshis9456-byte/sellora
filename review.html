@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sellora | Product Readiness Review</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f7f8fa;
+  color: #242832;
+}
+
+nav {
+  background: white;
+  border-bottom: 1px solid #e8e9ed;
+  padding: 18px 7%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 25px;
+  font-weight: bold;
+  color: #292f43;
+  text-decoration: none;
+}
+
+nav a:last-child {
+  color: #42485a;
+  text-decoration: none;
+}
+
+main {
+  max-width: 850px;
+  margin: 45px auto;
+  padding: 0 20px;
+}
+
+.intro {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.intro h1 {
+  font-size: 34px;
+  margin-bottom: 12px;
+}
+
+.intro p {
+  color: #697080;
+  line-height: 1.6;
+}
+
+.card {
+  background: white;
+  border: 1px solid #e7e8ed;
+  border-radius: 16px;
+  padding: 28px;
+  margin-bottom: 22px;
+}
+
+.score-layout {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+
+.score {
+  min-width: 125px;
+  height: 125px;
+  border: 8px solid #dce9df;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.score strong {
+  font-size: 32px;
+}
+
+.score span {
+  font-size: 12px;
+  color: #737987;
+}
+
+#scoreTitle {
+  font-size: 20px;
+  margin-bottom: 8px;
+}
+
+#scoreDescription {
+  color: #697080;
+  line-height: 1.6;
+}
+
+.insight {
+  border: 1px solid #e7e8ed;
+  border-radius: 10px;
+  padding: 15px;
+  margin-top: 12px;
+}
+
+.insight strong {
+  display: block;
+  margin-bottom: 6px;
+}
+
+.insight p {
+  margin: 0;
+  color: #697080;
+  line-height: 1.5;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 25px;
+}
+
+button {
+  border: 0;
+  border-radius: 9px;
+  padding: 14px 20px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.primary {
+  background: #30384f;
+  color: white;
+}
+
+.secondary {
+  background: #eef0f4;
+  color: #30384f;
+}
+
+button:hover {
+  opacity: 0.88;
+}
+
+.notice {
+  color: #777e8b;
+  font-size: 13px;
+  line-height: 1.6;
+  margin-top: 20px;
+}
+
+@media (max-width: 600px) {
+  main {
+    margin-top: 28px;
+  }
+
+  .intro h1 {
+    font-size: 28px;
+  }
+
+  .card {
+    padding: 20px;
+  }
+
+  .score-layout {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .actions button {
+    width: 100%;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+  <a class="logo" href="index.html">Sellora</a>
+  <a href="index.html">Home</a>
+</nav>
+
+<main>
+  <section class="intro">
+    <h1>Let's review your product</h1>
+    <p>Check your product information before creating your final selling poster.</p>
+  </section>
+
+  <section class="card">
+    <div class="score-layout">
+      <div class="score">
+        <strong id="score">--</strong>
+        <span>OUT OF 100</span>
+      </div>
+
+      <div>
+        <h2 id="scoreTitle">Checking your product details...</h2>
+        <p id="scoreDescription">
+          Your readiness score is based on the product information available in this browser.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Seller Readiness Insights</h2>
+    <p style="color:#697080;line-height:1.6">
+      A few simple improvements can make your product poster more useful to potential customers.
+    </p>
+
+    <div id="insights"></div>
+
+    <div class="actions">
+      <button class="secondary" onclick="editProduct()">
+        Edit Product Details
+      </button>
+
+      <button class="primary" onclick="continueToPoster()">
+        Continue to Poster
+      </button>
+    </div>
+
+    <p class="notice">
+      This score is a guidance tool, not a guarantee of sales. Your review information stays in this browser.
+    </p>
+  </section>
+</main>
+
+<script>
+const draft = JSON.parse(localStorage.getItem("selloraDraft") || "{}");
+
+function getValue(...keys) {
+  for (const key of keys) {
+    if (draft[key] !== undefined &&
+        draft[key] !== null &&
+        String(draft[key]).trim() !== "") {
+      return draft[key];
+    }
+  }
+  return "";
+}
+
+function calculateReview() {
+  const name = getValue("name", "productName", "product_name");
+  const category = getValue("category");
+  const price = getValue("price", "sellingPrice");
+  const description = getValue("description", "info", "productInfo");
+  const tagline = getValue("tagline", "offer");
+  const image = getValue("image", "imageData", "productImage");
+
+  let score = 0;
+  const suggestions = [];
+
+  if (name) {
+    score += 20;
+  } else {
+    suggestions.push({
+      title: "Add a product name",
+      text: "Choose a clear name so customers can quickly identify your product."
+    });
+  }
+
+  if (category) {
+    score += 15;
+  } else {
+    suggestions.push({
+      title: "Choose a category",
+      text: "A category helps describe what kind of product you sell."
+    });
+  }
+
+  if (price) {
+    score += 20;
+  } else {
+    suggestions.push({
+      title: "Add your selling price",
+      text: "Enter a price and select the appropriate currency on the product page."
+    });
+  }
+
+  if (description && String(description).length >= 15) {
+    score += 20;
+  } else {
+    suggestions.push({
+      title: "Improve your product description",
+      text: "Explain the product's material, features, size, or what makes it special."
+    });
+  }
+
+  if (tagline) {
+    score += 10;
+  } else {
+    suggestions.push({
+      title: "Add a tagline or offer",
+      text: "A short message can help communicate your product's main benefit."
+    });
+  }
+
+  if (image) {
+    score += 15;
+  } else {
+    suggestions.push({
+      title: "Upload a product photo",
+      text: "Use a clear, well-lit photo that shows the product properly."
+    });
+  }
+
+  document.getElementById("score").textContent = score;
+
+  document.getElementById("scoreTitle").textContent =
+    score >= 80 ? "Your product looks ready" :
+    score >= 50 ? "You're making good progress" :
+    "Let's complete your product details";
+
+  document.getElementById("scoreDescription").textContent =
+    score >= 80
+      ? "Your key details are in place. Review the suggestions below before creating your poster."
+      : "Some useful details are missing. You can edit them now or continue and improve your poster later.";
+
+  const insights = document.getElementById("insights");
+  insights.innerHTML = "";
+
+  if (suggestions.length === 0) {
+    insights.innerHTML =
+      '<div class="insight"><strong>Your key details are complete</strong><p>Check that your product photo, description and price are accurate before continuing.</p></div>';
+  } else {
+    suggestions.forEach(item => {
+      const div = document.createElement("div");
+      div.className = "insight";
+
+      const title = document.createElement("strong");
+      title.textContent = item.title;
+
+      const description = document.createElement("p");
+      description.textContent = item.text;
+
+      div.appendChild(title);
+      div.appendChild(description);
+      insights.appendChild(div);
+    });
+  }
+}
+
+function editProduct() {
+  window.location.href = "create.html";
+}
+
+function continueToPoster() {
+  window.location.href = "editor.html";
+}
+
+calculateReview();
+</script>
+
+</body>
+</html>
