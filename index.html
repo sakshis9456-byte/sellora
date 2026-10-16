@@ -4,17 +4,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Sellora helps small businesses create professional product posters and prepare their products for promotion.">
-<title>Sellora | Product Posters for Small Sellers</title>
+<meta name="description" content="Discover festive products made by India's home businesses and independent sellers on Sellora.">
+<meta name="theme-color" content="#fff9f0">
+<title>Sellora — India's Festival Marketplace</title>
 <style>
 :root {
-  --bg: #faf9f6;
+  --bg: #fffaf3;
   --surface: #ffffff;
-  --text: #252b27;
-  --muted: #737a73;
-  --accent: #355b49;
-  --accent-light: #e9f0e9;
-  --border: #e8e8e0;
+  --text: #30251f;
+  --muted: #786d65;
+  --accent: #8f302b;
+  --accent-dark: #70221f;
+  --gold: #d99b39;
+  --border: #eee3d6;
+  --soft: #f8eee1;
+  --green: #355b49;
 }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
@@ -26,315 +30,538 @@ body {
   line-height: 1.6;
 }
 a { color: inherit; text-decoration: none; }
-button { font: inherit; }
-.container { width: min(1120px, calc(100% - 40px)); margin: auto; }
+button, input, select { font: inherit; }
+button, a { -webkit-tap-highlight-color: transparent; }
+button { cursor: pointer; }
+.container { width: min(1160px, calc(100% - 40px)); margin: auto; }
+
+.announcement {
+  background: var(--accent-dark);
+  color: #fff7e9;
+  text-align: center;
+  padding: 9px 15px;
+  font-size: 12px;
+  letter-spacing: .3px;
+}
 header {
-  background: rgba(250,249,246,.96);
+  background: rgba(255,250,243,.96);
   border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  backdrop-filter: blur(12px);
 }
 .nav {
   min-height: 76px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 20px;
+  gap: 22px;
 }
-.logo { font-size: 27px; font-weight: 800; letter-spacing: -1px; }
+.logo {
+  font-size: 29px;
+  font-weight: 900;
+  letter-spacing: -1.5px;
+  white-space: nowrap;
+}
 .logo span { color: var(--accent); }
-.nav-links { display: flex; align-items: center; gap: 28px; }
-.nav-links a { font-size: 14px; font-weight: 600; }
-.nav-links a:not(.button):hover { color: var(--accent); }
+.nav-links { display: flex; align-items: center; gap: 25px; }
+.nav-links a { font-size: 13px; font-weight: 700; }
+.nav-links a:hover { color: var(--accent); }
+.nav-actions { display: flex; align-items: center; gap: 10px; }
+
 .button {
   display: inline-flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 12px 18px;
   border: 1px solid var(--accent);
+  border-radius: 8px;
   background: var(--accent);
   color: white;
-  border-radius: 8px;
-  padding: 13px 20px;
+  font-size: 13px;
   font-weight: 700;
-  font-size: 14px;
-  cursor: pointer;
-  transition: background .2s, transform .2s;
+  transition: .2s ease;
 }
-.button:hover { background: #284637; transform: translateY(-1px); }
-.button-outline { background: transparent; color: var(--accent); }
-.button-outline:hover { background: var(--accent-light); color: var(--accent); }
-.hero { padding: 85px 0 80px; }
+.button:hover { background: var(--accent-dark); transform: translateY(-1px); }
+.button-light { background: white; color: var(--accent); }
+.button-light:hover { background: var(--soft); color: var(--accent); }
+.cart-button {
+  background: white;
+  color: var(--text);
+  border-color: var(--border);
+  padding: 10px 13px;
+}
+.cart-count {
+  background: var(--accent);
+  color: white;
+  border-radius: 50%;
+  min-width: 20px;
+  height: 20px;
+  display: inline-grid;
+  place-items: center;
+  font-size: 11px;
+}
+
+.hero { padding: 52px 0 46px; }
 .hero-grid {
   display: grid;
   grid-template-columns: 1.05fr .95fr;
+  gap: 45px;
   align-items: center;
-  gap: 70px;
 }
 .eyebrow {
+  display: inline-block;
   color: var(--accent);
+  font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 2px;
-  font-size: 11px;
   font-weight: 800;
 }
+h1, h2, h3, p { margin-top: 0; }
 h1 {
-  font-size: clamp(42px, 5.5vw, 65px);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(42px, 5.5vw, 67px);
   line-height: 1.08;
-  letter-spacing: -2.5px;
-  margin: 20px 0;
+  letter-spacing: -2px;
+  margin: 17px 0;
+  font-weight: 700;
 }
-h2 { font-size: clamp(28px, 3.5vw, 39px); line-height: 1.2; letter-spacing: -1px; }
-h3 { margin-top: 0; }
-p { color: var(--muted); }
-.hero-copy > p { max-width: 510px; font-size: 17px; }
-.actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
-.note { font-size: 12px; margin-top: 20px; }
-.preview {
-  background: #eee9df;
-  border: 1px solid #e0d9cc;
-  border-radius: 16px;
-  padding: 25px;
-}
-.preview-top {
+h1 em { color: var(--accent); font-weight: 400; }
+.hero-copy > p { max-width: 500px; color: var(--muted); font-size: 16px; }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 11px; margin-top: 25px; }
+.trust-line { margin-top: 20px; font-size: 12px; color: var(--muted); }
+
+.hero-art {
+  position: relative;
+  min-height: 390px;
+  border-radius: 18px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 85% 18%, #f5d6a1 0 12%, transparent 12.5%),
+    radial-gradient(circle at 12% 90%, #e6b6a1 0 19%, transparent 19.5%),
+    linear-gradient(140deg, #f5e5c9, #e7c5a7 55%, #c97959);
   display: flex;
-  justify-content: space-between;
-  font-size: 11px;
-  color: #6f746b;
+  align-items: center;
+  justify-content: center;
+}
+.art-orbit {
+  position: absolute;
+  width: 285px;
+  height: 285px;
+  border: 1px solid #fff9e6a6;
+  border-radius: 50%;
+}
+.art-orbit.two { width: 340px; height: 340px; }
+.art-label {
+  position: absolute;
+  top: 22px;
+  left: 23px;
+  background: #fffaf0e8;
+  padding: 8px 12px;
+  border-radius: 5px;
+  font-size: 10px;
+  font-weight: 800;
   letter-spacing: 1px;
-  margin-bottom: 16px;
 }
-.poster {
-  background: #d8c6ae;
-  min-height: 350px;
-  padding: 26px;
+.diya-scene { position: relative; z-index: 1; text-align: center; }
+.diya { font-size: clamp(115px, 16vw, 190px); line-height: 1.2; filter: drop-shadow(0 12px 12px #762b2830); }
+.diya-caption {
+  background: #fffaf0ed;
+  padding: 11px 20px;
   border-radius: 8px;
+  margin-top: -3px;
+  font-family: Georgia, serif;
+  font-size: 20px;
+}
+.art-sticker {
+  position: absolute;
+  bottom: 23px;
+  right: 20px;
+  background: var(--accent);
+  color: white;
+  border-radius: 50%;
+  width: 83px;
+  height: 83px;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  font-size: 10px;
+  line-height: 1.4;
+  transform: rotate(9deg);
+}
+
+.benefits { border-block: 1px solid var(--border); background: #fffdf9; }
+.benefit-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; padding: 19px 0; }
+.benefit { display: flex; align-items: center; gap: 12px; justify-content: center; }
+.benefit-icon { font-size: 23px; }
+.benefit strong { display: block; font-size: 12px; }
+.benefit small { color: var(--muted); font-size: 11px; }
+
+.section { padding: 68px 0; }
+.section-head {
   display: flex;
-  flex-direction: column;
+  align-items: end;
   justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 27px;
+}
+.section-head h2, .seller-copy h2 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(29px, 4vw, 41px);
+  line-height: 1.2;
+  margin: 8px 0 0;
+  letter-spacing: -.8px;
+}
+.section-head p { color: var(--muted); font-size: 13px; margin: 8px 0 0; }
+.text-link { color: var(--accent); font-size: 13px; font-weight: 800; white-space: nowrap; }
+.text-link:hover { text-decoration: underline; }
+
+.festival-grid { display: grid; grid-template-columns: repeat(5,1fr); gap: 15px; }
+.festival-card {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 19px 12px;
+  text-align: center;
+  background: var(--surface);
+  transition: .2s ease;
+  cursor: pointer;
+}
+.festival-card:hover, .festival-card.active {
+  border-color: var(--accent);
+  background: #fff1e7;
+  transform: translateY(-3px);
+}
+.festival-icon { font-size: 40px; line-height: 1.4; }
+.festival-card h3 { font-size: 13px; margin: 9px 0 2px; }
+.festival-card p { font-size: 11px; color: var(--muted); margin: 0; }
+
+.products-section { background: #f8f0e6; }
+.filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+.filter {
+  padding: 8px 13px;
+  border: 1px solid #e7d8c8;
+  background: white;
+  border-radius: 30px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #62564d;
+}
+.filter.active, .filter:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+}
+.search-row { display: flex; gap: 10px; margin-bottom: 22px; }
+.search-row input {
+  min-width: 0;
+  flex: 1;
+  padding: 12px 15px;
+  border: 1px solid var(--border);
+  background: white;
+  border-radius: 8px;
+  outline-color: var(--accent);
+}
+.search-row select {
+  padding: 10px;
+  border: 1px solid var(--border);
+  background: white;
+  border-radius: 8px;
+  color: var(--text);
+}
+.product-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 18px; }
+.product-card {
+  background: white;
+  border: 1px solid #eee3d6;
+  border-radius: 12px;
+  overflow: hidden;
+  min-width: 0;
+  transition: transform .2s, box-shadow .2s;
+}
+.product-card:hover { transform: translateY(-4px); box-shadow: 0 12px 30px #4c2e1710; }
+.product-art {
+  height: 185px;
+  display: grid;
+  place-items: center;
   position: relative;
   overflow: hidden;
 }
-.poster:before {
-  content: "";
+.product-art .emoji { font-size: 78px; filter: drop-shadow(0 8px 5px #00000012); }
+.product-art .tag {
   position: absolute;
-  width: 210px;
-  height: 210px;
-  border-radius: 50%;
-  background: #f0e8d9;
-  right: -15px;
-  top: 65px;
-}
-.poster:after {
-  content: "";
-  position: absolute;
-  width: 95px;
-  height: 150px;
-  border-radius: 20px 20px 28px 28px;
-  background: #99836a;
-  right: 75px;
-  top: 95px;
-  box-shadow: inset 12px 0 15px #ffffff24;
-}
-.poster small, .poster h2, .poster-bottom { position: relative; z-index: 1; }
-.poster small { letter-spacing: 2px; font-size: 10px; font-weight: bold; }
-.poster h2 {
-  font-family: Georgia, serif;
-  max-width: 220px;
-  font-size: 38px;
-  margin: 0;
-}
-.poster-bottom {
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
-  font-size: 10px;
-  font-weight: bold;
-}
-.section { padding: 75px 0; }
-.section-heading { max-width: 650px; margin-bottom: 36px; }
-.section-heading p { max-width: 540px; }
-.features {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 18px;
-}
-.feature {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 25px;
-}
-.feature-number {
+  left: 11px;
+  top: 11px;
+  background: #fffaf0ed;
   color: var(--accent);
-  font-size: 12px;
+  font-size: 10px;
   font-weight: 800;
-  margin-bottom: 15px;
+  padding: 5px 8px;
+  border-radius: 4px;
 }
-.feature h3 { margin-bottom: 8px; font-size: 17px; }
-.feature p { font-size: 14px; margin-bottom: 0; }
-.workflow { background: #f0f1e9; }
-.steps {
+.product-info { padding: 15px; }
+.product-festival { color: var(--accent); font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .6px; }
+.product-info h3 { font-size: 14px; margin: 5px 0; line-height: 1.4; }
+.seller-name { color: var(--muted); font-size: 11px; margin: 0 0 11px; }
+.product-bottom { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.price { font-size: 17px; font-weight: 800; }
+.add-button {
+  border: 1px solid var(--accent);
+  background: white;
+  color: var(--accent);
+  border-radius: 6px;
+  padding: 7px 10px;
+  font-size: 11px;
+  font-weight: 800;
+}
+.add-button:hover { background: var(--accent); color: white; }
+.empty-state { grid-column: 1/-1; text-align: center; padding: 35px 10px; color: var(--muted); }
+
+.seller-section { padding: 68px 0; }
+.seller-panel {
+  background: #eee4d5;
+  border-radius: 18px;
+  padding: 42px;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 28px;
-}
-.step { border-top: 1px solid #cdd4c8; padding-top: 20px; }
-.step span { font-size: 12px; color: var(--accent); font-weight: 800; }
-.step h3 { margin: 12px 0 6px; }
-.step p { font-size: 14px; }
-.cta {
-  text-align: center;
-  background: var(--accent-light);
-  padding: 50px 25px;
-  border-radius: 15px;
-}
-.cta p { max-width: 530px; margin: 12px auto 25px; }
-footer { border-top: 1px solid var(--border); padding: 25px 0; }
-.footer-inner {
-  display: flex;
-  justify-content: space-between;
+  grid-template-columns: 1.1fr .9fr;
+  gap: 30px;
   align-items: center;
-  gap: 15px;
 }
-footer p { font-size: 12px; margin: 0; }
-@media (max-width: 800px) {
-  .hero { padding: 55px 0; }
-  .hero-grid { grid-template-columns: 1fr; gap: 35px; }
-  .features { grid-template-columns: repeat(2, 1fr); }
-  .steps { gap: 16px; }
+.seller-copy h2 { max-width: 470px; margin: 12px 0; }
+.seller-copy p { max-width: 480px; font-size: 14px; color: #6d5e52; }
+.seller-points { display: flex; flex-wrap: wrap; gap: 9px; margin: 20px 0 24px; }
+.seller-points span { border: 1px solid #d6c6b3; background: #fff9f0; border-radius: 30px; padding: 7px 11px; font-size: 11px; }
+.seller-art {
+  background: #d9b59b;
+  min-height: 255px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  position: relative;
+  overflow: hidden;
 }
-@media (max-width: 560px) {
+.seller-art .big-emoji { font-size: 115px; position: relative; z-index: 1; }
+.seller-note {
+  position: absolute;
+  bottom: 18px;
+  right: 17px;
+  background: white;
+  padding: 10px 13px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.how-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 25px; }
+.how-card { border-top: 2px solid var(--gold); padding-top: 18px; }
+.how-number { color: var(--accent); font-size: 11px; font-weight: 900; letter-spacing: 1px; }
+.how-card h3 { font-size: 16px; margin: 10px 0 6px; }
+.how-card p { font-size: 13px; margin: 0; }
+
+footer { background: #30251f; color: #fff7eb; padding: 30px 0; }
+.footer-inner { display: flex; justify-content: space-between; gap: 18px; align-items: center; }
+footer .logo span { color: #efbb6d; }
+footer p { color: #d4c7b9; font-size: 11px; margin: 0; }
+footer a:not(.logo) { font-size: 12px; }
+.toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translate(-50%, 20px);
+  background: #30251f;
+  color: white;
+  padding: 12px 18px;
+  border-radius: 9px;
+  font-size: 13px;
+  box-shadow: 0 8px 30px #0002;
+  opacity: 0;
+  pointer-events: none;
+  transition: .25s;
+  z-index: 50;
+  max-width: calc(100% - 30px);
+  text-align: center;
+}
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+@media (max-width: 900px) {
+  .nav-links { gap: 14px; }
+  .nav-links a { font-size: 12px; }
+  .hero-grid { gap: 25px; }
+  .festival-grid { grid-template-columns: repeat(3,1fr); }
+  .product-grid { grid-template-columns: repeat(2,1fr); }
+  .seller-panel { padding: 28px; }
+}
+@media (max-width: 620px) {
   .container { width: calc(100% - 30px); }
-  .nav { min-height: 68px; }
-  .nav-links { gap: 12px; }
-  .nav-links a:not(.button) { display: none; }
-  .nav-links .button { padding: 10px 12px; font-size: 12px; }
-  h1 { letter-spacing: -1.5px; }
-  .features, .steps { grid-template-columns: 1fr; }
-  .poster { min-height: 300px; }
-  .poster h2 { font-size: 32px; }
+  .announcement { font-size: 10px; }
+  .nav { min-height: 66px; gap: 10px; }
+  .logo { font-size: 25px; }
+  .nav-links { display: none; }
+  .hero { padding: 36px 0; }
+  .hero-grid { grid-template-columns: 1fr; }
+  h1 { font-size: 45px; letter-spacing: -1.5px; }
+  .hero-art { min-height: 300px; }
+  .diya { font-size: 125px; }
+  .benefit-grid { grid-template-columns: 1fr; gap: 13px; padding: 18px 0; }
+  .benefit { justify-content: flex-start; }
+  .section { padding: 48px 0; }
+  .section-head { align-items: flex-start; flex-direction: column; gap: 10px; }
+  .festival-grid { grid-template-columns: repeat(2,1fr); gap: 10px; }
+  .festival-card:last-child { grid-column: 1/-1; }
+  .search-row { flex-direction: column; }
+  .product-grid { gap: 11px; }
+  .product-art { height: 135px; }
+  .product-art .emoji { font-size: 60px; }
+  .product-info { padding: 11px; }
+  .product-info h3 { font-size: 12px; }
+  .product-bottom { align-items: flex-start; flex-direction: column; }
+  .add-button { width: 100%; }
+  .seller-panel { grid-template-columns: 1fr; padding: 23px; }
+  .seller-art { min-height: 200px; }
+  .how-grid { grid-template-columns: 1fr; gap: 22px; }
   .footer-inner { flex-direction: column; align-items: flex-start; }
 }
 </style>
 </head>
 <body>
+<div class="announcement">Celebrating India's makers, one festival at a time ✨</div>
 
 <header>
   <div class="container nav">
-    <a class="logo" href="index.html">sellora<span>.</span></a>
+    <a class="logo" href="#home" aria-label="Sellora home">sellora<span>.</span></a>
     <nav class="nav-links" aria-label="Main navigation">
-      <a href="#features">Features</a>
-      <a href="#how-it-works">How It Works</a>
-      <a class="button" href="create.html">Create a Poster ↗</a>
+      <a href="#festivals">Festivals</a>
+      <a href="#products">Shop products</a>
+      <a href="#how-it-works">How it works</a>
     </nav>
+    <div class="nav-actions">
+      <a class="button button-light" href="#sell-with-us">Start selling ↗</a>
+      <button class="button cart-button" id="cartButton" type="button" aria-label="View cart">
+        🛍 <span class="cart-count" id="cartCount">0</span>
+      </button>
+    </div>
   </div>
 </header>
 
-<main>
+<main id="home">
   <section class="hero">
     <div class="container hero-grid">
       <div class="hero-copy">
-        <div class="eyebrow">Made for small businesses</div>
-        <h1>Your products deserve a <span style="color:#355b49">beautiful presentation.</span></h1>
-        <p>Create professional product posters and prepare your product information in one simple workspace. Designed for home businesses, artisans, craft makers and independent sellers.</p>
-        <div class="actions">
-          <a class="button" href="create.html">Start Creating →</a>
-          <a class="button button-outline" href="#features">Explore Features</a>
+        <span class="eyebrow">A little more local. A little more special.</span>
+        <h1>Celebrate beautifully. <em>Shop thoughtfully.</em></h1>
+        <p>Discover festive decorations, thoughtful gifts and handmade treasures from India's home businesses and independent makers.</p>
+        <div class="hero-actions">
+          <a class="button" href="#festivals">Explore festivals →</a>
+          <a class="button button-light" href="#sell-with-us">I'm a seller</a>
         </div>
-        <p class="note">Simple to use · Works in your browser · Downloadable posters</p>
+        <div class="trust-line">Made by small businesses · Festive finds · Thoughtful gifting</div>
       </div>
-
-      <div class="preview">
-        <div class="preview-top">
-          <span>SELLORA STUDIO</span>
-          <span>DESIGN PREVIEW</span>
+      <div class="hero-art" aria-label="Illustration of a festive diya">
+        <div class="art-orbit"></div>
+        <div class="art-orbit two"></div>
+        <div class="art-label">THE FESTIVE EDITION · SELLORA</div>
+        <div class="diya-scene">
+          <div class="diya">🪔</div>
+          <div class="diya-caption">Little lights. Big celebrations.</div>
         </div>
-        <div class="poster">
-          <small>THOUGHTFULLY MADE</small>
-          <h2>Little things.<br>Beautiful living.</h2>
-          <div class="poster-bottom">
-            <span>THE EVERYDAY COLLECTION</span>
-            <span>SELLORA</span>
+        <div class="art-sticker">SHOP<br>SMALL<br>✨</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="benefits">
+    <div class="container benefit-grid">
+      <div class="benefit"><span class="benefit-icon">🏡</span><div><strong>Made by small sellers</strong><small>Discover independent makers</small></div></div>
+      <div class="benefit"><span class="benefit-icon">🎁</span><div><strong>Find thoughtful gifts</strong><small>For every festive occasion</small></div></div>
+      <div class="benefit"><span class="benefit-icon">🌼</span><div><strong>Celebrate your way</strong><small>Explore products by festival</small></div></div>
+    </div>
+  </section>
+
+  <section class="section" id="festivals">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">Find your celebration</span>
+          <h2>Shop by festival</h2>
+          <p>Discover something special for every occasion.</p>
+        </div>
+        <a class="text-link" href="#products" id="allFestivalsLink">Explore all products ↗</a>
+      </div>
+      <div class="festival-grid" id="festivalGrid">
+        <button class="festival-card" type="button" data-festival="Diwali"><div class="festival-icon">🪔</div><h3>Diwali</h3><p>Lights & decorations</p></button>
+        <button class="festival-card" type="button" data-festival="Ganesh Chaturthi"><div class="festival-icon">🌺</div><h3>Ganesh Chaturthi</h3><p>Festive essentials</p></button>
+        <button class="festival-card" type="button" data-festival="Raksha Bandhan"><div class="festival-icon">🧵</div><h3>Raksha Bandhan</h3><p>Rakhis & gifts</p></button>
+        <button class="festival-card" type="button" data-festival="Holi"><div class="festival-icon">🎨</div><h3>Holi</h3><p>Colours & joy</p></button>
+        <button class="festival-card" type="button" data-festival="Christmas"><div class="festival-icon">🎄</div><h3>Christmas</h3><p>Gifts & festive decor</p></button>
+      </div>
+    </div>
+  </section>
+
+  <section class="section products-section" id="products">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">Handpicked for happy celebrations</span>
+          <h2>Festive finds</h2>
+          <p>Explore sample products from the kinds of sellers Sellora is built for.</p>
+        </div>
+      </div>
+      <div class="search-row">
+        <input type="search" id="productSearch" placeholder="Search products, sellers or festivals..." aria-label="Search products">
+        <select id="sortProducts" aria-label="Sort products">
+          <option value="featured">Featured products</option>
+          <option value="low">Price: low to high</option>
+          <option value="high">Price: high to low</option>
+        </select>
+      </div>
+      <div class="filters" id="productFilters">
+        <button class="filter active" type="button" data-filter="All">All products</button>
+        <button class="filter" type="button" data-filter="Diwali">Diwali</button>
+        <button class="filter" type="button" data-filter="Ganesh Chaturthi">Ganesh Chaturthi</button>
+        <button class="filter" type="button" data-filter="Raksha Bandhan">Raksha Bandhan</button>
+        <button class="filter" type="button" data-filter="Holi">Holi</button>
+        <button class="filter" type="button" data-filter="Christmas">Christmas</button>
+      </div>
+      <div class="product-grid" id="productGrid" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <section class="seller-section" id="sell-with-us">
+    <div class="container">
+      <div class="seller-panel">
+        <div class="seller-copy">
+          <span class="eyebrow">Your craft deserves a bigger audience</span>
+          <h2>Small business? Make every festival your season.</h2>
+          <p>Showcase your festive products, introduce customers to your craft and manage your product collection in one place. Sellora is being built with home businesses and independent makers in mind.</p>
+          <div class="seller-points">
+            <span>🏪 Your product collection</span>
+            <span>🪔 Festival-based listings</span>
+            <span>💛 Built for small sellers</span>
           </div>
+          <button class="button" id="sellerButton" type="button">Become a Sellora seller →</button>
+          <p style="font-size:11px;margin:12px 0 0">Seller registration will be connected in the next development step.</p>
+        </div>
+        <div class="seller-art">
+          <div class="big-emoji">🧑🏽‍🎨</div>
+          <div class="seller-note">Your creativity. Your business. ✨</div>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="section" id="features">
+  <section class="section" id="how-it-works">
     <div class="container">
-      <div class="section-heading">
-        <div class="eyebrow">One simple workspace</div>
-        <h2>Everything you need to prepare a product for promotion.</h2>
-        <p>Move from product information to a finished poster without juggling several separate design tools.</p>
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">Simple for everyone</span>
+          <h2>How Sellora works</h2>
+          <p>A simple vision for a marketplace that brings festive makers and shoppers together.</p>
+        </div>
       </div>
-
-      <div class="features">
-        <article class="feature">
-          <div class="feature-number">01 / CREATE</div>
-          <h3>Product Details</h3>
-          <p>Add your photo, product name, category, description and selling price.</p>
-        </article>
-        <article class="feature">
-          <div class="feature-number">02 / PREPARE</div>
-          <h3>Seller Readiness Review</h3>
-          <p>Review missing details and practical suggestions before making your poster.</p>
-        </article>
-        <article class="feature">
-          <div class="feature-number">03 / DESIGN</div>
-          <h3>Poster Editor</h3>
-          <p>Customize the layout, image and colors to suit your product and brand.</p>
-        </article>
-        <article class="feature">
-          <div class="feature-number">04 / EXPORT</div>
-          <h3>PNG Download</h3>
-          <p>Save your finished poster as an image that you can share with customers.</p>
-        </article>
-        <article class="feature">
-          <div class="feature-number">05 / PROMOTE</div>
-          <h3>Marketing Drafts</h3>
-          <p>Prepare editable product descriptions and social captions for your listings.</p>
-        </article>
-        <article class="feature">
-          <div class="feature-number">06 / ACCESS</div>
-          <h3>Responsive Design</h3>
-          <p>Use the website on a laptop or mobile browser without installing an app.</p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <section class="section workflow" id="how-it-works">
-    <div class="container">
-      <div class="section-heading">
-        <div class="eyebrow">A clear process</div>
-        <h2>From product to poster in four steps.</h2>
-      </div>
-      <div class="steps">
-        <article class="step">
-          <span>STEP 01</span>
-          <h3>Add your product</h3>
-          <p>Upload a product photo and enter the information customers need.</p>
-        </article>
-        <article class="step">
-          <span>STEP 02</span>
-          <h3>Review your details</h3>
-          <p>Check your readiness score and improve any missing information.</p>
-        </article>
-        <article class="step">
-          <span>STEP 03</span>
-          <h3>Design and download</h3>
-          <p>Customize your poster, review the result and download your design.</p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="container">
-      <div class="cta">
-        <div class="eyebrow">Your next product starts here</div>
-        <h2>Ready to create your first poster?</h2>
-        <p>Bring your product details together and create a promotional design for your small business.</p>
-        <a class="button" href="create.html">Create Your Poster →</a>
+      <div class="how-grid">
+        <article class="how-card"><span class="how-number">STEP 01</span><h3>Discover</h3><p>Browse festive products and explore independent sellers by occasion.</p></article>
+        <article class="how-card"><span class="how-number">STEP 02</span><h3>Choose your favourites</h3><p>Compare products, explore prices and add items to your shopping cart.</p></article>
+        <article class="how-card"><span class="how-number">STEP 03</span><h3>Support small businesses</h3><p>Find special products while helping independent makers reach more people.</p></article>
       </div>
     </div>
   </section>
@@ -342,14 +569,143 @@ footer p { font-size: 12px; margin: 0; }
 
 <footer>
   <div class="container footer-inner">
-    <a class="logo" href="index.html">sellora<span>.</span></a>
-    <p>Product posters and seller tools for small businesses.</p>
+    <a class="logo" href="#home">sellora<span>.</span></a>
+    <p>A festival marketplace concept supporting India's small sellers.</p>
     <p>© <span id="year"></span> Sellora</p>
   </div>
 </footer>
 
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
 <script>
+const products = [
+  {id:1,name:"Handpainted Clay Diyas",seller:"Mitti & More",price:249,festival:"Diwali",emoji:"🪔",tag:"Handmade",bg:"linear-gradient(135deg,#f7d7a8,#f2b56e)"},
+  {id:2,name:"Festive Gift Hamper",seller:"Little Joy Studio",price:499,festival:"Diwali",emoji:"🎁",tag:"Popular pick",bg:"linear-gradient(135deg,#f2d8cb,#d9a5a0)"},
+  {id:3,name:"Decorative Pooja Thali",seller:"Saanjh Creations",price:349,festival:"Ganesh Chaturthi",emoji:"🌺",tag:"Made with care",bg:"linear-gradient(135deg,#f9dfb4,#edb77f)"},
+  {id:4,name:"Handmade Rakhi Set",seller:"Threads of Love",price:199,festival:"Raksha Bandhan",emoji:"🧵",tag:"Small-batch",bg:"linear-gradient(135deg,#f6d4de,#e5a7b8)"},
+  {id:5,name:"Holi Colour Gift Box",seller:"Rang Artisan Co.",price:299,festival:"Holi",emoji:"🎨",tag:"Festive favourite",bg:"linear-gradient(135deg,#e8d7fb,#f3c1ce)"},
+  {id:6,name:"Handcrafted Tree Ornaments",seller:"Merry Little Works",price:399,festival:"Christmas",emoji:"🎄",tag:"Handmade",bg:"linear-gradient(135deg,#c8e0cc,#90b8a1)"},
+  {id:7,name:"Festive Lantern Set",seller:"Utsav Home Studio",price:599,festival:"Diwali",emoji:"🏮",tag:"Decor pick",bg:"linear-gradient(135deg,#f9e5ac,#e7a45c)"},
+  {id:8,name:"Ganpati Decoration Set",seller:"Aangan Handmade",price:449,festival:"Ganesh Chaturthi",emoji:"🌼",tag:"Small-batch",bg:"linear-gradient(135deg,#f7e2bd,#dfba84)"}
+];
+
+let selectedFestival = "All";
+let cart = [];
+
+const productGrid = document.getElementById("productGrid");
+const searchInput = document.getElementById("productSearch");
+const sortSelect = document.getElementById("sortProducts");
+const toast = document.getElementById("toast");
+
+function showToast(message) {
+  toast.textContent = message;
+  toast.classList.add("show");
+  clearTimeout(showToast.timer);
+  showToast.timer = setTimeout(() => toast.classList.remove("show"), 2600);
+}
+
+function renderProducts() {
+  const query = searchInput.value.trim().toLowerCase();
+  let visible = products.filter(product => {
+    const matchesFestival = selectedFestival === "All" || product.festival === selectedFestival;
+    const searchable = `${product.name} ${product.seller} ${product.festival} ${product.tag}`.toLowerCase();
+    return matchesFestival && searchable.includes(query);
+  });
+
+  if (sortSelect.value === "low") visible.sort((a,b) => a.price-b.price);
+  if (sortSelect.value === "high") visible.sort((a,b) => b.price-a.price);
+
+  productGrid.innerHTML = "";
+
+  if (!visible.length) {
+    productGrid.innerHTML = '<div class="empty-state">No matching products found. Try another search or festival.</div>';
+    return;
+  }
+
+  visible.forEach(product => {
+    const card = document.createElement("article");
+    card.className = "product-card";
+
+    const art = document.createElement("div");
+    art.className = "product-art";
+    art.style.background = product.bg;
+
+    const emoji = document.createElement("span");
+    emoji.className = "emoji";
+    emoji.textContent = product.emoji;
+    art.appendChild(emoji);
+
+    const tag = document.createElement("span");
+    tag.className = "tag";
+    tag.textContent = product.tag;
+    art.appendChild(tag);
+
+    const info = document.createElement("div");
+    info.className = "product-info";
+    info.innerHTML = `
+      <div class="product-festival"></div>
+      <h3></h3>
+      <p class="seller-name"></p>
+      <div class="product-bottom">
+        <span class="price"></span>
+        <button class="add-button" type="button">+ Add to cart</button>
+      </div>`;
+
+    info.querySelector(".product-festival").textContent = product.festival;
+    info.querySelector("h3").textContent = product.name;
+    info.querySelector(".seller-name").textContent = "By " + product.seller;
+    info.querySelector(".price").textContent = "₹" + product.price;
+    info.querySelector(".add-button").addEventListener("click", () => {
+      cart.push(product);
+      document.getElementById("cartCount").textContent = cart.length;
+      showToast(product.name + " added to your demo cart.");
+    });
+
+    card.append(art,info);
+    productGrid.appendChild(card);
+  });
+}
+
+function setFestival(festival) {
+  selectedFestival = festival;
+  document.querySelectorAll(".filter").forEach(button => {
+    button.classList.toggle("active", button.dataset.filter === festival);
+  });
+  document.querySelectorAll(".festival-card").forEach(button => {
+    button.classList.toggle("active", button.dataset.festival === festival);
+  });
+  renderProducts();
+}
+
+document.querySelectorAll(".filter").forEach(button => {
+  button.addEventListener("click", () => setFestival(button.dataset.filter));
+});
+document.querySelectorAll(".festival-card").forEach(button => {
+  button.addEventListener("click", () => {
+    setFestival(button.dataset.festival);
+    document.getElementById("products").scrollIntoView({behavior:"smooth"});
+  });
+});
+document.getElementById("allFestivalsLink").addEventListener("click", () => setFestival("All"));
+searchInput.addEventListener("input", renderProducts);
+sortSelect.addEventListener("change", renderProducts);
+
+document.getElementById("cartButton").addEventListener("click", () => {
+  if (!cart.length) {
+    showToast("Your demo cart is empty. Add a product to get started!");
+    return;
+  }
+  const total = cart.reduce((sum, product) => sum + product.price, 0);
+  const summary = cart.map(product => product.name).join(", ");
+  showToast(`${cart.length} item(s) · Total ₹${total}. Demo cart only; checkout is not connected yet.`);
+});
+
+document.getElementById("sellerButton").addEventListener("click", () => {
+  showToast("Seller registration is our next step. This demo button does not create an account yet.");
+});
+
 document.getElementById("year").textContent = new Date().getFullYear();
+renderProducts();
 </script>
 </body>
 </html>
