@@ -5,199 +5,678 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sellora | India's Festival Marketplace</title>
+<meta name="description" content="Discover festival essentials, handmade gifts and traditional products from India's home sellers and artisans.">
 <style>
-:root{--green:#245b45;--cream:#faf8f2;--ink:#242923;--muted:#72776f;--line:#e8e7df;--orange:#d97745}
+:root {
+  --ink:#29251f;
+  --muted:#777168;
+  --paper:#fcfaf6;
+  --white:#fff;
+  --line:#e9e3d9;
+  --accent:#873c30;
+  --accent-dark:#682b23;
+  --soft:#f4ece4;
+  --gold:#c99b54;
+  --green:#41644d;
+}
 *{box-sizing:border-box}
-body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#fff;color:var(--ink)}
-button,input{font:inherit}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:Arial,Helvetica,sans-serif}
+button,input,select,textarea{font:inherit}
 button{cursor:pointer}
 a{color:inherit;text-decoration:none}
-.topbar{background:var(--green);color:white;text-align:center;padding:10px;font-size:12px;letter-spacing:.5px}
-header{padding:18px 6%;display:flex;align-items:center;gap:28px;border-bottom:1px solid var(--line);flex-wrap:wrap}
-.logo{font-family:Georgia,serif;font-size:30px;font-weight:bold;color:var(--green);letter-spacing:-1px}
-.logo span{color:var(--orange)}
-.search{flex:1;min-width:200px;display:flex;background:#f5f5f0;border-radius:7px;padding:4px 12px}
-.search input{border:0;outline:0;background:transparent;padding:10px;width:100%}
-.search button,.primary{background:var(--green);color:white;border:0;border-radius:6px;padding:12px 18px}
-.header-actions{display:flex;gap:10px;align-items:center}
-.secondary{border:1px solid var(--line);background:white;padding:11px 14px;border-radius:6px}
-nav{padding:14px 6%;display:flex;gap:25px;overflow-x:auto;white-space:nowrap;font-size:13px;border-bottom:1px solid var(--line)}
-nav a:hover{color:var(--orange)}
-.hero{margin:28px 6% 34px;background:#f3eee2;border-radius:12px;min-height:350px;display:grid;grid-template-columns:1.1fr .9fr;overflow:hidden}
-.hero-copy{padding:52px 8%;align-self:center}
-.eyebrow{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--green);font-weight:bold}
-h1{font-family:Georgia,serif;font-size:clamp(36px,4.5vw,60px);line-height:1.08;font-weight:normal;margin:17px 0}
-.hero p{line-height:1.8;color:#62645a;max-width:430px;font-size:14px}
-.hero .primary{display:inline-block;margin-top:15px}
-.hero-art{background:linear-gradient(140deg,#d9e2cb,#f0c99f);display:flex;align-items:center;justify-content:center;min-height:280px;position:relative}
-.art-circle{width:245px;height:245px;border-radius:50%;background:#fff8e8;display:flex;align-items:center;justify-content:center;font-size:100px;box-shadow:0 18px 55px #6b593222}
-.art-label{position:absolute;bottom:25px;right:25px;background:#fff9;padding:12px 16px;border-radius:6px;font-family:Georgia,serif}
-section{padding:12px 6% 36px}
-.section-head{display:flex;justify-content:space-between;align-items:end;gap:15px;margin-bottom:22px}
-h2{font-family:Georgia,serif;font-weight:normal;font-size:32px;margin:8px 0}
-.sub{color:var(--muted);font-size:13px;line-height:1.7}
-.text-link{color:var(--green);font-size:13px;font-weight:bold}
-.festivals{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:14px}
-.festival{border:1px solid var(--line);border-radius:9px;padding:18px 8px;text-align:center;background:white;transition:.2s}
-.festival:hover,.festival.active{border-color:var(--green);background:#f2f6ef}
-.festival-icon{height:67px;width:67px;margin:0 auto 12px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:33px;background:#f5ead9}
-.festival strong{display:block;font-size:13px}
-.festival small{display:block;color:var(--muted);margin-top:6px;font-size:11px}
-.filters{display:flex;gap:9px;flex-wrap:wrap;margin:20px 0}
-.filter{padding:9px 15px;border:1px solid var(--line);background:white;border-radius:25px;font-size:12px}
-.filter.active{background:var(--green);color:white;border-color:var(--green)}
-.products{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
-.product{border:1px solid var(--line);border-radius:9px;overflow:hidden;min-width:0}
-.product-image{height:205px;display:flex;align-items:center;justify-content:center;font-size:76px;position:relative;background:#f4eee5}
+.topbar{background:var(--ink);color:white;text-align:center;padding:10px 16px;font-size:12px;letter-spacing:.5px}
+header{background:var(--paper);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:10}
+.nav{max-width:1200px;margin:auto;padding:17px 22px;display:flex;align-items:center;gap:28px}
+.logo{font-family:Georgia,serif;font-size:29px;font-weight:bold;letter-spacing:-1px;color:var(--accent)}
+.logo span{color:var(--gold)}
+.navlinks{display:flex;gap:22px;margin-left:auto;font-size:13px}
+.navlinks a:hover{color:var(--accent)}
+.navactions{display:flex;align-items:center;gap:10px}
+.btn{border:1px solid var(--line);border-radius:5px;padding:11px 16px;background:white;color:var(--ink);font-weight:600;font-size:13px}
+.btn-primary{background:var(--accent);border-color:var(--accent);color:white}
+.btn-primary:hover{background:var(--accent-dark)}
+.btn-light{background:transparent;border-color:#bca99a}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.mobile-menu{display:none}
+main{max-width:1200px;margin:auto;padding:0 22px}
+.hero{margin:30px 0 48px;display:grid;grid-template-columns:1.05fr .95fr;min-height:390px;background:#f1e6d9;border-radius:8px;overflow:hidden}
+.hero-copy{padding:54px 45px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center}
+.eyebrow{text-transform:uppercase;letter-spacing:2px;font-size:11px;font-weight:bold;color:var(--accent)}
+h1,h2,h3,p{margin-top:0}
+h1{font-family:Georgia,serif;font-size:clamp(38px,5vw,62px);line-height:1.08;letter-spacing:-1.5px;font-weight:normal;margin:18px 0}
+.hero-copy p{font-size:15px;line-height:1.8;color:#635a50;max-width:420px}
+.hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.hero-art{min-height:330px;background:linear-gradient(145deg,#d7b99b,#b7795b);position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.hero-art:before{content:"";position:absolute;width:290px;height:290px;border-radius:50%;border:1px solid #ffffff66}
+.hero-art:after{content:"";position:absolute;width:220px;height:220px;border-radius:50%;border:1px solid #ffffff66}
+.art-card{z-index:1;width:65%;max-width:330px;background:#fff9ef;padding:25px 22px;text-align:center;transform:rotate(-3deg);box-shadow:0 18px 40px #53352626}
+.art-card .art-symbol{font-size:72px;margin:5px 0 12px}
+.art-card strong{font-family:Georgia,serif;font-size:27px;font-weight:normal;display:block}
+.art-card small{display:block;margin-top:8px;color:#756355;letter-spacing:2px;font-size:10px}
+.section{margin:0 0 50px}
+.section-head{display:flex;align-items:end;justify-content:space-between;gap:16px;margin-bottom:22px}
+.section-head h2{font-family:Georgia,serif;font-size:32px;font-weight:normal;margin-bottom:6px}
+.section-head p{font-size:13px;color:var(--muted);margin:0}
+.text-link{font-size:13px;color:var(--accent);font-weight:bold}
+.categories{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+.category{border:1px solid var(--line);border-radius:7px;padding:22px 12px;background:#fff;text-align:center;transition:.2s}
+.category:hover,.category.active{border-color:var(--accent);background:var(--soft)}
+.category-icon{font-size:31px;margin-bottom:12px}
+.category strong{display:block;font-size:13px;margin-bottom:5px}
+.category small{font-size:11px;color:var(--muted)}
+.toolbar{display:flex;gap:12px;align-items:center;margin:20px 0}
+.search{flex:1;min-width:0}
+.search input,.toolbar select{width:100%;padding:13px;border:1px solid var(--line);border-radius:5px;background:white;outline-color:var(--accent)}
+.toolbar select{width:200px}
+.products{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
+.product{background:white;border:1px solid var(--line);border-radius:7px;overflow:hidden;display:flex;flex-direction:column}
+.product-image{height:190px;background:#f0e8dd;display:flex;align-items:center;justify-content:center;overflow:hidden}
 .product-image img{width:100%;height:100%;object-fit:cover}
-.product-image .tag{position:absolute;top:12px;left:12px;background:white;padding:6px 9px;border-radius:4px;font-size:10px}
-.product-info{padding:15px}
-.product-info h3{font-size:14px;margin:0 0 8px;font-weight:600}
-.seller{font-size:11px;color:var(--muted);margin-bottom:13px}
-.price{font-size:18px;font-weight:bold}
-.product-bottom{display:flex;align-items:center;justify-content:space-between;gap:8px}
-.add{border:1px solid var(--green);color:var(--green);background:white;border-radius:5px;padding:9px 11px;font-size:12px}
-.add:hover{background:var(--green);color:white}
-.empty{padding:30px;text-align:center;color:var(--muted);grid-column:1/-1}
-.seller-banner{margin:15px 6% 45px;background:#e9efe5;border-radius:10px;padding:34px 5%;display:flex;justify-content:space-between;align-items:center;gap:20px}
-.seller-banner h2{font-size:29px}
-.seller-banner p{font-size:13px;color:var(--muted);line-height:1.7}
-footer{background:#203f32;color:#fff;padding:35px 6%;display:flex;justify-content:space-between;gap:25px;flex-wrap:wrap}
+.product-placeholder{font-size:58px}
+.product-body{padding:16px;display:flex;flex-direction:column;flex:1}
+.product-tag{font-size:10px;color:var(--accent);text-transform:uppercase;letter-spacing:1px;margin-bottom:9px}
+.product h3{font-size:15px;margin-bottom:7px;line-height:1.4}
+.product-desc{font-size:12px;line-height:1.6;color:var(--muted);margin-bottom:12px}
+.product-bottom{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.price{font-size:17px;font-weight:bold}
+.add-btn{border:1px solid var(--accent);background:white;color:var(--accent);padding:9px 11px;border-radius:4px;font-size:12px;font-weight:bold}
+.add-btn:hover{background:var(--accent);color:white}
+.empty{grid-column:1/-1;text-align:center;padding:35px;color:var(--muted);border:1px dashed var(--line);border-radius:6px}
+.notice{padding:15px 17px;background:#f4eee3;border-radius:5px;font-size:13px;line-height:1.7;color:#655749;margin-top:18px}
+.seller-banner{background:#ede4d8;padding:32px;border-radius:7px;display:flex;align-items:center;justify-content:space-between;gap:25px}
+.seller-banner h2{font-family:Georgia,serif;font-weight:normal;font-size:30px;margin-bottom:8px}
+.seller-banner p{font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:0;max-width:570px}
+footer{margin-top:60px;background:#29251f;color:white;padding:38px 22px}
+.footer-inner{max-width:1200px;margin:auto;display:flex;justify-content:space-between;gap:25px;flex-wrap:wrap}
 footer .logo{color:#fff}
-footer p{color:#d6dfd7;font-size:12px;line-height:1.8}
-.modal-backdrop{position:fixed;inset:0;background:#0008;display:none;align-items:center;justify-content:center;padding:20px;z-index:5}
-.modal-backdrop.open{display:flex}
-.modal{background:white;padding:28px;border-radius:10px;width:min(420px,100%);max-height:90vh;overflow:auto}
-.modal h2{font-size:27px}
-.modal input,.modal select{display:block;width:100%;padding:12px;margin:12px 0;border:1px solid var(--line);border-radius:5px}
-.modal .primary{width:100%;margin-top:8px}
-.close{float:right;border:0;background:transparent;font-size:23px}
-#notice{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#203f32;color:white;padding:13px 20px;border-radius:7px;display:none;z-index:9;font-size:13px;max-width:90%;text-align:center}
-@media(max-width:800px){
- header{gap:12px;padding:15px 5%}.header-actions{width:100%}.header-actions button{flex:1}
- .hero{margin:20px 4%;grid-template-columns:1fr}.hero-copy{padding:35px 7%}.hero-art{min-height:230px}
- section{padding-left:4%;padding-right:4%}.festivals{grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
- .products{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
- .product-image{height:155px}.seller-banner{margin:10px 4% 30px;align-items:flex-start;flex-direction:column}
- h2{font-size:27px}nav{padding-left:5%;padding-right:5%}
+footer p{color:#c7bfb5;font-size:12px;line-height:1.7;max-width:420px;margin:12px 0 0}
+.footer-links{display:flex;gap:20px;align-items:center;flex-wrap:wrap;font-size:12px;color:#eee5db}
+.modal{display:none;position:fixed;inset:0;z-index:30;background:#1b1714a8;align-items:center;justify-content:center;padding:18px}
+.modal.open{display:flex}
+.modal-card{width:100%;max-width:450px;max-height:90vh;overflow:auto;background:var(--paper);padding:27px;border-radius:8px;position:relative}
+.modal-card h2{font-family:Georgia,serif;font-size:29px;font-weight:normal;margin-bottom:8px}
+.modal-card>p{color:var(--muted);font-size:13px;line-height:1.6}
+.close{position:absolute;right:17px;top:13px;border:0;background:transparent;font-size:26px;color:var(--muted)}
+.field{margin:15px 0}
+.field label{display:block;font-size:12px;font-weight:bold;margin-bottom:7px}
+.field input,.field select,.field textarea{width:100%;padding:12px;border:1px solid var(--line);border-radius:4px;background:white;outline-color:var(--accent)}
+.field textarea{min-height:75px;resize:vertical}
+.form-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.form-actions .btn{flex:1}
+.form-message{font-size:13px;line-height:1.6;margin-top:13px;overflow-wrap:anywhere}
+.form-message.error{color:#a22d24}
+.form-message.success{color:var(--green)}
+.cart-list{margin:18px 0}
+.cart-row{display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid var(--line);font-size:13px}
+.cart-row button{border:0;background:none;color:var(--accent);font-size:12px}
+.cart-total{display:flex;justify-content:space-between;font-weight:bold;padding:15px 0}
+.account-status{font-size:12px;color:var(--muted)}
+@media(max-width:850px){
+ .nav{gap:13px;flex-wrap:wrap}
+ .navlinks{order:3;width:100%;justify-content:center;margin:0;gap:16px}
+ .hero{grid-template-columns:1fr}
+ .hero-copy{padding:36px 28px}
+ .hero-art{min-height:280px}
+ .categories{grid-template-columns:repeat(3,1fr)}
+ .products{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
-@media(max-width:380px){.product-image{height:125px}.product-image .emoji{font-size:55px}.product-info{padding:10px}.price{font-size:15px}.add{padding:8px}}
+@media(max-width:480px){
+ .nav{padding:14px}
+ .logo{font-size:25px}
+ .navactions{margin-left:auto}
+ .navlinks{font-size:11px;gap:12px}
+ .navactions .btn{padding:9px;font-size:11px}
+ main{padding:0 14px}
+ .hero{margin-top:18px}
+ .hero-copy{padding:30px 22px}
+ .hero-art{min-height:240px}
+ .section-head h2{font-size:26px}
+ .categories{grid-template-columns:repeat(2,1fr);gap:9px}
+ .toolbar{flex-direction:column;align-items:stretch}
+ .toolbar select{width:100%}
+ .products{gap:10px}
+ .product-image{height:140px}
+ .product-body{padding:11px}
+ .product h3{font-size:13px}
+ .product-bottom{align-items:flex-start;flex-direction:column}
+ .seller-banner{padding:22px;align-items:flex-start;flex-direction:column}
+}
 </style>
 </head>
 <body>
-<div class="topbar">CELEBRATE WITH MEANING · DISCOVER INDIA'S FESTIVAL FINDS</div>
+<div class="topbar">A marketplace celebrating India's festivals, makers and traditions</div>
+
 <header>
-<a class="logo" href="#">sellora<span>.</span></a>
-<div class="search"><input id="search" placeholder="Search diyas, gifts, decorations..." aria-label="Search products"><button onclick="renderProducts()">Search</button></div>
-<div class="header-actions">
-<button class="secondary" onclick="openAccount()">Sign in</button>
-<button class="primary" onclick="showCart()">Bag (<span id="cartCount">0</span>)</button>
-</div>
+  <nav class="nav">
+    <a class="logo" href="#">sellora<span>.</span></a>
+    <div class="navlinks">
+      <a href="#shop">Shop</a>
+      <a href="#festivals">Festivals</a>
+      <a href="#sell-with-us">Sell with us</a>
+    </div>
+    <div class="navactions">
+      <span class="account-status" id="accountStatus">Guest</span>
+      <button class="btn" id="accountButton" onclick="openAuth()">Sign in</button>
+      <button class="btn btn-primary" onclick="openCart()">Cart (<span id="cartCount">0</span>)</button>
+    </div>
+  </nav>
 </header>
-<nav>
-<a href="#festivals">Shop Festivals</a><a href="#products">All Products</a>
-<a href="#products" onclick="chooseCategory('Decor')">Home Decor</a>
-<a href="#products" onclick="chooseCategory('Gifts')">Gifts</a>
-<a href="#products" onclick="chooseCategory('Handmade')">Handmade</a>
-<a href="#sell">Sell on Sellora</a>
-</nav>
 
 <main>
-<div class="hero">
-<div class="hero-copy">
-<div class="eyebrow">A little more local. A lot more meaningful.</div>
-<h1>Every festival has a story.</h1>
-<p>Discover thoughtful decorations, traditional crafts and festive essentials made by India's home sellers, artisans and small businesses.</p>
-<a class="primary" href="#products">Explore the collection →</a>
-</div>
-<div class="hero-art"><div class="art-circle">🪔</div><div class="art-label">Made with tradition</div></div>
-</div>
+  <section class="hero">
+    <div class="hero-copy">
+      <span class="eyebrow">Made for every celebration</span>
+      <h1>Every festival.<br>Something special.</h1>
+      <p>Discover festive essentials, thoughtful gifts and handcrafted treasures from independent Indian sellers, artisans and small businesses.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#shop">Explore the marketplace</a>
+        <a class="btn btn-light" href="#sell-with-us">Become a seller</a>
+      </div>
+    </div>
+    <div class="hero-art" aria-label="Festival-inspired illustration">
+      <div class="art-card">
+        <div class="art-symbol">🪔</div>
+        <strong>Celebrate the little things</strong>
+        <small>LOCAL MAKERS · FESTIVE FINDS</small>
+      </div>
+    </div>
+  </section>
 
-<section id="festivals">
-<div class="section-head"><div><div class="eyebrow">Find your celebration</div><h2>Shop by festival</h2><div class="sub">The little details that make every occasion special.</div></div></div>
-<div class="festivals">
-<button class="festival" onclick="chooseFestival('Diwali',this)"><div class="festival-icon">🪔</div><strong>Diwali</strong><small>Lights & decor</small></button>
-<button class="festival" onclick="chooseFestival('Holi',this)"><div class="festival-icon">🎨</div><strong>Holi</strong><small>Colours & fun</small></button>
-<button class="festival" onclick="chooseFestival('Ganesh Chaturthi',this)"><div class="festival-icon">🙏</div><strong>Ganesh Chaturthi</strong><small>Puja essentials</small></button>
-<button class="festival" onclick="chooseFestival('Navratri',this)"><div class="festival-icon">🌺</div><strong>Navratri</strong><small>Traditional finds</small></button>
-<button class="festival" onclick="chooseFestival('Raksha Bandhan',this)"><div class="festival-icon">🎁</div><strong>Raksha Bandhan</strong><small>Gifts & rakhis</small></button>
-<button class="festival" onclick="chooseFestival('Christmas',this)"><div class="festival-icon">⭐</div><strong>Christmas</strong><small>Seasonal decor</small></button>
-</div>
-</section>
+  <section class="section" id="festivals">
+    <div class="section-head">
+      <div>
+        <h2>Shop by celebration</h2>
+        <p>Find something meaningful for every occasion.</p>
+      </div>
+    </div>
+    <div class="categories">
+      <button class="category" onclick="chooseFestival('Diwali',this)">
+        <div class="category-icon">🪔</div><strong>Diwali</strong><small>Lights and decor</small>
+      </button>
+      <button class="category" onclick="chooseFestival('Holi',this)">
+        <div class="category-icon">🎨</div><strong>Holi</strong><small>Colourful essentials</small>
+      </button>
+      <button class="category" onclick="chooseFestival('Ganesh Chaturthi',this)">
+        <div class="category-icon">🌼</div><strong>Ganesh Chaturthi</strong><small>Puja and decor</small>
+      </button>
+      <button class="category" onclick="chooseFestival('Raksha Bandhan',this)">
+        <div class="category-icon">🎁</div><strong>Raksha Bandhan</strong><small>Rakhis and gifts</small>
+      </button>
+      <button class="category" onclick="chooseFestival('All',this)">
+        <div class="category-icon">✨</div><strong>All festivals</strong><small>Explore everything</small>
+      </button>
+    </div>
+  </section>
 
-<section id="products">
-<div class="section-head"><div><div class="eyebrow">Handpicked for you</div><h2 id="productHeading">Festive favourites</h2><div class="sub">Discover special finds from independent sellers.</div></div><a class="text-link" href="#products" onclick="resetFilters()">View all products →</a></div>
-<div class="filters">
-<button class="filter active" onclick="chooseCategory('All',this)">All products</button>
-<button class="filter" onclick="chooseCategory('Decor',this)">Decor</button>
-<button class="filter" onclick="chooseCategory('Gifts',this)">Gifts</button>
-<button class="filter" onclick="chooseCategory('Puja',this)">Puja essentials</button>
-<button class="filter" onclick="chooseCategory('Handmade',this)">Handmade</button>
-</div>
-<div class="products" id="productGrid"></div>
-</section>
+  <section class="section" id="shop">
+    <div class="section-head">
+      <div>
+        <h2>Discover festive finds</h2>
+        <p id="productSubtitle">Explore products from independent sellers.</p>
+      </div>
+      <a class="text-link" href="#sell-with-us">Are you a seller?</a>
+    </div>
+    <div class="toolbar">
+      <div class="search">
+        <input id="searchInput" type="search" placeholder="Search diyas, gifts, decor..." aria-label="Search products">
+      </div>
+      <select id="festivalFilter" aria-label="Filter by festival">
+        <option value="All">All festivals</option>
+        <option value="Diwali">Diwali</option>
+        <option value="Holi">Holi</option>
+        <option value="Ganesh Chaturthi">Ganesh Chaturthi</option>
+        <option value="Raksha Bandhan">Raksha Bandhan</option>
+        <option value="Navratri">Navratri</option>
+        <option value="Eid">Eid</option>
+        <option value="Christmas">Christmas</option>
+        <option value="Pongal">Pongal</option>
+        <option value="Onam">Onam</option>
+        <option value="Durga Puja">Durga Puja</option>
+        <option value="Makar Sankranti">Makar Sankranti</option>
+        <option value="Janmashtami">Janmashtami</option>
+        <option value="Other">Other</option>
+      </select>
+    </div>
+    <div class="products" id="productGrid">
+      <div class="empty">Loading marketplace products...</div>
+    </div>
+    <div class="notice" id="dataNotice">
+      Products published by approved sellers will appear here. Sample products are shown when the database has no published listings yet.
+    </div>
+  </section>
 
-<div class="seller-banner" id="sell">
-<div><div class="eyebrow">For India's makers</div><h2>Your craft deserves a wider audience.</h2><p>Bring your handmade products and festive creations to a marketplace built around celebrations and local sellers.</p></div>
-<button class="primary" onclick="openSeller()">Start selling →</button>
-</div>
+  <section class="section" id="sell-with-us">
+    <div class="seller-banner">
+      <div>
+        <span class="eyebrow">Your craft deserves a wider audience</span>
+        <h2>Bring your creations to Sellora.</h2>
+        <p>Join a marketplace designed for home sellers, artisans and small festival businesses. Apply to become a seller and share your products with more customers.</p>
+      </div>
+      <button class="btn btn-primary" onclick="openSeller()">Apply to sell</button>
+    </div>
+  </section>
 </main>
 
 <footer>
-<div><div class="logo">sellora<span>.</span></div><p>Celebrating India's festivals, one thoughtful find at a time.<br>Supporting home sellers, artisans and small businesses.</p></div>
-<div><strong>Explore Sellora</strong><p><a href="#festivals">Festivals</a><br><a href="#products">Shop products</a><br><a href="#sell">Sell with us</a></p></div>
-<div><strong>Our promise</strong><p>Discover local makers.<br>Celebrate traditions.<br>Find something meaningful.</p></div>
+  <div class="footer-inner">
+    <div>
+      <a class="logo" href="#">sellora<span>.</span></a>
+      <p>A festival-products marketplace helping customers discover local makers, traditional goods and thoughtful festive gifts.</p>
+    </div>
+    <div class="footer-links">
+      <a href="#shop">Shop</a>
+      <a href="#festivals">Festivals</a>
+      <a href="#sell-with-us">Sell with us</a>
+      <a href="#" onclick="openAuth();return false;">My account</a>
+    </div>
+  </div>
 </footer>
 
-<div class="modal-backdrop" id="modalBackdrop" onclick="if(event.target===this)closeModal()">
-<div class="modal">
-<button class="close" onclick="closeModal()">×</button>
-<div id="modalContent"></div>
+<!-- Account modal -->
+<div class="modal" id="authModal" role="dialog" aria-modal="true" aria-label="Customer account">
+  <div class="modal-card">
+    <button class="close" onclick="closeModal('authModal')" aria-label="Close">&times;</button>
+    <h2 id="authTitle">Welcome to Sellora</h2>
+    <p id="authDescription">Sign in or create an account to get started.</p>
+    <form id="authForm">
+      <div class="field" id="nameField">
+        <label for="fullName">Full name</label>
+        <input id="fullName" autocomplete="name" placeholder="Your name">
+      </div>
+      <div class="field">
+        <label for="authEmail">Email address</label>
+        <input id="authEmail" type="email" autocomplete="email" required placeholder="you@example.com">
+      </div>
+      <div class="field">
+        <label for="authPassword">Password</label>
+        <input id="authPassword" type="password" autocomplete="current-password" required minlength="6" placeholder="At least 6 characters">
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-primary" type="submit" id="authSubmit">Create account</button>
+        <button class="btn" type="button" id="authSwitch" onclick="switchAuthMode()">I already have an account</button>
+      </div>
+    </form>
+    <div class="form-message" id="authMessage" aria-live="polite"></div>
+  </div>
 </div>
-</div>
-<div id="notice" role="status"></div>
 
+<!-- Seller application modal -->
+<div class="modal" id="sellerModal" role="dialog" aria-modal="true" aria-label="Seller application">
+  <div class="modal-card">
+    <button class="close" onclick="closeModal('sellerModal')" aria-label="Close">&times;</button>
+    <h2>Sell with Sellora</h2>
+    <p>Sign in first, then submit your seller application.</p>
+    <form id="sellerForm">
+      <div class="field">
+        <label for="businessName">Business or shop name</label>
+        <input id="businessName" required maxlength="120" placeholder="Your business name">
+      </div>
+      <div class="field">
+        <label for="sellerType">Seller type</label>
+        <select id="sellerType" required>
+          <option value="home_seller">Home seller</option>
+          <option value="artisan">Artisan or craft maker</option>
+          <option value="small_business">Small festival business</option>
+        </select>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-primary" type="submit" id="sellerSubmit">Submit application</button>
+      </div>
+    </form>
+    <div class="form-message" id="sellerMessage" aria-live="polite"></div>
+  </div>
+</div>
+
+<!-- Cart modal -->
+<div class="modal" id="cartModal" role="dialog" aria-modal="true" aria-label="Shopping cart">
+  <div class="modal-card">
+    <button class="close" onclick="closeModal('cartModal')" aria-label="Close">&times;</button>
+    <h2>Your shopping cart</h2>
+    <p>Your selected products are listed below.</p>
+    <div class="cart-list" id="cartList"></div>
+    <div class="cart-total"><span>Total</span><span id="cartTotal">₹0</span></div>
+    <button class="btn btn-primary" style="width:100%" onclick="startCheckout()">Continue to checkout</button>
+    <div class="form-message" id="cartMessage" aria-live="polite"></div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-const products=[
-{id:1,name:"Handcrafted Terracotta Diyas",price:299,category:"Decor",festival:"Diwali",seller:"Mitti Art Studio",emoji:"🪔",tag:"Handmade"},
-{id:2,name:"Festive Toran Door Hanging",price:449,category:"Decor",festival:"Diwali",seller:"Asha's Home Crafts",emoji:"🌼",tag:"Bestseller"},
-{id:3,name:"Decorative Puja Thali",price:599,category:"Puja",festival:"Ganesh Chaturthi",seller:"Shree Handicrafts",emoji:"🪷",tag:"Artisan made"},
-{id:4,name:"Handmade Rakhi Gift Set",price:249,category:"Gifts",festival:"Raksha Bandhan",seller:"Threads of Love",emoji:"🎁",tag:"Thoughtful gift"},
-{id:5,name:"Organic Holi Colour Set",price:199,category:"Gifts",festival:"Holi",seller:"Natural Colours Co.",emoji:"🎨",tag:"Festival favourite"},
-{id:6,name:"Brass Diya Pair",price:799,category:"Puja",festival:"Diwali",seller:"Heritage Metalworks",emoji:"✨",tag:"Traditional"},
-{id:7,name:"Navratri Bandhani Dupatta",price:699,category:"Handmade",festival:"Navratri",seller:"Rang Artisan Collective",emoji:"🧣",tag:"Handcrafted"},
-{id:8,name:"Handmade Christmas Ornaments",price:349,category:"Decor",festival:"Christmas",seller:"Little Pine Studio",emoji:"⭐",tag:"Small business"},
-{id:9,name:"Festive Gift Hamper",price:999,category:"Gifts",festival:"Diwali",seller:"The Thoughtful Box",emoji:"🎀",tag:"Gift favourite"},
-{id:10,name:"Handpainted Clay Ganesh",price:549,category:"Handmade",festival:"Ganesh Chaturthi",seller:"Earth & Art",emoji:"🙏",tag:"Artisan made"},
-{id:11,name:"Marigold Door Decor Set",price:399,category:"Decor",festival:"Navratri",seller:"Asha's Home Crafts",emoji:"🌻",tag:"Made by hand"},
-{id:12,name:"Festive Greeting Gift Box",price:299,category:"Gifts",festival:"Raksha Bandhan",seller:"Threads of Love",emoji:"💝",tag:"Gift favourite"}
+"use strict";
+
+/*
+  Sellora uses the Supabase browser client.
+  A publishable key is intended for client-side use.
+  Never put a service_role key or database password here.
+*/
+const SELLORA_SUPABASE_URL = "https://psepulcpyxuxlmzmyqjy.supabase.co";
+const SELLORA_SUPABASE_KEY = "sb_publishable_Y9gEiisXIlswikJE3SG6Hg_Li2vWIZ5";
+
+let selloraSupabase = null;
+let currentUser = null;
+let authMode = "signup";
+let databaseProducts = [];
+let cart = [];
+
+const sampleProducts = [
+  {id:"sample-1",name:"Hand-painted Clay Diyas",description:"Traditional clay lamps finished by hand for festive evenings.",price:249,category:"Home Decor",festival:"Diwali",image_url:"",stock:20,sampleIcon:"🪔"},
+  {id:"sample-2",name:"Handcrafted Festive Toran",description:"A welcoming handmade decoration for your doorway.",price:399,category:"Decor",festival:"Diwali",image_url:"",stock:12,sampleIcon:"🌼"},
+  {id:"sample-3",name:"Colourful Herbal Gulal Set",description:"A festive set for joyful celebrations with friends and family.",price:199,category:"Celebration",festival:"Holi",image_url:"",stock:25,sampleIcon:"🎨"},
+  {id:"sample-4",name:"Handmade Rakhi Gift Set",description:"Thoughtful handmade rakhis for a special family celebration.",price:299,category:"Gifts",festival:"Raksha Bandhan",image_url:"",stock:15,sampleIcon:"🎁"},
+  {id:"sample-5",name:"Decorative Puja Thali",description:"A festive thali for your family rituals and celebrations.",price:549,category:"Puja Essentials",festival:"Ganesh Chaturthi",image_url:"",stock:10,sampleIcon:"🪷"},
+  {id:"sample-6",name:"Artisan Candle Collection",description:"Warm, handcrafted candles for festive tables and gifting.",price:349,category:"Gifts",festival:"Diwali",image_url:"",stock:18,sampleIcon:"🕯️"},
+  {id:"sample-7",name:"Handwoven Festive Basket",description:"A reusable woven basket for gifts and festive treats.",price:449,category:"Handmade",festival:"Other",image_url:"",stock:8,sampleIcon:"🧺"},
+  {id:"sample-8",name:"Festive Gift Hamper",description:"A curated gift hamper for family, friends and celebrations.",price:699,category:"Gifts",festival:"Other",image_url:"",stock:6,sampleIcon:"🎀"}
 ];
-let category="All",festival="",cart={},noticeTimer;
-function money(n){return "₹"+n.toLocaleString("en-IN")}
-function renderProducts(){
-const q=document.getElementById("search").value.trim().toLowerCase();
-const shown=products.filter(p=>(category==="All"||p.category===category||category==="Handmade"&&p.tag.toLowerCase().includes("hand"))&&(!festival||p.festival===festival)&&(!q||(p.name+" "+p.seller+" "+p.festival+" "+p.category).toLowerCase().includes(q)));
-document.getElementById("productHeading").textContent=festival?festival+" collection":category==="All"?"Festive favourites":category+" collection";
-document.getElementById("productGrid").innerHTML=shown.length?shown.map(p=>`<article class="product"><div class="product-image"><span class="tag">${p.tag}</span><span class="emoji">${p.emoji}</span></div><div class="product-info"><h3>${p.name}</h3><div class="seller">By ${p.seller}</div><div class="product-bottom"><span class="price">${money(p.price)}</span><button class="add" onclick="addToCart(${p.id})">Add +</button></div></div></article>`).join(""):'<div class="empty">No matching products. Try another search or category.</div>';
+
+function money(value) {
+  return new Intl.NumberFormat("en-IN",{style:"currency",currency:"INR",maximumFractionDigits:2}).format(Number(value)||0);
 }
-function chooseFestival(f,el){festival=festival===f?"":f;category="All";document.querySelectorAll(".festival").forEach(b=>b.classList.remove("active"));if(festival&&el)el.classList.add("active");document.querySelectorAll(".filter").forEach(b=>b.classList.toggle("active",b.textContent==="All products"));renderProducts();document.getElementById("products").scrollIntoView({behavior:"smooth"})}
-function chooseCategory(c,el){category=c;festival="";document.querySelectorAll(".festival").forEach(b=>b.classList.remove("active"));document.querySelectorAll(".filter").forEach(b=>b.classList.remove("active"));if(el&&el.classList.contains("filter"))el.classList.add("active");else document.querySelectorAll(".filter").forEach(b=>{if((c==="All"&&b.textContent==="All products")||b.textContent===c)b.classList.add("active")});renderProducts()}
-function resetFilters(){category="All";festival="";document.getElementById("search").value="";document.querySelectorAll(".festival").forEach(b=>b.classList.remove("active"));chooseCategory("All")}
-function toast(s){const n=document.getElementById("notice");n.textContent=s;n.style.display="block";clearTimeout(noticeTimer);noticeTimer=setTimeout(()=>n.style.display="none",2800)}
-function addToCart(id){cart[id]=(cart[id]||0)+1;updateCart();toast("Added to your bag.")}
-function updateCart(){document.getElementById("cartCount").textContent=Object.values(cart).reduce((a,b)=>a+b,0)}
-function openModal(html){document.getElementById("modalContent").innerHTML=html;document.getElementById("modalBackdrop").classList.add("open")}
-function closeModal(){document.getElementById("modalBackdrop").classList.remove("open")}
-function showCart(){
-const entries=Object.entries(cart);
-const total=entries.reduce((s,[id,n])=>s+products.find(p=>p.id===Number(id)).price*n,0);
-openModal(`<h2>Your shopping bag</h2>${entries.length?entries.map(([id,n])=>{const p=products.find(x=>x.id===Number(id));return `<p>${p.emoji} ${p.name}<br><span class="sub">${n} × ${money(p.price)}</span></p>`}).join(""):`<p class="sub">Your bag is empty. Find something special for your next celebration.</p>`}${entries.length?`<hr><p><strong>Total: ${money(total)}</strong></p><button class="primary" onclick="checkout()">Continue to checkout</button>`:""}<p class="sub">Prototype: sample products and cart only. No order or payment has been submitted.</p>`);
+
+function showMessage(id,message,type) {
+  const element=document.getElementById(id);
+  element.textContent=message;
+  element.className="form-message"+(type?" "+type:"");
 }
-function checkout(){openModal(`<h2>Checkout preview</h2><p class="sub">The shopping bag works as a demonstration, but real customer accounts, order storage and payments have not been connected yet.</p><button class="primary" onclick="closeModal()">Continue browsing</button>`)}
-function openAccount(){openModal(`<h2>Welcome to Sellora</h2><p class="sub">Customer and seller registration will be connected to the live database in the next development stage.</p><input placeholder="Email address" type="email" id="accountEmail"><button class="primary" onclick="toast('Account registration is not connected yet.');closeModal()">Continue</button><p class="sub">This prototype does not create or store real accounts.</p>`)}
-function openSeller(){openModal(`<h2>Sell on Sellora</h2><p class="sub">A marketplace for India's home sellers, artisans and small festival businesses.</p><input placeholder="Your name or business name" id="sellerName"><input placeholder="Email address" type="email" id="sellerEmail"><select id="sellerType"><option>Home seller</option><option>Artisan</option><option>Small festival business</option></select><button class="primary" onclick="toast('Seller registration will be connected in the next stage.');closeModal()">Get started</button><p class="sub">This is a demonstration form; details are not saved or submitted.</p>`)}
-document.getElementById("search").addEventListener("input",renderProducts);
-renderProducts();
+
+function openModal(id) {
+  document.getElementById(id).classList.add("open");
+}
+function closeModal(id) {
+  document.getElementById(id).classList.remove("open");
+}
+
+document.querySelectorAll(".modal").forEach(modal=>{
+  modal.addEventListener("click",event=>{
+    if(event.target===modal) modal.classList.remove("open");
+  });
+});
+
+function updateAccountUI() {
+  const status=document.getElementById("accountStatus");
+  const button=document.getElementById("accountButton");
+  if(currentUser) {
+    status.textContent=currentUser.email||"Signed in";
+    button.textContent="Sign out";
+    button.onclick=signOut;
+  } else {
+    status.textContent="Guest";
+    button.textContent="Sign in";
+    button.onclick=openAuth;
+  }
+}
+
+function openAuth() {
+  document.getElementById("authForm").reset();
+  showMessage("authMessage","","");
+  setAuthMode("signup");
+  openModal("authModal");
+}
+
+function setAuthMode(mode) {
+  authMode=mode;
+  const signup=mode==="signup";
+  document.getElementById("authTitle").textContent=signup?"Create your Sellora account":"Welcome back";
+  document.getElementById("authDescription").textContent=signup?"Join the marketplace to discover festive products.":"Sign in to your existing account.";
+  document.getElementById("nameField").style.display=signup?"block":"none";
+  document.getElementById("fullName").required=signup;
+  document.getElementById("authSubmit").textContent=signup?"Create account":"Sign in";
+  document.getElementById("authSwitch").textContent=signup?"I already have an account":"Create a new account";
+  document.getElementById("authPassword").autocomplete=signup?"new-password":"current-password";
+  showMessage("authMessage","","");
+}
+function switchAuthMode() {
+  setAuthMode(authMode==="signup"?"signin":"signup");
+}
+
+async function signOut() {
+  if(!selloraSupabase) return;
+  const {error}=await selloraSupabase.auth.signOut();
+  if(error) {
+    alert("Could not sign out: "+error.message);
+    return;
+  }
+  currentUser=null;
+  updateAccountUI();
+}
+
+document.getElementById("authForm").addEventListener("submit",async event=>{
+  event.preventDefault();
+  if(!selloraSupabase) {
+    showMessage("authMessage","The database connection is not ready. Refresh the page and try again.","error");
+    return;
+  }
+
+  const email=document.getElementById("authEmail").value.trim();
+  const password=document.getElementById("authPassword").value;
+  const fullName=document.getElementById("fullName").value.trim();
+  const button=document.getElementById("authSubmit");
+  button.disabled=true;
+  showMessage("authMessage","Please wait...","");
+
+  try {
+    if(authMode==="signup") {
+      const {data,error}=await selloraSupabase.auth.signUp({
+        email,
+        password,
+        options:{data:{full_name:fullName}}
+      });
+      if(error) throw error;
+
+      if(data.session) {
+        currentUser=data.user;
+        updateAccountUI();
+        showMessage("authMessage","Your account has been created successfully.","success");
+        setTimeout(()=>closeModal("authModal"),900);
+      } else {
+        showMessage("authMessage","Registration submitted. Check your email for a confirmation link if email confirmation is enabled in Supabase.","success");
+      }
+    } else {
+      const {data,error}=await selloraSupabase.auth.signInWithPassword({email,password});
+      if(error) throw error;
+      currentUser=data.user;
+      updateAccountUI();
+      showMessage("authMessage","You are signed in successfully.","success");
+      setTimeout(()=>closeModal("authModal"),700);
+    }
+  } catch(error) {
+    showMessage("authMessage",error.message||"Account action failed. Please try again.","error");
+  } finally {
+    button.disabled=false;
+  }
+});
+
+async function openSeller() {
+  showMessage("sellerMessage","","");
+  if(!currentUser) {
+    openAuth();
+    showMessage("authMessage","Please create an account or sign in first. Then open Apply to sell again.","");
+    return;
+  }
+  openModal("sellerModal");
+}
+
+document.getElementById("sellerForm").addEventListener("submit",async event=>{
+  event.preventDefault();
+  if(!selloraSupabase||!currentUser) {
+    showMessage("sellerMessage","Please sign in before submitting your application.","error");
+    return;
+  }
+  const button=document.getElementById("sellerSubmit");
+  button.disabled=true;
+  showMessage("sellerMessage","Submitting your application...","");
+  try {
+    const {error}=await selloraSupabase.from("seller_applications").insert({
+      user_id:currentUser.id,
+      business_name:document.getElementById("businessName").value.trim(),
+      seller_type:document.getElementById("sellerType").value,
+      status:"pending"
+    });
+    if(error) throw error;
+    showMessage("sellerMessage","Application submitted. It is pending review; product selling is not enabled until approval.","success");
+    document.getElementById("sellerForm").reset();
+  } catch(error) {
+    showMessage("sellerMessage",error.message||"Application could not be submitted.","error");
+  } finally {
+    button.disabled=false;
+  }
+});
+
+function safeText(value) {
+  return String(value??"").replace(/[&<>"']/g,char=>({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+  }[char]));
+}
+
+function renderProducts() {
+  const search=document.getElementById("searchInput").value.trim().toLowerCase();
+  const festival=document.getElementById("festivalFilter").value;
+  const products=databaseProducts.filter(product=>{
+    const matchesFestival=festival==="All"||String(product.festival||"Other").toLowerCase()===festival.toLowerCase();
+    const searchable=[product.name,product.description,product.category,product.festival].join(" ").toLowerCase();
+    return matchesFestival&&searchable.includes(search);
+  });
+
+  const grid=document.getElementById("productGrid");
+  if(!products.length) {
+    grid.innerHTML='<div class="empty">No products match your search. Try another keyword or festival.</div>';
+    return;
+  }
+
+  grid.innerHTML=products.map(product=>{
+    const image=product.image_url&&/^https?:\/\//i.test(product.image_url)
+      ?'<img src="'+safeText(product.image_url)+'" alt="'+safeText(product.name)+'" loading="lazy" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'">'
+      :'';
+    const icon=product.sampleIcon||"🎁";
+    const isSample=String(product.id).startsWith("sample-");
+    return '<article class="product">'+
+      '<div class="product-image">'+image+
+      '<div class="product-placeholder" style="'+(image?'display:none':'display:flex')+'">'+icon+'</div></div>'+
+      '<div class="product-body">'+
+      '<div class="product-tag">'+safeText(product.festival||"Festive collection")+'</div>'+
+      '<h3>'+safeText(product.name)+'</h3>'+
+      '<p class="product-desc">'+safeText(product.description||"A festive find from Sellora.")+'</p>'+
+      '<div class="product-bottom"><span class="price">'+money(product.price)+'</span>'+
+      '<button class="add-btn" onclick="addToCart(\''+safeText(product.id)+'\')">Add to cart</button></div>'+
+      (isSample?'<div style="font-size:10px;color:#8a8075;margin-top:9px">Illustrative sample product</div>':'')+
+      '</div></article>';
+  }).join("");
+}
+
+async function loadProducts() {
+  const grid=document.getElementById("productGrid");
+  try {
+    if(!selloraSupabase) throw new Error("Supabase client unavailable");
+    const {data,error}=await selloraSupabase
+      .from("products")
+      .select("id,name,description,price,category,festival,image_url,stock")
+      .eq("is_active",true)
+      .order("created_at",{ascending:false});
+    if(error) throw error;
+
+    if(data&&data.length) {
+      databaseProducts=data;
+      document.getElementById("productSubtitle").textContent="Products listed by sellers on Sellora.";
+      document.getElementById("dataNotice").textContent="These listings are loaded from the Sellora database. Product availability and fulfilment must be confirmed by the seller.";
+    } else {
+      databaseProducts=sampleProducts;
+      document.getElementById("productSubtitle").textContent="A preview of the kinds of products Sellora will feature.";
+      document.getElementById("dataNotice").textContent="These are sample products for demonstration, not real seller listings. Approved sellers' active products will replace these examples when available.";
+    }
+  } catch(error) {
+    console.error("Could not load products:",error);
+    databaseProducts=sampleProducts;
+    document.getElementById("productSubtitle").textContent="Preview the marketplace while listings are being connected.";
+    document.getElementById("dataNotice").textContent="The product database could not be loaded, so sample products are shown. Check your Supabase connection and products table policies.";
+  }
+  renderProducts();
+}
+
+function chooseFestival(festival,button) {
+  document.getElementById("festivalFilter").value=festival;
+  document.querySelectorAll(".category").forEach(item=>item.classList.remove("active"));
+  if(button) button.classList.add("active");
+  renderProducts();
+  document.getElementById("shop").scrollIntoView({behavior:"smooth"});
+}
+
+document.getElementById("searchInput").addEventListener("input",renderProducts);
+document.getElementById("festivalFilter").addEventListener("change",renderProducts);
+
+function addToCart(productId) {
+  const product=databaseProducts.find(item=>String(item.id)===String(productId));
+  if(!product) return;
+  const existing=cart.find(item=>String(item.id)===String(productId));
+  if(existing) existing.quantity+=1;
+  else cart.push({...product,quantity:1});
+  updateCart();
+}
+
+function updateCart() {
+  document.getElementById("cartCount").textContent=cart.reduce((sum,item)=>sum+item.quantity,0);
+  const list=document.getElementById("cartList");
+  if(!cart.length) {
+    list.innerHTML='<div class="empty">Your cart is empty. Explore the marketplace to add products.</div>';
+  } else {
+    list.innerHTML=cart.map(item=>
+      '<div class="cart-row"><div><strong>'+safeText(item.name)+'</strong><br>'+
+      '<span>'+money(item.price)+' × '+item.quantity+'</span></div>'+
+      '<div style="text-align:right"><strong>'+money(Number(item.price)*item.quantity)+'</strong><br>'+
+      '<button onclick="removeFromCart(\''+safeText(item.id)+'\')">Remove</button></div></div>'
+    ).join("");
+  }
+  const total=cart.reduce((sum,item)=>sum+Number(item.price)*item.quantity,0);
+  document.getElementById("cartTotal").textContent=money(total);
+}
+
+function removeFromCart(productId) {
+  cart=cart.filter(item=>String(item.id)!==String(productId));
+  updateCart();
+}
+
+function openCart() {
+  showMessage("cartMessage","","");
+  updateCart();
+  openModal("cartModal");
+}
+
+function startCheckout() {
+  showMessage("cartMessage","Checkout is not connected yet. The cart currently works as a prototype; secure order creation, stock checks and payment processing must be implemented before taking real orders.","error");
+}
+
+async function initialiseSellora() {
+  try {
+    if(!window.supabase||!window.supabase.createClient) {
+      throw new Error("Supabase library did not load. Check your internet connection.");
+    }
+    selloraSupabase=window.supabase.createClient(
+      SELLORA_SUPABASE_URL,
+      SELLORA_SUPABASE_KEY
+    );
+    const {data,error}=await selloraSupabase.auth.getSession();
+    if(error) throw error;
+    currentUser=data.session?.user||null;
+    updateAccountUI();
+
+    selloraSupabase.auth.onAuthStateChange((_event,session)=>{
+      currentUser=session?.user||null;
+      updateAccountUI();
+    });
+
+    await loadProducts();
+    console.log("Sellora Supabase client initialized.");
+  } catch(error) {
+    console.error("Sellora setup error:",error);
+    currentUser=null;
+    updateAccountUI();
+    databaseProducts=sampleProducts;
+    renderProducts();
+    document.getElementById("dataNotice").textContent="Supabase could not be reached. Sample products are shown; registration and seller applications need a working connection.";
+  }
+}
+
+updateCart();
+initialiseSellora();
 </script>
 </body>
 </html>
