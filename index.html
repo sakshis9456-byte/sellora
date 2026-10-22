@@ -496,7 +496,7 @@ footer p {
   <nav class="nav">
     <a class="logo" href="#">sellora<span>.</span></a>
     <div class="navlinks">
-      <a href="shop.html">Shop</a>
+      <a href="#shop">Shop</a>
       <a href="#festivals">Festivals</a>
       <a href="#sell-with-us">Sell with us</a>
     </div>
@@ -515,7 +515,7 @@ footer p {
       <h1>Every festival.<br>Something special.</h1>
       <p>Discover festive essentials, thoughtful gifts and handcrafted treasures from independent Indian sellers, artisans and small businesses.</p>
       <div class="hero-actions">
-        <a class="btn btn-primary" href="shop.html">Explore the marketplace</a>
+        <a class="btn btn-primary" href="#shop">Explore the marketplace</a>
         <a class="btn" href="#sell-with-us">Become a seller</a>
       </div>
     </div>
@@ -612,7 +612,7 @@ footer p {
         <p id="productSubtitle">Explore products from independent sellers.</p>
       </div>
       <a class="text-link" href="#sell-with-us">Are you a seller?</a>
-      <a class="text-link" href="shop.html">View all products →</a>
+      <a class="text-link" href="#shop">View all products →</a>
     </div>
 
     <div class="toolbar">
@@ -662,7 +662,7 @@ footer p {
       <p>A festival-products marketplace helping customers discover local makers, traditional goods and thoughtful festive gifts.</p>
     </div>
     <div class="footer-links">
-      <a href="shop.html">Shop</a>
+      <a href="#shop">Shop</a>
       <a href="#festivals">Festivals</a>
       <a href="#sell-with-us">Sell with us</a>
       <a href="#" onclick="openAuth();return false;">My account</a>
@@ -1261,23 +1261,25 @@ async function loadProducts() {
       document.getElementById("productSubtitle").textContent = "Products listed by sellers on Sellora.";
       document.getElementById("dataNotice").textContent = "These listings are loaded from the Sellora database.";
     } else {
-      databaseProducts = sampleProducts;
-      document.getElementById("productSubtitle").textContent = "A preview of the products Sellora will feature.";
-      document.getElementById("dataNotice").textContent = "These are sample products for demonstration, not real seller listings. Approved sellers' active products will replace these examples when available.";
+      databaseProducts = [];
+      document.getElementById("productSubtitle").textContent = "Products listed by approved sellers on Sellora.";
+      document.getElementById("dataNotice").textContent = "No active seller products are available yet. Products published by approved sellers will appear here.";
     }
   } catch (error) {
     console.error("Could not load products:",error);
-    databaseProducts = sampleProducts;
-    document.getElementById("productSubtitle").textContent = "Preview the marketplace.";
-    document.getElementById("dataNotice").textContent = "Sample products are shown because the product database could not be loaded.";
+    databaseProducts = [];
+    document.getElementById("productSubtitle").textContent = "Products listed by approved sellers on Sellora.";
+    document.getElementById("dataNotice").textContent = "The marketplace could not load products. Please refresh and try again.";
   }
 
   renderProducts();
 }
 
 function chooseFestival(festival,button) {
-  const target = festival === "All" ? "shop.html" : "shop.html?festival=" + encodeURIComponent(festival);
-  window.location.href = target;
+  const filter = document.getElementById("festivalFilter");
+  if (filter) filter.value = festival;
+  renderProducts();
+  document.getElementById("shop").scrollIntoView({behavior:"smooth",block:"start"});
 }
 
 document.getElementById("searchInput").addEventListener("input",renderProducts);
@@ -1285,12 +1287,8 @@ document.getElementById("festivalFilter").addEventListener("change",renderProduc
 document.getElementById("searchInput").addEventListener("keydown", event => {
   if (event.key === "Enter") {
     event.preventDefault();
-    const query = document.getElementById("searchInput").value.trim();
-    const festival = document.getElementById("festivalFilter").value;
-    const params = new URLSearchParams();
-    if (query) params.set("q", query);
-    if (festival && festival !== "All") params.set("festival", festival);
-    window.location.href = "shop.html" + (params.toString() ? "?" + params.toString() : "");
+    renderProducts();
+    document.getElementById("shop").scrollIntoView({behavior:"smooth",block:"start"});
   }
 });
 
@@ -1373,10 +1371,10 @@ async function initialiseSellora() {
     console.error("Sellora setup error:",error);
     currentUser = null;
     updateAccountUI();
-    databaseProducts = sampleProducts;
+    databaseProducts = [];
     renderProducts();
     document.getElementById("dataNotice").textContent =
-      "Supabase could not be reached. Sample products are shown; account and seller features need a working connection.";
+      "Supabase could not be reached. Please refresh the page and try again.";
   }
 }
 
