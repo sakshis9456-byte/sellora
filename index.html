@@ -9,16 +9,16 @@
 
 <style>
 :root {
-  --ink:#30201f;
-  --muted:#756966;
-  --paper:#fbf7f0;
+  --ink:#172b4d;
+  --muted:#667085;
+  --paper:#faf8f2;
   --white:#fff;
-  --line:#eadfd7;
-  --accent:#7d2638;
-  --accent-dark:#5f1b2a;
-  --soft:#f4e8e5;
-  --gold:#b99252;
-  --green:#7d2638;
+  --line:#e4e2dc;
+  --accent:#203f70;
+  --accent-dark:#152d52;
+  --soft:#eaf0f8;
+  --gold:#b89a5a;
+  --navy:#203f70;
 }
 * { box-sizing:border-box; }
 body {
@@ -105,7 +105,7 @@ main {
   display:grid;
   grid-template-columns:1.05fr .95fr;
   min-height:390px;
-  background:#f2e4dc;
+  background:#eaf0f8;
   border-radius:8px;
   overflow:hidden;
 }
@@ -135,7 +135,7 @@ h1 {
 .hero-copy p {
   font-size:15px;
   line-height:1.8;
-  color:#635a50;
+  color:#536078;
   max-width:440px;
 }
 .hero-actions {
@@ -146,7 +146,7 @@ h1 {
 }
 .hero-art {
   min-height:330px;
-  background:linear-gradient(145deg,#d7b99b,#b7795b);
+  background:linear-gradient(145deg,#dce5f1,#8fa7c7);
   position:relative;
   display:flex;
   align-items:center;
@@ -157,7 +157,7 @@ h1 {
   content:"";
   position:absolute;
   border-radius:50%;
-  border:1px solid #ffffff66;
+  border:1px solid #ffffff80;
 }
 .hero-art:before { width:290px;height:290px; }
 .hero-art:after { width:220px;height:220px; }
@@ -165,11 +165,11 @@ h1 {
   z-index:1;
   width:65%;
   max-width:330px;
-  background:#fffaf4;
+  background:#fffdf8;
   padding:25px 22px;
   text-align:center;
   transform:rotate(-3deg);
-  box-shadow:0 18px 40px #53352626;
+  box-shadow:0 18px 40px #172b4d20;
 }
 .art-symbol { font-size:72px;margin:5px 0 12px; }
 .art-card strong {
@@ -181,7 +181,7 @@ h1 {
 .art-card small {
   display:block;
   margin-top:8px;
-  color:#756355;
+  color:#6b7280;
   letter-spacing:2px;
   font-size:10px;
 }
@@ -259,7 +259,7 @@ h1 {
 }
 .product-image {
   height:190px;
-  background:#f2e8e1;
+  background:#edf1f7;
   display:flex;
   align-items:center;
   justify-content:center;
@@ -315,15 +315,15 @@ h1 {
 }
 .notice {
   padding:15px 17px;
-  background:#f4e8e5;
+  background:#edf1f7;
   border-radius:5px;
   font-size:13px;
   line-height:1.7;
-  color:#655749;
+  color:#536078;
   margin-top:18px;
 }
 .seller-banner {
-  background:#f0e1dc;
+  background:#e9eef6;
   padding:32px;
   border-radius:7px;
   display:flex;
@@ -346,7 +346,7 @@ h1 {
 }
 footer {
   margin-top:60px;
-  background:#30201f;
+  background:#172b4d;
   color:white;
   padding:38px 22px;
 }
@@ -360,7 +360,7 @@ footer {
 }
 footer .logo { color:white; }
 footer p {
-  color:#c7bfb5;
+  color:#d3dbea;
   font-size:12px;
   line-height:1.7;
   max-width:420px;
@@ -378,7 +378,7 @@ footer p {
   position:fixed;
   inset:0;
   z-index:30;
-  background:#30201fa8;
+  background:#172b4db3;
   align-items:center;
   justify-content:center;
   padding:18px;
@@ -486,6 +486,14 @@ footer p {
   .product-bottom { align-items:flex-start;flex-direction:column; }
   .seller-banner { padding:22px;align-items:flex-start;flex-direction:column; }
 }
+ 
+.destination-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.destination-card{display:block;padding:28px;border:1px solid var(--line);border-radius:8px;background:#fffdf8;transition:transform .2s,border-color .2s}
+.destination-card:hover{transform:translateY(-3px);border-color:var(--gold)}
+.destination-card h2{font:normal 27px/1.2 Georgia,serif;margin:12px 0}
+.destination-card p{color:var(--muted);font-size:14px;line-height:1.7}
+.destination-link{font-size:13px;font-weight:bold;color:var(--accent)}
+@media(max-width:650px){.destination-grid{grid-template-columns:1fr}.destination-card{padding:22px}}
 </style>
 </head>
 
@@ -497,8 +505,8 @@ footer p {
     <a class="logo" href="index.html">sellora<span>.</span></a>
     <div class="navlinks">
       <a href="shop.html">Shop</a>
-      <a href="#festivals">Festivals</a>
-      <a href="#sell-with-us">Sell with us</a>
+      <a href="shop.html">Festivals</a>
+      <a href="sell.html">Sell with us</a>
     </div>
     <div class="navactions">
       <span class="account-status" id="accountStatus">Guest</span>
@@ -516,114 +524,16 @@ footer p {
       <p>Discover festive essentials, thoughtful gifts and handcrafted treasures from independent Indian sellers, artisans and small businesses.</p>
       <div class="hero-actions">
         <a class="btn btn-primary" href="shop.html">Explore the marketplace</a>
-        <a class="btn" href="#sell-with-us">Become a seller</a>
+        <a class="btn" href="sell.html">Become a seller</a>
       </div>
     </div>
-    <div class="hero-art">
-      <div class="art-card">
-        <div class="art-symbol">🪔</div>
-        <strong>Celebrate the little things</strong>
-        <small>LOCAL MAKERS · FESTIVE FINDS</small>
-      </div>
-    </div>
+    <div class="hero-art"><div class="art-card"><div class="art-symbol">🪔</div><strong>Celebrate the little things</strong><small>LOCAL MAKERS · FESTIVE FINDS</small></div></div>
   </section>
-
-  <section class="section" id="festivals">
-    <div class="section-head">
-      <div>
-        <h2>Shop by celebration</h2>
-        <p>Find something meaningful for every occasion.</p>
-      </div>
-    </div>
-
-    <div class="categories">
-      <button class="category" onclick="window.location.href='shop.html?festival=Diwali'">
-        <div class="category-icon">🪔</div>
-        <strong>Diwali</strong>
-        <small>Lights and decor</small>
-      </button>
-      <button class="category" onclick="window.location.href='shop.html?festival=Holi'">
-        <div class="category-icon">🎨</div>
-        <strong>Holi</strong>
-        <small>Colours and celebration</small>
-      </button>
-      <button class="category" onclick="window.location.href='shop.html?festival=Ganesh%20Chaturthi'">
-        <div class="category-icon">🌼</div>
-        <strong>Ganesh Chaturthi</strong>
-        <small>Puja and decor</small>
-      </button>
-      <button class="category" onclick="window.location.href='shop.html?festival=Navratri'">
-        <div class="category-icon">🌺</div>
-        <strong>Navratri</strong>
-        <small>Festive essentials</small>
-      </button>
-      <button class="category" onclick="window.location.href='shop.html?festival=Durga%20Puja'">
-        <div class="category-icon">🪷</div>
-        <strong>Durga Puja</strong>
-        <small>Tradition and decor</small>
-      </button>
-      <button class="category" onclick="window.location.href='shop.html?festival=Raksha%20Bandhan'">
-        <div class="category-icon">🎁</div>
-        <strong>Raksha Bandhan</strong>
-        <small>Rakhis and gifts</small>
-      </button>
-      <button class="category" onclick="window.location.href='shop.html?festival=Eid'">
-        <div class="category-icon">🌙</div>
-        <strong>Eid</strong>
-        <small>Gifts and celebration</small>
-      </button>
-      <button class="category" onclick="window.location.href='shop.html?festival=Christmas'">
-        <div class="category-icon">🎄</div>
-        <strong>Christmas</strong>
-        <small>Gifts and decorations</small>
-      </button>
-      <button class="category" onclick="window.location.href='shop.html?festival=Pongal'">
-        <div class="category-icon">🌾</div>
-        <strong>Pongal</strong>
-        <small>Harvest celebrations</small>
-      </button>
-      <button class="category" onclick="window.location.href='shop.html?festival=Onam'">
-        <div class="category-icon">🌸</div>
-        <strong>Onam</strong>
-        <small>Traditional finds</small>
-      </button>
-      <button class="category" onclick="window.location.href='shop.html?festival=Janmashtami'">
-        <div class="category-icon">🦚</div>
-        <strong>Janmashtami</strong>
-        <small>Puja and gifts</small>
-      </button>
-      <button class="category" onclick="window.location.href='shop.html?festival=Makar%20Sankranti'">
-        <div class="category-icon">🪁</div>
-        <strong>Makar Sankranti</strong>
-        <small>Kites and festivities</small>
-      </button>
-      <button class="category" onclick="window.location.href='shop.html?festival=All'">
-        <div class="category-icon">✨</div>
-        <strong>All festivals</strong>
-        <small>Explore everything</small>
-      </button>
-    </div>
-  </section>
-
-  <section class="section marketplace-cta">
-    <div class="seller-banner">
-      <div>
-        <span class="eyebrow">Discover independent makers</span>
-        <h2>Find your next festive favourite.</h2>
-        <p>Explore real product listings published by approved Sellora sellers.</p>
-      </div>
-      <a class="btn btn-primary" href="shop.html">Browse the marketplace</a>
-    </div>
-  </section>
-
-  <section class="section" id="sell-with-us">
-    <div class="seller-banner">
-      <div>
-        <span class="eyebrow">Your craft deserves a wider audience</span>
-        <h2>Bring your creations to Sellora.</h2>
-        <p>Join a marketplace designed for home sellers, artisans and small festival businesses. Apply to become a seller and share your products with more customers.</p>
-      </div>
-      <button class="btn btn-primary" id="sellerActionButton" onclick="openSeller()">Apply to sell</button>
+  <section class="section">
+    <div class="section-head"><div><h2>Explore Sellora</h2><p>Choose where you would like to go next.</p></div></div>
+    <div class="destination-grid">
+      <a class="destination-card" href="shop.html"><span class="eyebrow">For shoppers</span><h2>Shop festival products</h2><p>Browse real listings, search products and filter by festival.</p><span class="destination-link">Explore the marketplace →</span></a>
+      <a class="destination-card" href="sell.html"><span class="eyebrow">For makers</span><h2>Sell with Sellora</h2><p>Apply to list your products as a home seller, artisan or small business.</p><span class="destination-link">Learn how to sell →</span></a>
     </div>
   </section>
 </main>
@@ -636,8 +546,8 @@ footer p {
     </div>
     <div class="footer-links">
       <a href="shop.html">Shop</a>
-      <a href="#festivals">Festivals</a>
-      <a href="#sell-with-us">Sell with us</a>
+      <a href="shop.html">Festivals</a>
+      <a href="sell.html">Sell with us</a>
       <a href="#" onclick="openAuth();return false;">My account</a>
     </div>
   </div>
