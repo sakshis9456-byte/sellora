@@ -5,631 +5,744 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sellora | India's Festival Marketplace</title>
-<meta name="description" content="Discover Indian festivals, regional traditions, local artisans and festive products from across India.">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<meta name="description" content="Discover festival essentials, handmade gifts and traditional products from Indian home sellers and artisans.">
+
 <style>
-:root{--cream:#fffaf3;--paper:#fff;--teal:#064f50;--ink:#173b45;--coral:#f45c70;--gold:#d5a75b;--muted:#68777b;--line:#eadfd2}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:90px}
-body{margin:0;background:var(--cream);color:var(--ink);font-family:Arial,Helvetica,sans-serif}
-a{color:inherit;text-decoration:none}
-button,input,select{font:inherit}
-button,a,select{cursor:pointer}
-header{position:sticky;top:0;z-index:10;background:#fffaf3ed;backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
-.nav{max-width:1420px;margin:auto;padding:15px 5%;display:flex;align-items:center;gap:24px}
-.logo{font-family:Georgia,serif;font-size:29px;font-weight:bold;color:var(--teal);margin-right:auto}
-.logo span{color:var(--coral)}
-nav{display:flex;gap:22px;align-items:center}
-nav a{font-size:14px;font-weight:600}
-nav a:hover{color:var(--coral)}
-.btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 19px;border:0;border-radius:30px;background:var(--coral);color:white;font-weight:700}
-.btn.teal{background:var(--teal)}
-.btn.light{background:white;color:var(--teal);border:1px solid var(--line)}
-.btn:hover{filter:brightness(.96)}
-.menu{display:none}
-main{max-width:1420px;margin:auto;padding:0 5%}
-.hero{margin:28px 0 24px;min-height:390px;border-radius:24px;overflow:hidden;display:grid;grid-template-columns:1fr 1fr;background:#f8e9d7}
-.hero-copy{padding:55px 7%;align-self:center}
-.eyebrow{text-transform:uppercase;letter-spacing:2px;font-size:11px;font-weight:800;color:var(--coral)}
-h1,h2,h3{font-family:Georgia,'Times New Roman',serif;color:var(--teal)}
-h1{font-size:clamp(38px,5vw,65px);line-height:1.04;margin:16px 0}
-.hero p{line-height:1.7;color:#53696b;max-width:470px}
-.hero-image{min-height:350px;background-image:url('https://images.unsplash.com/photo-1603909223429-69bb7101f420?auto=format&fit=crop&w=1400&q=90');background-size:cover;background-position:center}
-.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}
-.section{padding:38px 0}
-.section-head{display:flex;justify-content:space-between;align-items:end;gap:16px;margin-bottom:22px}
-.section-head h2{font-size:30px;margin:0 0 7px}
-.section-head p{color:var(--muted);margin:0;font-size:14px;line-height:1.6}
-.text-link{color:var(--coral);font-size:14px;font-weight:bold;white-space:nowrap}
-.finder{padding:25px;border-radius:20px;background:#f9eddf;border:1px solid #f1dfca}
-.controls{display:grid;grid-template-columns:2fr 1fr auto;gap:12px;margin-top:17px}
-input,select{width:100%;padding:13px 15px;border:1px solid #e3d8cb;border-radius:12px;background:white;color:var(--ink);outline:none;min-width:0}
-input:focus,select:focus{border-color:var(--teal)}
-.directory-tools{display:grid;grid-template-columns:2fr 1fr 1fr;gap:12px;margin-bottom:18px}
-.results-line{display:flex;justify-content:space-between;gap:10px;color:var(--muted);font-size:13px;margin:12px 0 18px}
-.festival-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
-.festival-card{background:white;border:1px solid var(--line);border-radius:16px;overflow:hidden;transition:transform .2s,box-shadow .2s}
-.festival-card:hover{transform:translateY(-3px);box-shadow:0 9px 24px #4d34220d}
-.festival-card img{width:100%;height:165px;display:block;object-fit:cover;background:#efe4d6}
-.festival-info{padding:14px}
-.festival-info h3{font-family:Arial,sans-serif;font-size:16px;margin:0 0 7px;color:var(--ink)}
-.festival-info p{font-size:12px;line-height:1.5;color:var(--muted);margin:0 0 10px}
-.meta{font-size:11px;color:#9a6c3f;font-weight:bold}
-.card-link{display:inline-block;margin-top:12px;font-size:12px;color:var(--coral);font-weight:bold}
-.states-banner{margin:25px 0 12px;background:#fcedd9;border-radius:20px;display:grid;grid-template-columns:1fr 1fr;overflow:hidden;min-height:230px}
-.states-copy{padding:35px}
-.states-copy h2{font-size:34px;margin:0 0 12px}
-.states-copy p{color:var(--muted);line-height:1.7}
-.states-image{background:url('https://images.unsplash.com/photo-1504609813442-a8924e83f76e?auto=format&fit=crop&w=1200&q=90') center/cover}
-.products{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
-.product-card{background:white;border:1px solid var(--line);border-radius:16px;overflow:hidden}
-.product-card img{width:100%;height:190px;object-fit:cover;background:#f3e9dd}
-.product-info{padding:15px}
-.product-info h3{font-family:Arial,sans-serif;font-size:15px;margin:0 0 9px}
-.price{font-weight:bold;color:var(--teal);margin:8px 0}
-.empty{padding:25px;background:white;border:1px solid var(--line);border-radius:14px;color:var(--muted);grid-column:1/-1}
-.features{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;padding:24px 0}
-.feature{padding:20px;background:#f8eee1;border-radius:15px}
-.feature strong{display:block;color:var(--teal);margin-bottom:7px}
-.feature span{font-size:13px;color:var(--muted);line-height:1.6}
-footer{margin-top:30px;background:var(--teal);color:white;padding:35px 5%}
-.footer-inner{max-width:1300px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
-footer .logo{color:white}
-footer p{font-size:13px;line-height:1.7;color:#d7e8e5}
-footer a{margin-left:16px;font-size:13px}
-.modal{display:none;position:fixed;inset:0;z-index:30;background:#102f35a8;align-items:center;justify-content:center;padding:20px}
-.modal.open{display:flex}
-.modal-box{width:min(430px,100%);background:white;padding:27px;border-radius:20px}
-.modal-box h2{margin-top:0}
-.modal-box input{margin-bottom:12px}
-.modal-box .btn{width:100%;margin-top:8px}
-.modal-close{float:right;border:0;background:transparent;font-size:24px;color:var(--muted)}
-#authMessage{font-size:13px;line-height:1.5;color:var(--teal)}
-@media(max-width:950px){
- nav{gap:13px}
- .festival-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
- .products{grid-template-columns:repeat(2,minmax(0,1fr))}
- .hero{grid-template-columns:1fr 1fr}
-}
-@media(max-width:680px){
- .nav{padding:13px 5%;gap:12px;flex-wrap:wrap}
- .logo{font-size:25px}
- nav{order:3;width:100%;overflow-x:auto;padding:7px 0}
- nav a{white-space:nowrap;font-size:12px}
- .nav>.btn{padding:10px 13px;font-size:12px}
- main{padding:0 4%}
- .hero{grid-template-columns:1fr}
- .hero-copy{padding:35px 7%}
- .hero-image{min-height:220px;grid-row:1}
- h1{font-size:42px}
- .controls,.directory-tools{grid-template-columns:1fr}
- .festival-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
- .festival-card img{height:125px}
- .festival-info{padding:11px}
- .festival-info h3{font-size:14px}
- .section-head h2{font-size:25px}
- .states-banner{grid-template-columns:1fr}
- .states-image{min-height:180px}
- .states-copy{padding:25px}
- .products{gap:12px}
- .product-card img{height:145px}
- .features{grid-template-columns:repeat(2,1fr)}
- .section{padding:27px 0}
-}
+:root{--ink:#123f4b;--muted:#647781;--paper:#fffaf3;--white:#fff;--line:#f0e3d8;--accent:#f34f72;--accent-dark:#d83c60;--soft:#fff0ed;--gold:#dfa84f;--navy:#064b50;--teal:#0a6267}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font-family:Arial,Helvetica,sans-serif;font-size:14px}button,input,select,textarea{font:inherit}button{cursor:pointer}a{color:inherit;text-decoration:none}img{max-width:100%;display:block}.topbar{display:none}header{position:sticky;top:0;z-index:20;background:#fffdf9;border-bottom:1px solid #f0e5da}.nav{max-width:1240px;margin:auto;min-height:58px;padding:9px 24px;display:flex;align-items:center;gap:28px}.logo{font-family:Georgia,serif;font-size:27px;font-weight:bold;letter-spacing:-1px;color:#123f4b;white-space:nowrap}.logo span{color:var(--accent)}.navlinks{display:flex;gap:26px;align-items:center;margin-left:auto;font-size:12px;color:#35535c}.navlinks a{padding:12px 0}.navlinks a:first-child{color:var(--accent);border-bottom:2px solid var(--accent)}.navactions{display:flex;align-items:center;gap:9px}.account-status{display:none}.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 18px;border:1px solid #f1a6b4;border-radius:999px;background:#fffdfa;color:var(--accent-dark);font-size:12px;white-space:nowrap}.btn-primary{background:var(--accent);border-color:var(--accent);color:white}.btn:hover{transform:translateY(-1px)}#accountButton{padding:8px 12px}main{width:100%;max-width:1240px;margin:0 auto;padding:0 24px}.hero{margin:0 0 18px;min-height:285px;display:grid;grid-template-columns:1fr 1.05fr;overflow:hidden;border-radius:0 0 20px 20px;background:linear-gradient(105deg,#fffaf3 0%,#fff3e4 65%,#fce7d9 100%);position:relative}.hero-copy{padding:40px 28px 32px 34px;position:relative;z-index:2}.eyebrow{font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:#b64050;font-weight:800}.hero h1{font-family:Georgia,'Times New Roman',serif;font-size:clamp(36px,4vw,51px);line-height:1.02;letter-spacing:-1.1px;margin:13px 0 12px;color:#123f4b}.hero h1 .pink{color:var(--accent)}.hero h1 .teal{color:#0b777b}.hero-copy p{max-width:350px;line-height:1.55;font-size:13px;color:#536c74;margin:0 0 17px}.hero-actions{display:flex;gap:10px;flex-wrap:wrap}.hero-art{min-height:285px;background-image:url('assets/hero-diwali.jpg');background-position:center;background-size:cover;position:relative;border-radius:140px 0 0 140px;border-left:5px solid #fff4e5}.hero-art:after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,#fff4e51c,transparent 28%)}.section{margin:20px 0 25px}.festival-finder{display:grid;grid-template-columns:1fr;gap:10px;padding:18px 23px 20px;border:1px solid #f4d8d0;border-radius:13px;background:linear-gradient(105deg,#fff1e9,#fff3f1);box-shadow:none}.finder-copy{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.finder-copy:before{content:'♧';font-size:27px;color:var(--accent)}.finder-copy .eyebrow{display:none}.finder-copy h2{font: bold 20px Georgia,serif;margin:0;color:var(--ink)}.finder-copy p{font-size:12px;color:#65777a;margin:0}.finder-controls{display:grid;grid-template-columns:repeat(3,minmax(0,1fr)) 150px;gap:9px;align-items:center}.finder-controls label{display:none}.finder-controls select{min-width:0;border:1px solid #efe0d5;border-radius:9px;padding:11px;background:#fffdfa;color:#536b72;font-size:11px}.finder-controls .btn{padding:11px 14px}.section-head{display:flex;justify-content:space-between;align-items:end;gap:15px;margin:24px 4px 13px}.section-head h2,.section-heading h2{font: bold 23px Georgia,serif;color:var(--ink);margin:0}.section-head p{display:none}.text-link{font-size:11px;color:var(--accent);white-space:nowrap}.inspiration-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:12px}.inspiration-card{display:block;border:0;border-radius:11px;background:transparent;overflow:hidden;box-shadow:none;min-width:0}.inspiration-art{height:auto;aspect-ratio:1.05;background-size:cover;background-position:center;position:relative;border-radius:11px;overflow:hidden}.inspiration-art:after{display:none}.art-diya{background-image:url('assets/festival-diwali.jpg')}.art-gift{background-image:url('assets/festival-holi.jpg')}.art-rangoli{background-image:url('assets/festival-ganesh.jpg')}.art-thali{background-image:url('assets/festival-rakhi.jpg')}.art-onam{background-image:url('assets/festival-onam.jpg')}.art-navratri{background-image:url('assets/festival-navratri.jpg')}.art-pongal{background-image:url('assets/festival-pongal.jpg')}.art-stamp{position:absolute;left:0;right:0;bottom:0;top:auto;background:#123f4bba;color:#fff;text-align:center;font-size:9px;letter-spacing:.4px;padding:6px 2px;border:0;border-radius:0}.festival-visual-title,.inspiration-info,.inspiration-note{display:none}.festival-visual-card{position:relative}.festival-visual-card:after{content:attr(aria-label);display:block;text-align:center;font-size:11px;color:#244b55;font-weight:600;padding-top:7px}.festival-visual-grid .inspiration-art{height:auto;aspect-ratio:1.05}.all-india-festivals{display:none}.state-banner{min-height:135px;border-radius:14px;overflow:hidden;display:grid;grid-template-columns:1fr 1.05fr;background:#fff0dc;margin:24px 0 22px;position:relative}.state-copy{padding:22px 25px;z-index:2}.state-copy h2{font: bold 25px/1.03 Georgia,serif;margin:0 0 9px;color:#104651}.state-copy p{font-size:11px;line-height:1.45;color:#566e74;max-width:250px;margin:0 0 10px}.state-copy .btn{background:#064b50;color:white;border-color:#064b50;padding:9px 16px}.state-art{background:url('assets/state-dancer.jpg') center 40%/cover no-repeat;min-height:135px;clip-path:polygon(9% 0,100% 0,100% 100%,0 100%)}.popular-head{margin-top:16px}.popular-head h2{font: bold 23px Georgia,serif}.popular-tools{display:none}.products{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px}.product{border:0;border-radius:10px;background:#fff;overflow:hidden;box-shadow:none;min-width:0}.product:hover{transform:translateY(-2px);box-shadow:0 8px 20px #6c43301a}.product-image{height:auto;aspect-ratio:1.15;background:#f5eadb;position:relative}.product-image img{width:100%;height:100%;object-fit:cover}.product-placeholder{height:100%;display:flex;align-items:center;justify-content:center;font-size:35px}.product-body{padding:9px 8px 11px}.product-tag{display:none}.product h3{font-size:11px;line-height:1.35;margin:0 0 6px;color:#234a53;font-weight:700}.product-desc{display:none}.product-bottom{display:flex;flex-wrap:wrap;gap:5px;align-items:center;justify-content:space-between}.price{font-size:11px;font-weight:800;color:#173f48}.add-btn{padding:4px 7px;border-radius:999px;border:1px solid #f5b5c0;background:#fff;color:var(--accent);font-size:10px}.benefits{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;background:#fff2df;border:1px solid #f4e4d1;border-radius:12px;margin:22px 0;padding:13px 15px}.benefit{display:flex;gap:9px;align-items:center;font-size:10px;color:#35555d}.benefit-icon{width:27px;height:27px;border-radius:50%;display:grid;place-items:center;background:#ffe0d9;font-size:15px;flex-shrink:0}.benefit strong{display:block;font-size:10px;margin-bottom:3px}.benefit span{display:block;color:#6c7c7e;font-size:9px}.bottom-banner{min-height:110px;margin:20px -12px 0;border-radius:13px;overflow:hidden;background:#064b50;display:grid;grid-template-columns:40% 60%;position:relative}.bottom-copy{padding:16px 24px 16px 30px;color:#ffe3a3;z-index:2}.bottom-copy h2{font:bold 25px/1.02 Georgia,serif;margin:0 0 10px}.bottom-copy .btn{padding:7px 13px;background:#ff9779;color:white;border:0;font-size:10px}.bottom-image{background:url('assets/bottom-festival-strip.jpg') center/cover no-repeat;min-height:110px}.bottom-banner:after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,#064b50 0%,#064b50 35%,transparent 70%);pointer-events:none}footer{margin-top:0;background:#fffaf3;color:#244b55;border-top:1px solid #f2e5d9;padding:18px 24px}.footer-inner{max-width:1240px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:20px}.footer-inner p{font-size:10px;color:#6a7b7e;margin:0}.footer-links{display:flex;gap:18px;font-size:10px}.footer-links a:hover{color:var(--accent)}.modal{position:fixed;inset:0;background:#092f36b8;display:none;align-items:center;justify-content:center;padding:20px;z-index:100}.modal.open{display:flex}.modal-card{width:min(520px,100%);max-height:90vh;overflow:auto;background:#fffaf3;border-radius:18px;padding:28px;position:relative;box-shadow:0 25px 80px #132e3550}.modal-card h2{font: bold 28px Georgia,serif;margin:0 0 8px}.modal-card p{color:#65777a;line-height:1.55}.close{position:absolute;right:14px;top:12px;border:0;background:#fff0ed;color:#a93e54;width:32px;height:32px;border-radius:50%;font-size:23px}.field{display:grid;gap:7px;margin:14px 0}.field label{font-size:12px;font-weight:700}.field input,.field select,.field textarea{width:100%;border:1px solid #eadbd0;background:white;border-radius:9px;padding:12px;color:var(--ink)}.form-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}.form-message{font-size:12px;line-height:1.5;margin-top:12px;color:var(--ink)}.form-message.error{color:#bd2f46}.form-message.success{color:#13765d}.cart-list{display:grid;gap:10px}.cart-total{display:flex;justify-content:space-between;font-weight:800;padding:14px 0}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}.utility-hidden{display:none!important}
+@media(max-width:760px){.nav{padding:10px 14px;gap:12px;flex-wrap:wrap}.logo{font-size:24px}.navlinks{order:3;width:100%;justify-content:center;gap:22px;margin:0}.navactions{margin-left:auto}.navactions .btn{padding:8px 10px}.hero{grid-template-columns:1fr}.hero-copy{padding:28px 23px}.hero h1{font-size:39px}.hero-art{min-height:210px;border-radius:90px 0 0 0;border-left:0;border-top:4px solid #fff4e5}.finder-controls{grid-template-columns:1fr 1fr}.finder-controls .btn{grid-column:1/-1}.inspiration-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.festival-visual-card:nth-child(n+5){display:none}.state-banner{grid-template-columns:1fr .85fr}.state-copy{padding:18px}.state-copy h2{font-size:22px}.products{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.benefits{grid-template-columns:repeat(2,1fr)}.bottom-banner{grid-template-columns:1fr .8fr}.bottom-copy{padding:15px}.bottom-copy h2{font-size:21px}.footer-inner{flex-wrap:wrap}.footer-links{flex-wrap:wrap}.section-head h2,.popular-head h2{font-size:21px}}
+@media(max-width:420px){main{padding:0 12px}.hero h1{font-size:35px}.hero-copy p{font-size:12px}.inspiration-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.festival-visual-card:nth-child(n+4){display:none}.state-banner{grid-template-columns:1fr}.state-art{min-height:110px;clip-path:none}.benefits{gap:10px;padding:12px}.bottom-banner{grid-template-columns:1fr}.bottom-image{min-height:75px}.bottom-banner:after{background:linear-gradient(180deg,#064b50 0%,transparent 70%)}.footer-links{gap:12px}.navactions .btn{font-size:10px}}
 </style>
+
+
+
 </head>
+
 <body>
-
 <header>
-  <div class="nav">
-    <a class="logo" href="index.html">Sell<span>ora</span></a>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="shop.html">Shop</a>
-      <a href="#festivals">Festivals</a>
-      <a href="#states">Explore States</a>
-      <a href="sell.html">Sell with Us</a>
-    </nav>
-    <button class="btn light" onclick="openAuth()">Sign In</button>
-  </div>
+  <nav class="nav">
+    <a class="logo" href="index.html">🌺 Sellora</a>
+    <div class="navlinks"><a href="index.html">Home</a><a href="shop.html">Shop</a><a href="shop.html">Festivals</a><a href="sell.html">Sell with Us</a></div>
+    <div class="navactions"><span class="account-status" id="accountStatus">Guest</span><button class="btn" id="accountButton" onclick="openAuth()" aria-label="Sign in">♙</button><button class="btn" onclick="openCart()" aria-label="Open cart">♡ <span id="cartCount">0</span></button></div>
+  </nav>
 </header>
-
 <main>
   <section class="hero">
-    <div class="hero-copy">
-      <div class="eyebrow">India's festival marketplace</div>
-      <h1>Celebrating India's Colours, Culture & Crafts</h1>
-      <p>Discover festivals, regional traditions and handmade treasures from every corner of India. Celebrate the big occasions and the little-known traditions that make every place special.</p>
-      <div class="actions">
-        <a class="btn" href="#festivals">Explore Festivals →</a>
-        <a class="btn light" href="shop.html">Shop Now</a>
-      </div>
-    </div>
-    <div class="hero-image" role="img" aria-label="Indian festive lamps and decorations"></div>
+    <div class="hero-copy"><span class="eyebrow">India's festival marketplace</span><h1>Celebrating<br>India’s <span class="pink">Colours,</span><br><span class="teal">Culture & Crafts</span></h1><p>Discover authentic products, local makers and festivals from every corner of India.</p><div class="hero-actions"><a class="btn btn-primary" href="#explore-festivals">Explore Festivals →</a><a class="btn" href="shop.html">Shop Now</a></div></div>
+    <div class="hero-art" role="img" aria-label="Festive diya surrounded by marigold flowers"></div>
   </section>
-
-  <section class="section">
-    <div class="finder">
-      <div class="eyebrow">Find your celebration</div>
-      <h2 style="margin:9px 0">Festival Finder</h2>
-      <p style="color:var(--muted);margin:0">Search for a festival or discover celebrations by state.</p>
-      <div class="controls">
-        <input id="finderSearch" placeholder="Search a festival, tradition or state..." aria-label="Search festivals">
-        <select id="finderState" aria-label="Choose state">
-          <option value="">All States & Union Territories</option>
-        </select>
-        <button class="btn teal" onclick="applyFilters()">Find Festivals</button>
-      </div>
-    </div>
+  <section class="section festival-finder" id="festival-finder">
+    <div class="finder-copy"><h2>Festival Gift Finder</h2><p>Find the perfect gift for any festival</p></div>
+    <div class="finder-controls"><label for="homeFestival">Festival</label><select id="homeFestival"><option value="Diwali">Select Festival</option><option value="Diwali">Diwali</option><option value="Holi">Holi</option><option value="Ganesh Chaturthi">Ganesh Chaturthi</option><option value="Onam">Onam</option><option value="Raksha Bandhan">Raksha Bandhan</option><option value="Navratri">Navratri</option><option value="Pongal">Pongal</option><option value="Eid">Eid</option><option value="Christmas">Christmas</option><option value="Durga Puja">Durga Puja</option></select><label for="homeRecipient">Recipient</label><select id="homeRecipient"><option value="everyone">Select Recipient</option><option value="family">Family</option><option value="friend">A friend</option><option value="child">A child</option><option value="host">A host or home</option><option value="self">Myself</option></select><label for="homeBudget">Budget</label><select id="homeBudget"><option value="">Select Budget</option><option value="500">Up to ₹500</option><option value="1000">Up to ₹1,000</option><option value="2500">Up to ₹2,500</option><option value="5000">Up to ₹5,000</option></select><a class="btn btn-primary" id="findFestivalButton" href="shop.html?festival=Diwali">Find Gifts</a></div>
   </section>
-
-  <section class="section" id="festivals">
-    <div class="section-head">
-      <div>
-        <h2>Explore Festivals</h2>
-        <p>From nationwide celebrations to local traditions and regional fairs.</p>
-      </div>
-      <a href="festivals.html">View All Festivals →</a>
-    </div>
-    <div class="festival-grid" id="featuredGrid"></div>
-  </section>
-
-  <section class="states-banner" id="states">
-    <div class="states-copy">
-      <div class="eyebrow">Many regions, one India</div>
-      <h2>From Every State, Every Celebration</h2>
-      <p>Discover harvest festivals, folk traditions, temple celebrations, tribal gatherings and local fairs from across India.</p>
-      <a class="btn teal" href="#directory">Explore All States →</a>
-    </div>
-    <div class="states-image" role="img" aria-label="Indian cultural celebration"></div>
-  </section>
-
-  <section class="section" id="directory">
-    <div class="section-head">
-      <div>
-        <h2>The Indian Festival Directory</h2>
-        <p>Browse by festival, state or region. Dates can vary by local calendar and year.</p>
-      </div>
-    </div>
-    <div class="directory-tools">
-      <input id="searchInput" placeholder="Search festival or tradition..." aria-label="Search the festival directory">
-      <select id="stateFilter" aria-label="Filter by state">
-        <option value="">Every State & Union Territory</option>
-      </select>
-      <select id="typeFilter" aria-label="Filter by festival type">
-        <option value="">All festival types</option>
-        <option>Religious</option>
-        <option>Harvest</option>
-        <option>Cultural</option>
-        <option>Tribal</option>
-        <option>Seasonal</option>
-        <option>Fair</option>
-      </select>
-    </div>
-    <div class="results-line"><span id="resultCount">Loading festivals...</span><span>Festival information is for discovery</span></div>
-    <div class="festival-grid" id="festivalGrid"></div>
-  </section>
-
-  <section class="section" id="productsSection">
-    <div class="section-head">
-      <div>
-        <h2>Festive Finds from Local Makers</h2>
-        <p>Real products listed by sellers on Sellora.</p>
-      </div>
-      <a class="text-link" href="shop.html">View All Products →</a>
-    </div>
-    <div class="products" id="productGrid">
-      <div class="empty">Loading products from Sellora sellers...</div>
-    </div>
-  </section>
-
-  <section class="features">
-    <div class="feature"><strong>Made by Local Makers</strong><span>Discover products from artisans and small businesses.</span></div>
-    <div class="feature"><strong>Regional Traditions</strong><span>Explore celebrations from across India.</span></div>
-    <div class="feature"><strong>One Festival at a Time</strong><span>Find decorations, gifts and festive essentials.</span></div>
-    <div class="feature"><strong>Sell on Sellora</strong><span>Bring your handmade and festival products to more people.</span></div>
-  </section>
+  <section class="section" id="explore-festivals"><div class="section-head"><h2>Explore Festivals</h2><a class="text-link" href="shop.html">View All Festivals →</a></div><div class="inspiration-grid festival-visual-grid">
+    <a class="inspiration-card festival-visual-card" href="shop.html?festival=Diwali" aria-label="Diwali"><div class="inspiration-art art-diya"></div></a>
+    <a class="inspiration-card festival-visual-card" href="shop.html?festival=Holi" aria-label="Holi"><div class="inspiration-art art-gift"></div></a>
+    <a class="inspiration-card festival-visual-card" href="shop.html?festival=Ganesh%20Chaturthi" aria-label="Ganesh Chaturthi"><div class="inspiration-art art-rangoli"></div></a>
+    <a class="inspiration-card festival-visual-card" href="shop.html?festival=Onam" aria-label="Onam"><div class="inspiration-art art-onam"></div></a>
+    <a class="inspiration-card festival-visual-card" href="shop.html?festival=Raksha%20Bandhan" aria-label="Rakhi"><div class="inspiration-art art-thali"></div></a>
+    <a class="inspiration-card festival-visual-card" href="shop.html?festival=Navratri" aria-label="Navratri"><div class="inspiration-art art-navratri"></div></a>
+    <a class="inspiration-card festival-visual-card" href="shop.html?festival=Pongal" aria-label="Pongal"><div class="inspiration-art art-pongal"></div></a>
+  </div></section>
+  <section class="state-banner"><div class="state-copy"><h2>From Every State,<br>Every Celebration</h2><p>Explore regional, local and traditional festivals across India.</p><a class="btn" href="shop.html">Explore All States →</a></div><div class="state-art" role="img" aria-label="Indian classical dancer and colourful regional art"></div></section>
+  <div class="utility-hidden" aria-hidden="true"><div id="productGrid" class="products"></div></div>
+  <section class="benefits"><div class="benefit"><div class="benefit-icon">♧</div><div><strong>Authentic Products</strong><span>From real artisans</span></div></div><div class="benefit"><div class="benefit-icon">▣</div><div><strong>Secure Payments</strong><span>Shop with confidence</span></div></div><div class="benefit"><div class="benefit-icon">♡</div><div><strong>Support Local</strong><span>Empower Indian makers</span></div></div><div class="benefit"><div class="benefit-icon">♧</div><div><strong>Fast Delivery</strong><span>Across India</span></div></div></section>
+  <section class="bottom-banner"><div class="bottom-copy"><h2>More Festivals<br>More Stories<br>More India</h2><a class="btn" href="shop.html">Explore All Festivals →</a></div><div class="bottom-image" role="img" aria-label="Collage of colourful Indian festival traditions"></div></section>
+  <div class="utility-hidden"><input id="festivalDirectorySearch"><select id="festivalStateFilter"><option value="All">All</option></select><div id="festivalDirectory"></div><button id="sellerActionButton" onclick="openSeller()">Apply to sell</button></div>
 </main>
+<footer><div class="footer-inner"><a class="logo" href="index.html">🌺 Sellora</a><p>Celebrating India, Together</p><div class="footer-links"><a href="shop.html">About</a><a href="shop.html">Help</a><a href="sell.html">Contact</a><a href="#">◎</a><a href="#">f</a><a href="#">𝕏</a></div></div></footer>
 
-<footer>
-  <div class="footer-inner">
-    <div>
-      <a class="logo" href="index.html">Sellora</a>
-      <p>Celebrating India, together.<br>Festivals, local makers and traditions from across the country.</p>
-    </div>
-    <div>
-      <a href="index.html">Home</a>
-      <a href="shop.html">Shop</a>
-      <a href="#directory">Festivals</a>
-      <a href="sell.html">Sell with Us</a>
-    </div>
-  </div>
-</footer>
-
-<div class="modal" id="authModal" role="dialog" aria-modal="true" aria-labelledby="authTitle">
-  <div class="modal-box">
-    <button class="modal-close" onclick="closeAuth()" aria-label="Close">×</button>
+<div class="modal" id="authModal" role="dialog" aria-modal="true">
+  <div class="modal-card">
+    <button class="close" onclick="closeModal('authModal')" aria-label="Close">&times;</button>
     <h2 id="authTitle">Welcome to Sellora</h2>
-    <p style="color:var(--muted);font-size:14px">Sign in or create an account to continue.</p>
-    <input id="authEmail" type="email" placeholder="Email address" autocomplete="email">
-    <input id="authPassword" type="password" placeholder="Password" autocomplete="current-password">
-    <button class="btn teal" onclick="signIn()">Sign In</button>
-    <button class="btn light" onclick="signUp()">Create Account</button>
-    <p id="authMessage"></p>
+    <p id="authDescription">Sign in or create an account to get started.</p>
+    <form id="authForm">
+      <div class="field" id="nameField">
+        <label for="fullName">Full name</label>
+        <input id="fullName" autocomplete="name" placeholder="Your name">
+      </div>
+      <div class="field">
+        <label for="authEmail">Email address</label>
+        <input id="authEmail" type="email" autocomplete="email" required placeholder="you@example.com">
+      </div>
+      <div class="field">
+        <label for="authPassword">Password</label>
+        <input id="authPassword" type="password" autocomplete="current-password" required minlength="6" placeholder="At least 6 characters">
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-primary" type="submit" id="authSubmit">Create account</button>
+        <button class="btn" type="button" id="authSwitch" onclick="switchAuthMode()">I already have an account</button>
+      </div>
+    </form>
+    <div class="form-message" id="authMessage" aria-live="polite"></div>
   </div>
 </div>
 
+<div class="modal" id="sellerModal" role="dialog" aria-modal="true">
+  <div class="modal-card">
+    <button class="close" onclick="closeModal('sellerModal')" aria-label="Close">&times;</button>
+    <h2>Sell with Sellora</h2>
+    <p>Submit an application to sell your festival products.</p>
+    <form id="sellerForm">
+      <div class="field">
+        <label for="businessName">Business or shop name</label>
+        <input id="businessName" required maxlength="120" placeholder="Your business name">
+      </div>
+      <div class="field">
+        <label for="sellerType">Seller type</label>
+        <select id="sellerType" required>
+          <option value="home_seller">Home seller</option>
+          <option value="artisan">Artisan or craft maker</option>
+          <option value="small_business">Small festival business</option>
+        </select>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-primary" type="submit" id="sellerSubmit">Submit application</button>
+      </div>
+    </form>
+    <div class="form-message" id="sellerMessage" aria-live="polite"></div>
+  </div>
+</div>
+
+<div class="modal" id="productModal" role="dialog" aria-modal="true">
+  <div class="modal-card">
+    <button class="close" onclick="closeModal('productModal')" aria-label="Close">&times;</button>
+    <h2>Add a festival product</h2>
+    <p>Your product will be saved to the Sellora marketplace.</p>
+    <form id="productForm">
+      <div class="field">
+        <label for="listingName">Product name</label>
+        <input id="listingName" required maxlength="120">
+      </div>
+      <div class="field">
+        <label for="listingDescription">Description</label>
+        <textarea id="listingDescription" required maxlength="1000"></textarea>
+      </div>
+      <div class="field">
+        <label for="listingPrice">Price in ₹</label>
+        <input id="listingPrice" type="number" min="0.01" step="0.01" required>
+      </div>
+      <div class="field">
+        <label for="listingCategory">Category</label>
+        <input id="listingCategory" required maxlength="80" placeholder="e.g. Home Decor">
+      </div>
+      <div class="field">
+        <label for="listingFestival">Festival</label>
+        <select id="listingFestival" required><option value="Ugadi">Ugadi</option><option value="Sankranti">Sankranti</option><option value="Tirumala Brahmotsavam">Tirumala Brahmotsavam</option><option value="Tirupati Gangamma Jatara">Tirupati Gangamma Jatara</option><option value="Lumbini Festival">Lumbini Festival</option><option value="Losar">Losar</option><option value="Solung">Solung</option><option value="Nyokum">Nyokum</option><option value="Dree Festival">Dree Festival</option><option value="Mopin">Mopin</option><option value="Si-Donyi">Si-Donyi</option><option value="Bohag Bihu">Bohag Bihu</option><option value="Kongali Bihu">Kongali Bihu</option><option value="Bhogali Bihu">Bhogali Bihu</option><option value="Ambubachi Mela">Ambubachi Mela</option><option value="Majuli Raas Mahotsav">Majuli Raas Mahotsav</option><option value="Baishagu">Baishagu</option><option value="Chhath Puja">Chhath Puja</option><option value="Jitiya">Jitiya</option><option value="Sama Chakeva">Sama Chakeva</option><option value="Bihula">Bihula</option><option value="Pitrapaksha Mela">Pitrapaksha Mela</option><option value="Sonepur Mela">Sonepur Mela</option><option value="Bastar Dussehra">Bastar Dussehra</option><option value="Madai Festival">Madai Festival</option><option value="Hareli">Hareli</option><option value="Teeja">Teeja</option><option value="Goncha Festival">Goncha Festival</option><option value="Bhoramdeo Mahotsav">Bhoramdeo Mahotsav</option><option value="Goa Carnival">Goa Carnival</option><option value="Shigmo">Shigmo</option><option value="Sao Joao">Sao Joao</option><option value="Bonderam">Bonderam</option><option value="Chikhal Kalo">Chikhal Kalo</option><option value="Saptah Festival">Saptah Festival</option><option value="Uttarayan">Uttarayan</option><option value="Navratri Garba">Navratri Garba</option><option value="Rann Utsav">Rann Utsav</option><option value="Tarnetar Fair">Tarnetar Fair</option><option value="Bhavnath Mahadev Mela">Bhavnath Mahadev Mela</option><option value="Janmashtami at Dwarka">Janmashtami at Dwarka</option><option value="Teej">Teej</option><option value="Surajkund International Crafts Mela">Surajkund International Crafts Mela</option><option value="Baisakhi">Baisakhi</option><option value="Gugga Naumi">Gugga Naumi</option><option value="Pinjore Heritage Festival">Pinjore Heritage Festival</option><option value="Kullu Dussehra">Kullu Dussehra</option><option value="Mandi Shivratri">Mandi Shivratri</option><option value="Minjar Fair">Minjar Fair</option><option value="Halda Festival">Halda Festival</option><option value="Renuka Fair">Renuka Fair</option><option value="Sarhul">Sarhul</option><option value="Karma">Karma</option><option value="Tusu Parab">Tusu Parab</option><option value="Sohrai">Sohrai</option><option value="Bhagta Parab">Bhagta Parab</option><option value="Mysuru Dasara">Mysuru Dasara</option><option value="Bengaluru Karaga">Bengaluru Karaga</option><option value="Vairamudi Festival">Vairamudi Festival</option><option value="Kambala">Kambala</option><option value="Hampi Utsav">Hampi Utsav</option><option value="Makara Sankranti">Makara Sankranti</option><option value="Onam">Onam</option><option value="Vishu">Vishu</option><option value="Thrissur Pooram">Thrissur Pooram</option><option value="Attukal Pongala">Attukal Pongala</option><option value="Theyyam season">Theyyam season</option><option value="Aranmula Vallam Kali">Aranmula Vallam Kali</option><option value="Vallam Kali boat festivals">Vallam Kali boat festivals</option><option value="Khajuraho Dance Festival">Khajuraho Dance Festival</option><option value="Bhagoria Haat">Bhagoria Haat</option><option value="Lokrang Festival">Lokrang Festival</option><option value="Tansen Samaroh">Tansen Samaroh</option><option value="Narmada Jayanti">Narmada Jayanti</option><option value="Simhastha Kumbh (Ujjain)">Simhastha Kumbh (Ujjain)</option><option value="Ganesh Chaturthi">Ganesh Chaturthi</option><option value="Gudi Padwa">Gudi Padwa</option><option value="Makar Sankranti">Makar Sankranti</option><option value="Gokulashtami/Dahi Handi">Gokulashtami/Dahi Handi</option><option value="Pola">Pola</option><option value="Ashadhi Ekadashi Wari">Ashadhi Ekadashi Wari</option><option value="Ellora Festival">Ellora Festival</option><option value="Narali Purnima">Narali Purnima</option><option value="Yaoshang">Yaoshang</option><option value="Lai Haraoba">Lai Haraoba</option><option value="Ningol Chakouba">Ningol Chakouba</option><option value="Cheiraoba">Cheiraoba</option><option value="Kang Chingba">Kang Chingba</option><option value="Kut Festival">Kut Festival</option><option value="Wangala">Wangala</option><option value="Nongkrem Dance Festival">Nongkrem Dance Festival</option><option value="Shad Suk Mynsiem">Shad Suk Mynsiem</option><option value="Behdienkhlam">Behdienkhlam</option><option value="Strawberry Festival">Strawberry Festival</option><option value="Chapchar Kut">Chapchar Kut</option><option value="Pawl Kut">Pawl Kut</option><option value="Mim Kut">Mim Kut</option><option value="Thalfavang Kut">Thalfavang Kut</option><option value="Hornbill Festival">Hornbill Festival</option><option value="Moatsu">Moatsu</option><option value="Sekrenyi">Sekrenyi</option><option value="Aoling">Aoling</option><option value="Tuluni">Tuluni</option><option value="Tokhu Emong">Tokhu Emong</option><option value="Rath Yatra">Rath Yatra</option><option value="Raja Parba">Raja Parba</option><option value="Nuakhai">Nuakhai</option><option value="Bali Jatra">Bali Jatra</option><option value="Dhanu Jatra">Dhanu Jatra</option><option value="Boita Bandana">Boita Bandana</option><option value="Durga Puja">Durga Puja</option><option value="Lohri">Lohri</option><option value="Hola Mohalla">Hola Mohalla</option><option value="Teej/Tiyan">Teej/Tiyan</option><option value="Gurpurab">Gurpurab</option><option value="Maghi">Maghi</option><option value="Gangaur">Gangaur</option><option value="Pushkar Camel Fair">Pushkar Camel Fair</option><option value="Desert Festival Jaisalmer">Desert Festival Jaisalmer</option><option value="Mewar Festival">Mewar Festival</option><option value="Brij Holi">Brij Holi</option><option value="Kaila Devi Fair">Kaila Devi Fair</option><option value="Pang Lhabsol">Pang Lhabsol</option><option value="Saga Dawa">Saga Dawa</option><option value="Losoong/Namsoong">Losoong/Namsoong</option><option value="Bumchu">Bumchu</option><option value="Indra Jatra">Indra Jatra</option><option value="Pongal">Pongal</option><option value="Puthandu">Puthandu</option><option value="Thaipusam">Thaipusam</option><option value="Karthigai Deepam">Karthigai Deepam</option><option value="Chithirai Festival">Chithirai Festival</option><option value="Aadi Perukku">Aadi Perukku</option><option value="Jallikattu season">Jallikattu season</option><option value="Bathukamma">Bathukamma</option><option value="Bonalu">Bonalu</option><option value="Sammakka Saralamma Jatara">Sammakka Saralamma Jatara</option><option value="Medaram Jatara">Medaram Jatara</option><option value="Peerla Panduga">Peerla Panduga</option><option value="Kharchi Puja">Kharchi Puja</option><option value="Garia Puja">Garia Puja</option><option value="Ker Puja">Ker Puja</option><option value="Neermahal Water Festival">Neermahal Water Festival</option><option value="Holi in Braj">Holi in Braj</option><option value="Dev Deepawali">Dev Deepawali</option><option value="Kumbh/Ardh Kumbh Mela">Kumbh/Ardh Kumbh Mela</option><option value="Ram Leela of Ramnagar">Ram Leela of Ramnagar</option><option value="Janmashtami in Mathura">Janmashtami in Mathura</option><option value="Taj Mahotsav">Taj Mahotsav</option><option value="Ganga Mahotsav">Ganga Mahotsav</option><option value="Harela">Harela</option><option value="Phool Dei">Phool Dei</option><option value="Nanda Devi Raj Jat">Nanda Devi Raj Jat</option><option value="Kumbh Mela (Haridwar)">Kumbh Mela (Haridwar)</option><option value="Uttarayani Mela">Uttarayani Mela</option><option value="Bikhauti Mela">Bikhauti Mela</option><option value="Kali Puja">Kali Puja</option><option value="Poila Boishakh">Poila Boishakh</option><option value="Saraswati Puja">Saraswati Puja</option><option value="Jagaddhatri Puja">Jagaddhatri Puja</option><option value="Poush Mela">Poush Mela</option><option value="Gangasagar Mela">Gangasagar Mela</option><option value="Rash Mela">Rash Mela</option><option value="Island Tourism Festival">Island Tourism Festival</option><option value="Subhash Mela">Subhash Mela</option><option value="Rose Festival">Rose Festival</option><option value="Chandigarh Carnival">Chandigarh Carnival</option><option value="Tarpa Festival">Tarpa Festival</option><option value="Nariyal Poornima">Nariyal Poornima</option><option value="Daman Ganga Fair">Daman Ganga Fair</option><option value="Phool Walon Ki Sair">Phool Walon Ki Sair</option><option value="Delhi International Kite Festival">Delhi International Kite Festival</option><option value="Luv Kush Ramleela">Luv Kush Ramleela</option><option value="Tulip Festival">Tulip Festival</option><option value="Navreh">Navreh</option><option value="Eid celebrations">Eid celebrations</option><option value="Kheer Bhawani Mela">Kheer Bhawani Mela</option><option value="Hemis-style regional Buddhist celebrations">Hemis-style regional Buddhist celebrations</option><option value="Hemis Festival">Hemis Festival</option><option value="Dosmoche">Dosmoche</option><option value="Sindhu Darshan Festival">Sindhu Darshan Festival</option><option value="Ladakh Festival">Ladakh Festival</option><option value="Eid al-Fitr">Eid al-Fitr</option><option value="Eid al-Adha">Eid al-Adha</option><option value="Milad-un-Nabi">Milad-un-Nabi</option><option value="Masi Magam">Masi Magam</option><option value="Villianur Temple Car Festival">Villianur Temple Car Festival</option><option value="Bastille Day celebrations">Bastille Day celebrations</option><option value="Diwali">Diwali</option><option value="Holi">Holi</option><option value="Raksha Bandhan">Raksha Bandhan</option><option value="Janmashtami">Janmashtami</option><option value="Ram Navami">Ram Navami</option><option value="Dussehra">Dussehra</option><option value="Navratri">Navratri</option><option value="Maha Shivaratri">Maha Shivaratri</option><option value="Christmas">Christmas</option><option value="Easter">Easter</option><option value="Buddha Purnima">Buddha Purnima</option><option value="Mahavir Jayanti">Mahavir Jayanti</option><option value="Guru Nanak Gurpurab">Guru Nanak Gurpurab</option><option value="Vasant Panchami">Vasant Panchami</option><option value="Karwa Chauth">Karwa Chauth</option><option value="Ahoi Ashtami">Ahoi Ashtami</option><option value="Bhai Dooj">Bhai Dooj</option><option value="Dhanteras">Dhanteras</option><option value="Akshaya Tritiya">Akshaya Tritiya</option><option value="Bihu">Bihu</option><option value="Vishu Kani">Vishu Kani</option><option value="Aadi Amavasai">Aadi Amavasai</option><option value="Kumbh Mela">Kumbh Mela</option><option value="Maha Kumbh Mela">Maha Kumbh Mela</option><option value="Ambedkar Jayanti">Ambedkar Jayanti</option><option value="Independence Day">Independence Day</option><option value="Republic Day">Republic Day</option><option value="Other">Other / not listed</option></select>
+      </div>
+      <div class="field">
+        <label for="listingImageFile">Real product photo (required)</label>
+        <input id="listingImageFile" type="file" accept="image/jpeg,image/png,image/webp,image/gif" required>
+        <small style="display:block;color:var(--muted);margin-top:7px;line-height:1.5">Upload a clear photo of the actual item. JPG, PNG, WEBP or GIF; maximum 5 MB.</small>
+        <img id="listingImagePreview" alt="Product photo preview" style="display:none;width:100%;max-height:220px;object-fit:contain;margin-top:12px;border:1px solid var(--line);border-radius:5px;background:white">
+      </div>
+      <div class="field">
+        <label for="listingStock">Available quantity</label>
+        <input id="listingStock" type="number" min="0" step="1" value="10" required>
+      </div>
+      <button class="btn btn-primary" type="submit" id="productSubmit">Publish product</button>
+    </form>
+    <div class="form-message" id="productMessage" aria-live="polite"></div>
+  </div>
+</div>
+
+<div class="modal" id="cartModal" role="dialog" aria-modal="true">
+  <div class="modal-card">
+    <button class="close" onclick="closeModal('cartModal')" aria-label="Close">&times;</button>
+    <h2>Your shopping cart</h2>
+    <p>Your selected products are listed below.</p>
+    <div class="cart-list" id="cartList"></div>
+    <div class="cart-total"><span>Total</span><span id="cartTotal">₹0</span></div>
+    <button class="btn btn-primary" style="width:100%" onclick="startCheckout()">Continue to checkout</button>
+    <div class="form-message" id="cartMessage" aria-live="polite"></div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-const SUPABASE_URL = "https://psepulcpyxuxlmzmyqjy.supabase.co";
-const SUPABASE_KEY = "sb_publishable_Y9eGiisXIlswikJE3SG6Hg_Li2vWIZ5";
-const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+"use strict";
 
-const photo = {
-  lamps:"https://images.unsplash.com/photo-1603909223429-69bb7101f420?auto=format&fit=crop&w=900&q=90",
-  colours:"https://images.unsplash.com/photo-1577083552431-6e5fd01aa342?auto=format&fit=crop&w=900&q=90",
-  flowers:"https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=900&q=90",
-  dance:"https://images.unsplash.com/photo-1504609813442-a8924e83f76e?auto=format&fit=crop&w=900&q=90",
-  food:"https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=900&q=90",
-  craft:"https://images.unsplash.com/photo-1493106641515-6b5631de4bb9?auto=format&fit=crop&w=900&q=90",
-  harvest:"https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=900&q=90",
-  general:"https://images.unsplash.com/photo-1514222134-b57cbb8ce073?auto=format&fit=crop&w=900&q=90"
-};
+const SELLORA_SUPABASE_URL = "https://psepulcpyxuxlmzmyqjy.supabase.co";
+const SELLORA_SUPABASE_KEY = "sb_publishable_Y9gEiisXIlswikJE3SG6Hg_Li2vWIZ5";
 
-const festivals = [
-["Diwali","All India","Religious","Festival of lights","lamps"],
-["Holi","All India","Seasonal","Festival of colours","colours"],
-["Dussehra / Vijayadashami","All India","Religious","Celebration of the victory of good over evil","dance"],
-["Navratri","All India","Religious","Nine nights of devotion, dance and music","dance"],
-["Durga Puja","West Bengal, Assam, Tripura","Religious","Community pandals, art and worship","flowers"],
-["Ganesh Chaturthi","Maharashtra, Goa, Karnataka","Religious","Celebrations honouring Lord Ganesha","craft"],
-["Raksha Bandhan","All India","Cultural","Celebrating bonds between siblings","craft"],
-["Janmashtami","All India","Religious","Celebration of the birth of Krishna","flowers"],
-["Ram Navami","All India","Religious","Celebrating the birth of Rama","flowers"],
-["Makar Sankranti","All India","Harvest","Seasonal transition and harvest celebrations","harvest"],
-["Lohri","Punjab, Haryana, Himachal Pradesh","Seasonal","Bonfires and winter harvest traditions","harvest"],
-["Pongal","Tamil Nadu","Harvest","Tamil harvest festival","harvest"],
-["Onam","Kerala","Harvest","Harvest season, pookalam and community feasts","flowers"],
-["Baisakhi","Punjab, Haryana","Harvest","Spring harvest and Sikh new year","harvest"],
-["Bihu (Rongali)","Assam","Harvest","Assamese new year and spring festival","dance"],
-["Bihu (Bhogali)","Assam","Harvest","Community feasts and harvest traditions","food"],
-["Bihu (Kongali)","Assam","Seasonal","A quieter Bihu observance","lamps"],
-["Chhath Puja","Bihar, Jharkhand, Uttar Pradesh","Religious","Sun worship near rivers and water bodies","lamps"],
-["Chaitra Navratri","All India","Religious","Springtime nine-night observance","flowers"],
-["Sharad Purnima","All India","Seasonal","Full-moon celebration","lamps"],
-["Karwa Chauth","North India","Cultural","A traditional fasting observance","lamps"],
-["Teej","Rajasthan, Haryana, Uttar Pradesh","Cultural","Monsoon celebration with songs and swings","flowers"],
-["Bhai Dooj","All India","Cultural","Celebrating sibling relationships","flowers"],
-["Vasant Panchami","All India","Seasonal","Welcoming spring and honouring learning","flowers"],
-["Maha Shivaratri","All India","Religious","Night of devotion to Shiva","lamps"],
-["Gudi Padwa","Maharashtra, Goa","Cultural","Marathi new year celebration","flowers"],
-["Ugadi","Andhra Pradesh, Telangana, Karnataka","Cultural","New year celebration in the Deccan","flowers"],
-["Vishu","Kerala","Cultural","Malayalam new year traditions","flowers"],
-["Puthandu","Tamil Nadu","Cultural","Tamil new year","flowers"],
-["Pohela Boishakh","West Bengal, Tripura","Cultural","Bengali new year","dance"],
-["Vaisakhi","Punjab","Harvest","Spring harvest and community celebrations","harvest"],
-["Eid al-Fitr","All India","Religious","Celebration marking the end of Ramadan","food"],
-["Eid al-Adha","All India","Religious","Festival of sacrifice and sharing","food"],
-["Muharram","All India","Religious","A solemn Islamic observance","lamps"],
-["Christmas","All India","Religious","Christmas services, food and decorations","flowers"],
-["Good Friday","All India","Religious","Christian day of remembrance","flowers"],
-["Easter","All India","Religious","Christian celebration of resurrection","flowers"],
-["Buddha Purnima","All India","Religious","Celebrating the life of Buddha","flowers"],
-["Mahavir Jayanti","All India","Religious","Celebration honouring Mahavira","flowers"],
-["Guru Nanak Gurpurab","All India","Religious","Celebrating Guru Nanak's birth","lamps"],
-["Gurpurab","Punjab, All India","Religious","Sikh commemorations of the Gurus","flowers"],
-["Ambedkar Jayanti","All India","Cultural","Commemorating Dr. B. R. Ambedkar","dance"],
-["Independence Day","All India","Cultural","Celebrating India's independence","general"],
-["Republic Day","All India","Cultural","Celebrating India's Constitution","general"],
-["National Tribal Festivals","Various states","Tribal","Local tribal communities celebrate diverse traditions","dance"],
-["Hornbill Festival","Nagaland","Tribal","A showcase of Naga heritage and performance","dance"],
-["Sekrenyi","Nagaland","Tribal","Angami Naga purification festival","dance"],
-["Moatsu","Nagaland","Tribal","Ao Naga spring community festival","dance"],
-["Aoling","Nagaland","Tribal","Konyak Naga spring festival","dance"],
-["Mim Kut","Mizoram","Harvest","Mizo harvest festival","harvest"],
-["Chapchar Kut","Mizoram","Seasonal","Mizo spring festival with dances","dance"],
-["Pawl Kut","Mizoram","Harvest","Mizo harvest celebration","harvest"],
-["Wangala","Meghalaya","Harvest","Garo harvest festival of a hundred drums","dance"],
-["Nongkrem Dance Festival","Meghalaya","Tribal","Khasi community dance festival","dance"],
-["Behdienkhlam","Meghalaya","Religious","Jaintia community festival","dance"],
-["Shad Suk Mynsiem","Meghalaya","Cultural","Khasi spring thanksgiving dance","dance"],
-["Losar","Ladakh, Himachal Pradesh, Arunachal Pradesh, Sikkim","Religious","Tibetan and Himalayan new year traditions","lamps"],
-["Hemis Festival","Ladakh","Religious","Monastery festival with masked dances","dance"],
-["Dosmoche","Ladakh","Religious","Traditional Ladakhi winter festival","dance"],
-["Sindhu Darshan","Ladakh","Cultural","Cultural gathering near the Indus River","general"],
-["Ladakh Harvest Festival","Ladakh","Harvest","Celebrating Ladakhi culture and harvest","harvest"],
-["Phyang Tsedup","Ladakh","Religious","Monastery festival and masked dances","dance"],
-["Kullu Dussehra","Himachal Pradesh","Religious","Week-long regional Dussehra celebration","dance"],
-["Minjar Fair","Chamba, Himachal Pradesh","Fair","Traditional fair linked with harvest","harvest"],
-["Mandi Shivaratri","Mandi, Himachal Pradesh","Religious","Gathering of deities and devotees","lamps"],
-["Lavi Fair","Rampur, Himachal Pradesh","Fair","Historic trade fair","craft"],
-["Phulaich","Kinnaur, Himachal Pradesh","Cultural","Festival of flowers and remembrance","flowers"],
-["Sair Festival","Himachal Pradesh","Harvest","Traditional autumn harvest observance","harvest"],
-["Basant Panchami Fair","Various states","Fair","Local fairs welcoming spring","flowers"],
-["Pushkar Camel Fair","Rajasthan","Fair","Livestock fair and cultural events","harvest"],
-["Gangaur","Rajasthan","Cultural","Celebration of Gauri with processions","flowers"],
-["Marwar Festival","Jodhpur, Rajasthan","Cultural","Folk music and Marwari heritage","dance"],
-["Desert Festival","Jaisalmer, Rajasthan","Cultural","Desert culture, music and craft","dance"],
-["Mewar Festival","Udaipur, Rajasthan","Cultural","Spring celebrations and processions","flowers"],
-["Bundi Utsav","Bundi, Rajasthan","Cultural","Local arts, performances and traditions","dance"],
-["Kite Festival","Gujarat","Seasonal","Uttarayan kite-flying celebrations","general"],
-["Rann Utsav","Kutch, Gujarat","Cultural","Craft, music and culture in the Rann","craft"],
-["Tarnetar Fair","Gujarat","Fair","Traditional rural fair and folk arts","dance"],
-["Bhavnath Fair","Junagadh, Gujarat","Fair","Pilgrimage fair at Girnar","lamps"],
-["Madhavpur Fair","Porbandar, Gujarat","Fair","Cultural fair celebrating regional traditions","dance"],
-["Dang Darbar","Dang, Gujarat","Tribal","Gathering celebrating tribal heritage","dance"],
-["Bastar Dussehra","Chhattisgarh","Tribal","Distinctive long-running Bastar tradition","dance"],
-["Madai Festival","Chhattisgarh","Tribal","Regional tribal fair and worship","dance"],
-["Hareli","Chhattisgarh","Harvest","Agricultural and monsoon festival","harvest"],
-["Pola","Maharashtra, Madhya Pradesh, Chhattisgarh","Harvest","Honouring working cattle and farming traditions","harvest"],
-["Bhagoria Haat","Madhya Pradesh","Tribal","Bhil and Bhilala community fair","dance"],
-["Khajuraho Dance Festival","Madhya Pradesh","Cultural","Classical dance performances","dance"],
-["Tansen Samaroh","Gwalior, Madhya Pradesh","Cultural","Indian classical music festival","dance"],
-["Lokrang Festival","Bhopal, Madhya Pradesh","Cultural","Folk and tribal cultural performances","dance"],
-["Narmada Jayanti","Madhya Pradesh","Religious","Celebrations along the Narmada","lamps"],
-["Bohag Bihu","Assam","Harvest","Springtime new year and folk dance","dance"],
-["Ambubachi Mela","Guwahati, Assam","Fair","Pilgrimage gathering at Kamakhya Temple","flowers"],
-["Majuli Raas Mahotsav","Majuli, Assam","Cultural","Raas performances and local theatre","dance"],
-["Dehing Patkai Festival","Assam","Cultural","Regional music, culture and outdoor events","dance"],
-["Baishagu","Bodoland, Assam","Cultural","Bodo spring new year celebration","dance"],
-["Kharchi Puja","Tripura","Religious","Important Tripuri religious festival","flowers"],
-["Garia Puja","Tripura","Tribal","Tripuri spring and community festival","dance"],
-["Ker Puja","Tripura","Religious","Traditional protective ritual","lamps"],
-["Neermahal Water Festival","Tripura","Cultural","Water-based cultural celebrations","general"],
-["Lai Haraoba","Manipur","Tribal","Meitei ritual dances and traditions","dance"],
-["Yaoshang","Manipur","Seasonal","Spring festival with sports and community events","colours"],
-["Ningol Chakouba","Manipur","Cultural","Family reunion celebration","food"],
-["Sangai Festival","Manipur","Cultural","Showcase of Manipuri culture and crafts","dance"],
-["Cheiraoba","Manipur","Cultural","Manipuri new year","food"],
-["Khajuraho Dance Festival","Madhya Pradesh","Cultural","Classical dance at historic temples","dance"],
-["Bali Jatra","Cuttack, Odisha","Fair","Historic maritime trade fair","craft"],
-["Raja Parba","Odisha","Seasonal","Celebration of earth and monsoon","flowers"],
-["Nuakhai","Western Odisha","Harvest","New rice harvest celebration","harvest"],
-["Dhanu Jatra","Bargarh, Odisha","Cultural","Large open-air dramatic performance","dance"],
-["Konark Dance Festival","Odisha","Cultural","Classical dance festival","dance"],
-["Chhau Festival","Odisha, Jharkhand, West Bengal","Cultural","Traditional masked dance performances","dance"],
-["Puri Rath Yatra","Odisha","Religious","Chariot festival of Lord Jagannath","flowers"],
-["Sitalsasthi","Sambalpur, Odisha","Cultural","Traditional ceremonial festival","dance"],
-["Bathukamma","Telangana","Cultural","Floral festival celebrating womanhood","flowers"],
-["Bonalu","Telangana","Religious","Regional festival with decorated offerings","flowers"],
-["Sammakka Saralamma Jatara","Telangana","Tribal","Major Adivasi pilgrimage gathering","dance"],
-["Medaram Jatara","Telangana","Tribal","Community pilgrimage and traditions","dance"],
-["Peerla Panduga","Telangana, Andhra Pradesh","Cultural","Local observances shared by communities","lamps"],
-["Lumbini Festival","Andhra Pradesh, Telangana","Cultural","Celebrating Buddhist heritage","flowers"],
-["Tirupati Brahmotsavam","Andhra Pradesh","Religious","Major temple festival","flowers"],
-["Ugadi Pachadi Celebrations","Andhra Pradesh, Telangana","Cultural","New year traditions and festive foods","food"],
-["Mysuru Dasara","Karnataka","Cultural","Royal processions and cultural programmes","dance"],
-["Hampi Utsav","Karnataka","Cultural","Music, dance and heritage celebrations","dance"],
-["Karaga Festival","Bengaluru, Karnataka","Religious","Traditional procession and community worship","flowers"],
-["Kambala","Coastal Karnataka","Cultural","Traditional buffalo racing festival","harvest"],
-["Tulu Nadu Paryaya","Udupi, Karnataka","Religious","Temple tradition and ceremonial handover","flowers"],
-["Kodava Kailpodh","Coorg, Karnataka","Cultural","Kodava festival honouring arms and community","general"],
-["Yellamma Fair","Saundatti, Karnataka","Fair","Pilgrimage and community fair","flowers"],
-["Thrissur Pooram","Kerala","Religious","Temple festival with percussion and decorated elephants","dance"],
-["Thripunithura Athachamayam","Kerala","Cultural","Colourful procession marking Onam season","dance"],
-["Vallam Kali","Kerala","Cultural","Traditional snake boat races","general"],
-["Theyyam Season","North Kerala","Cultural","Ritual performances and local shrine traditions","dance"],
-["Attukal Pongala","Thiruvananthapuram, Kerala","Religious","Large community offering festival","food"],
-["Aranmula Boat Race","Kerala","Cultural","Traditional ceremonial boat race","general"],
-["Kalpathi Ratholsavam","Palakkad, Kerala","Religious","Temple chariot festival","flowers"],
-["Karthigai Deepam","Tamil Nadu","Religious","Festival of lamps","lamps"],
-["Jallikattu","Tamil Nadu","Cultural","Traditional Pongal-season event","harvest"],
-["Chithirai Festival","Madurai, Tamil Nadu","Religious","Historic temple celebrations and procession","flowers"],
-["Aadi Perukku","Tamil Nadu","Seasonal","Celebration of rivers and monsoon","harvest"],
-["Thaipusam","Tamil Nadu, Puducherry","Religious","Devotional observance of Murugan","flowers"],
-["Natyanjali Festival","Chidambaram, Tamil Nadu","Cultural","Classical dance offerings","dance"],
-["Mamallapuram Dance Festival","Tamil Nadu","Cultural","Dance performances at heritage sites","dance"],
-["Panguni Uthiram","Tamil Nadu","Religious","Temple festival and ceremonial observances","flowers"],
-["Kavadi Festival","Tamil Nadu","Religious","Devotional processions and offerings","flowers"],
-["Puducherry Bastille Day","Puducherry","Cultural","Local civic and cultural observance","general"],
-["Fête de Pondichéry","Puducherry","Cultural","Arts and cultural celebrations","dance"],
-["Losoong","Sikkim","Harvest","Sikkimese new year and harvest festival","dance"],
-["Pang Lhabsol","Sikkim","Cultural","Honouring Mount Khangchendzonga","dance"],
-["Saga Dawa","Sikkim","Religious","Important Buddhist observance","lamps"],
-["Bumchu","Tashiding, Sikkim","Religious","Sacred water festival","lamps"],
-["Indra Jatra","Sikkim, Himalayan communities","Cultural","Traditional Himalayan observance","dance"],
-["Dree Festival","Arunachal Pradesh","Harvest","Apatani agricultural festival","harvest"],
-["Solung","Arunachal Pradesh","Harvest","Adi community harvest festival","harvest"],
-["Nyokum","Arunachal Pradesh","Tribal","Nyishi community festival","dance"],
-["Mopin","Arunachal Pradesh","Cultural","Galo community festival","dance"],
-["Si-Donyi","Arunachal Pradesh","Religious","Tagin community festival","dance"],
-["Pangsau Pass Winter Festival","Arunachal Pradesh","Cultural","Border-region cultural gathering","dance"],
-["Ziro Music Festival","Arunachal Pradesh","Cultural","Music festival in the Ziro Valley","dance"],
-["Loku","Arunachal Pradesh","Tribal","Nocte community festival","dance"],
-["Myoko","Arunachal Pradesh","Tribal","Apatani community festival","dance"],
-["Torgya","Arunachal Pradesh","Religious","Monastery festival and masked dances","dance"],
-["Gaan-Ngai","Manipur, Assam","Tribal","Zeliangrong community festival","dance"],
-["Chavang Kut","Manipur, Mizoram","Harvest","Kuki-Chin-Mizo harvest festival","dance"],
-["Kang Chingba","Manipur","Religious","Traditional chariot festival","flowers"],
-["Lai Haraoba","Manipur","Cultural","Traditional ritual and dance festival","dance"],
-["Sarhul","Jharkhand","Tribal","Spring and nature worship festival","flowers"],
-["Karma Festival","Jharkhand, Bihar, Odisha","Tribal","Community dance and nature traditions","dance"],
-["Tusu Parab","Jharkhand, West Bengal","Harvest","Winter harvest folk festival","harvest"],
-["Sohrai","Jharkhand","Cultural","Harvest and cattle celebration with wall art","craft"],
-["Mage Parab","Jharkhand, Odisha","Tribal","Ho community festival","dance"],
-["Jani Shikar","Jharkhand","Cultural","Traditional community observance","general"],
-["Baha Parab","Jharkhand, West Bengal","Tribal","Santhal flower festival","flowers"],
-["Karam","Bihar, Jharkhand","Tribal","Karam tree and community traditions","dance"],
-["Rajgir Mahotsav","Bihar","Cultural","Music, dance and cultural programmes","dance"],
-["Sonepur Mela","Bihar","Fair","Historic regional fair","craft"],
-["Pitrapaksha Mela","Gaya, Bihar","Religious","Pilgrimage and ancestral rites","lamps"],
-["Jitiya","Bihar, Jharkhand","Cultural","Traditional family and fasting observance","flowers"],
-["Braj Holi","Mathura, Uttar Pradesh","Religious","Regional Holi celebrations and traditions","colours"],
-["Lathmar Holi","Barsana, Uttar Pradesh","Cultural","Distinctive local Holi tradition","colours"],
-["Dev Deepawali","Varanasi, Uttar Pradesh","Religious","Riverfront celebration of lights","lamps"],
-["Taj Mahotsav","Agra, Uttar Pradesh","Cultural","Crafts, cuisine and cultural performances","craft"],
-["Nauchandi Mela","Meerut, Uttar Pradesh","Fair","Historic annual fair","craft"],
-["Ganga Dussehra","Uttar Pradesh, Uttarakhand","Religious","Celebration of the Ganges","lamps"],
-["Magh Mela","Prayagraj, Uttar Pradesh","Religious","Seasonal pilgrimage gathering","lamps"],
-["Kumbh Mela","Rotating host cities","Religious","Major pilgrimage gathering held periodically","lamps"],
-["Uttarayani Fair","Uttarakhand","Fair","Winter fair and regional trade","craft"],
-["Phool Dei","Uttarakhand","Seasonal","Springtime door-step flower tradition","flowers"],
-["Harela","Uttarakhand","Seasonal","Monsoon and nature celebration","harvest"],
-["Nanda Devi Raj Jat","Uttarakhand","Religious","Traditional pilgrimage held periodically","dance"],
-["Jauljibi Fair","Uttarakhand","Fair","Historic cross-border trading fair","craft"],
-["Bikhauti Mela","Uttarakhand","Fair","Regional fair in Kumaon","general"],
-["Ganga Aarti Festivals","Uttarakhand, Uttar Pradesh","Religious","Local riverfront devotional gatherings","lamps"],
-["Harela","Uttarakhand","Seasonal","Celebrating greenery and the monsoon","harvest"],
-["Bhandara Festival","Maharashtra","Religious","Regional temple and community celebrations","flowers"],
-["Narali Purnima","Maharashtra, Goa","Seasonal","Coastal communities mark the monsoon season","harvest"],
-["Ashadhi Ekadashi Wari","Maharashtra","Religious","Pilgrimage procession to Pandharpur","dance"],
-["Pandharpur Wari","Maharashtra","Religious","Traditional pilgrimage with devotional singing","dance"],
-["Ellora Festival","Maharashtra","Cultural","Music and dance at historic caves","dance"],
-["Kala Ghoda Arts Festival","Mumbai, Maharashtra","Cultural","Public arts and cultural festival","craft"],
-["Shigmo","Goa","Cultural","Goan spring festival with folk performances","dance"],
-["Sao Joao","Goa","Cultural","Monsoon celebration in Goa","general"],
-["Bonderam","Divar Island, Goa","Cultural","Village flag festival and procession","dance"],
-["Carnival","Goa","Cultural","Parades, music and colourful celebrations","dance"],
-["Chavoth","Goa","Religious","Konkani Ganesh festival","flowers"],
-["Gomantak Folk Festivals","Goa","Cultural","Local village feasts and folk traditions","dance"],
-["Paryushan","Gujarat, Rajasthan","Religious","Jain period of reflection and observance","lamps"],
-["Mahamaham","Kumbakonam, Tamil Nadu","Religious","Sacred tank festival held periodically","lamps"],
-["Kailash Fair","Agra region, Uttar Pradesh","Fair","Regional religious fair","flowers"],
-["Local Gram Devata Jatras","Various states","Fair","Village deity festivals and processions","flowers"],
-["Village Jatras and Utsavams","South India","Fair","Local temple festivals that vary by town","dance"],
-["Urs Festivals","Various states","Cultural","Sufi shrine commemorations and gatherings","flowers"],
-["Local Harvest Fairs","Across India","Harvest","Regional harvest gatherings and fairs","harvest"]
-];
+let selloraSupabase = null;
+let currentUser = null;
+let authMode = "signup";
+let databaseProducts = [];
+let cart = [];
 
-const states = [
-"Andhra Pradesh","Arunachal Pradesh","Assam","Bihar","Chhattisgarh","Goa","Gujarat","Haryana","Himachal Pradesh","Jharkhand","Karnataka","Kerala","Madhya Pradesh","Maharashtra","Manipur","Meghalaya","Mizoram","Nagaland","Odisha","Punjab","Rajasthan","Sikkim","Tamil Nadu","Telangana","Tripura","Uttar Pradesh","Uttarakhand","West Bengal",
-"Andaman and Nicobar Islands","Chandigarh","Dadra and Nagar Haveli and Daman and Diu","Delhi","Jammu and Kashmir","Ladakh","Lakshadweep","Puducherry"
-];
 
-function stateOptions() {
-  ["finderState","stateFilter"].forEach(id=>{
-    const select=document.getElementById(id);
-    states.forEach(s=>{
-      const option=document.createElement("option");
-      option.value=s;option.textContent=s;select.appendChild(option);
-    });
+
+function money(value) {
+  return new Intl.NumberFormat("en-IN", {
+    style:"currency",currency:"INR",maximumFractionDigits:2
+  }).format(Number(value)||0);
+}
+
+function showMessage(id,message,type) {
+  const element = document.getElementById(id);
+  if (!element) return;
+  element.textContent = message;
+  element.className = "form-message" + (type ? " " + type : "");
+}
+
+function openModal(id) {
+  document.getElementById(id).classList.add("open");
+}
+
+function closeModal(id) {
+  document.getElementById(id).classList.remove("open");
+}
+
+document.querySelectorAll(".modal").forEach(modal => {
+  modal.addEventListener("click",event => {
+    if (event.target === modal) modal.classList.remove("open");
   });
-}
-
-function imageFor(kind){return photo[kind]||photo.general;}
-
-function festivalCard(f,index){
-  const [name,region,type,description,kind]=f;
-  const img=imageFor(kind);
-  return `<article class="festival-card">
-    <img src="${img}" alt="${name} festival" loading="${index<8?'eager':'lazy'}" onerror="this.onerror=null;this.src='${photo.general}'">
-    <div class="festival-info">
-      <div class="meta">${type} · ${region}</div>
-      <h3>${name}</h3>
-      <p>${description}</p>
-      <a class="card-link" href="shop.html?festival=${encodeURIComponent(name)}">Explore related products →</a>
-    </div>
-  </article>`;
-}
-
-function renderFeatured(){
-  const picks=["Diwali","Holi","Ganesh Chaturthi","Onam","Raja Parba","Hornbill Festival","Bathukamma","Bastar Dussehra","Wangala","Shigmo","Phulaich","Nuakhai"];
-  const chosen=picks.map(n=>festivals.find(f=>f[0]===n)).filter(Boolean);
-  document.getElementById("featuredGrid").innerHTML=chosen.map(f=>festivalCard(f,0)).join("");
-}
-
-function applyFilters(){
-  const query=(document.getElementById("searchInput").value||document.getElementById("finderSearch").value).trim().toLowerCase();
-  const state=document.getElementById("stateFilter").value||document.getElementById("finderState").value;
-  const type=document.getElementById("typeFilter").value;
-  const filtered=festivals.filter(f=>{
-    const matchesQuery=!query||f.slice(0,4).join(" ").toLowerCase().includes(query);
-    const matchesState=!state||f[1].toLowerCase().includes(state.toLowerCase())||f[1]==="All India"||f[1]==="Various states"||f[1]==="Across India";
-    const matchesType=!type||f[2]===type;
-    return matchesQuery&&matchesState&&matchesType;
-  });
-  document.getElementById("festivalGrid").innerHTML=filtered.length
-    ?filtered.map((f,i)=>festivalCard(f,i)).join("")
-    :'<div class="empty">No matching festival found. Try another festival name or state.</div>';
-  document.getElementById("resultCount").textContent=`Showing ${filtered.length} festival entries`;
-}
-
-document.getElementById("searchInput").addEventListener("input",applyFilters);
-document.getElementById("stateFilter").addEventListener("change",applyFilters);
-document.getElementById("typeFilter").addEventListener("change",applyFilters);
-document.getElementById("finderSearch").addEventListener("input",()=>{
-  document.getElementById("searchInput").value=document.getElementById("finderSearch").value;
-  applyFilters();
-});
-document.getElementById("finderState").addEventListener("change",()=>{
-  document.getElementById("stateFilter").value=document.getElementById("finderState").value;
-  applyFilters();
 });
 
-function openAuth(){document.getElementById("authModal").classList.add("open");}
-function closeAuth(){document.getElementById("authModal").classList.remove("open");}
-document.getElementById("authModal").addEventListener("click",e=>{
-  if(e.target.id==="authModal")closeAuth();
+function updateAccountUI() {
+  const status = document.getElementById("accountStatus");
+  const button = document.getElementById("accountButton");
+
+  if (currentUser) {
+    status.textContent = currentUser.email || "Signed in";
+    button.textContent = "Sign out";
+    button.onclick = signOut;
+  } else {
+    status.textContent = "Guest";
+    button.textContent = "Sign in";
+    button.onclick = openAuth;
+  }
+  refreshSellerButton();
+}
+
+async function refreshSellerButton() {
+  const button = document.getElementById("sellerActionButton");
+  if (!button) return;
+
+  if (!currentUser || !selloraSupabase) {
+    button.textContent = "Apply to sell";
+    return;
+  }
+
+  try {
+    const {data,error} = await selloraSupabase
+      .from("seller_applications")
+      .select("status")
+      .eq("user_id",currentUser.id)
+      .maybeSingle();
+
+    if (error) throw error;
+
+    if (data?.status === "approved") button.textContent = "Add product";
+    else if (data?.status === "pending") button.textContent = "Application pending";
+    else if (data?.status === "rejected") button.textContent = "Application rejected";
+    else button.textContent = "Apply to sell";
+  } catch (error) {
+    console.error("Could not check seller status:",error);
+    button.textContent = "Sell with Sellora";
+  }
+}
+
+function openAuth() {
+  document.getElementById("authForm").reset();
+  showMessage("authMessage","","");
+  setAuthMode("signup");
+  openModal("authModal");
+}
+
+function setAuthMode(mode) {
+  authMode = mode;
+  const signup = mode === "signup";
+
+  document.getElementById("authTitle").textContent =
+    signup ? "Create your Sellora account" : "Welcome back";
+  document.getElementById("authDescription").textContent =
+    signup ? "Join the marketplace to discover festive products." : "Sign in to your existing account.";
+  document.getElementById("nameField").style.display = signup ? "block" : "none";
+  document.getElementById("fullName").required = signup;
+  document.getElementById("authSubmit").textContent = signup ? "Create account" : "Sign in";
+  document.getElementById("authSwitch").textContent =
+    signup ? "I already have an account" : "Create a new account";
+  document.getElementById("authPassword").autocomplete =
+    signup ? "new-password" : "current-password";
+  showMessage("authMessage","","");
+}
+
+function switchAuthMode() {
+  setAuthMode(authMode === "signup" ? "signin" : "signup");
+}
+
+async function signOut() {
+  if (!selloraSupabase) return;
+
+  const {error} = await selloraSupabase.auth.signOut();
+  if (error) {
+    alert("Could not sign out: " + error.message);
+    return;
+  }
+
+  currentUser = null;
+  updateAccountUI();
+}
+
+document.getElementById("authForm").addEventListener("submit",async event => {
+  event.preventDefault();
+
+  if (!selloraSupabase) {
+    showMessage("authMessage","Database connection is not ready. Refresh and try again.","error");
+    return;
+  }
+
+  const email = document.getElementById("authEmail").value.trim();
+  const password = document.getElementById("authPassword").value;
+  const fullName = document.getElementById("fullName").value.trim();
+  const button = document.getElementById("authSubmit");
+
+  button.disabled = true;
+  showMessage("authMessage","Please wait...","");
+
+  try {
+    if (authMode === "signup") {
+      const {data,error} = await selloraSupabase.auth.signUp({
+        email,
+        password,
+        options:{data:{full_name:fullName}}
+      });
+
+      if (error) throw error;
+
+      if (data.session) {
+        currentUser = data.user;
+        updateAccountUI();
+        showMessage("authMessage","Your account has been created successfully.","success");
+        setTimeout(() => closeModal("authModal"),900);
+      } else {
+        showMessage("authMessage","Registration submitted. Check your email for a confirmation link if email confirmation is enabled.","success");
+      }
+    } else {
+      const {data,error} = await selloraSupabase.auth.signInWithPassword({email,password});
+      if (error) throw error;
+
+      currentUser = data.user;
+      updateAccountUI();
+      showMessage("authMessage","You are signed in successfully.","success");
+      setTimeout(() => closeModal("authModal"),700);
+    }
+  } catch (error) {
+    showMessage("authMessage",error.message || "Account action failed. Please try again.","error");
+  } finally {
+    button.disabled = false;
+  }
 });
 
-async function signIn(){
-  const email=document.getElementById("authEmail").value.trim();
-  const password=document.getElementById("authPassword").value;
-  const message=document.getElementById("authMessage");
-  if(!email||!password){message.textContent="Enter your email and password.";return;}
-  message.textContent="Signing in...";
-  const {error}=await db.auth.signInWithPassword({email,password});
-  message.textContent=error?error.message:"Signed in successfully.";
-  if(!error)setTimeout(closeAuth,900);
+async function openSeller() {
+  if (!currentUser || !selloraSupabase) {
+    openAuth();
+    showMessage("authMessage","Please sign in first, then choose Sell with Sellora again.","");
+    return;
+  }
+
+  const button = document.getElementById("sellerActionButton");
+  button.disabled = true;
+
+  try {
+    const {data,error} = await selloraSupabase
+      .from("seller_applications")
+      .select("status")
+      .eq("user_id",currentUser.id)
+      .maybeSingle();
+
+    if (error) throw error;
+
+    if (data?.status === "approved") {
+      document.getElementById("productForm").reset();
+      showMessage("productMessage","","");
+      openModal("productModal");
+    } else if (data?.status === "pending") {
+      document.getElementById("sellerForm").style.display = "none";
+      showMessage("sellerMessage","Your application is pending review. You cannot submit another application.","");
+      openModal("sellerModal");
+    } else if (data?.status === "rejected") {
+      document.getElementById("sellerForm").style.display = "none";
+      showMessage("sellerMessage","Your application was rejected. Please contact the Sellora team for guidance.","error");
+      openModal("sellerModal");
+    } else {
+      document.getElementById("sellerForm").style.display = "block";
+      showMessage("sellerMessage","","");
+      openModal("sellerModal");
+    }
+  } catch (error) {
+    alert("Could not check seller approval: " + error.message);
+  } finally {
+    button.disabled = false;
+  }
 }
 
-async function signUp(){
-  const email=document.getElementById("authEmail").value.trim();
-  const password=document.getElementById("authPassword").value;
-  const message=document.getElementById("authMessage");
-  if(!email||password.length<6){message.textContent="Enter an email and a password of at least 6 characters.";return;}
-  message.textContent="Creating your account...";
-  const {error}=await db.auth.signUp({email,password});
-  message.textContent=error?error.message:"Account created. If email confirmation is enabled, check your inbox before signing in.";
-}
+document.getElementById("sellerForm").addEventListener("submit",async event => {
+  event.preventDefault();
 
-async function loadProducts(){
-  const grid=document.getElementById("productGrid");
-  try{
-    const {data,error}=await db.from("products")
-      .select("id,name,description,price,festival,image_url,stock")
-      .eq("is_active",true)
-      .not("image_url","is",null)
-      .order("created_at",{ascending:false})
-      .limit(8);
-    if(error)throw error;
-    if(!data||!data.length){
-      grid.innerHTML='<div class="empty">New products from Sellora sellers will appear here as they become available. <a class="text-link" href="shop.html">Visit the shop →</a></div>';
+  if (!selloraSupabase || !currentUser) {
+    showMessage("sellerMessage","Please sign in before submitting your application.","error");
+    return;
+  }
+
+  const button = document.getElementById("sellerSubmit");
+  button.disabled = true;
+
+  try {
+    const {data:existing,error:checkError} = await selloraSupabase
+      .from("seller_applications")
+      .select("status")
+      .eq("user_id",currentUser.id)
+      .maybeSingle();
+
+    if (checkError) throw checkError;
+
+    if (existing) {
+      showMessage("sellerMessage","You already have a seller application. Current status: " + existing.status + ".","error");
+      await refreshSellerButton();
       return;
     }
-    grid.innerHTML=data.map(p=>`
-      <article class="product-card">
-        <img src="${escapeAttr(p.image_url||photo.general)}" alt="${escapeAttr(p.name)}" loading="lazy" onerror="this.onerror=null;this.src='${photo.general}'">
-        <div class="product-info">
-          <h3>${escapeHtml(p.name)}</h3>
-          <div class="meta">${escapeHtml(p.festival||"Festival collection")}</div>
-          <div class="price">₹${Number(p.price||0).toLocaleString("en-IN")}</div>
-          <a class="btn teal" href="shop.html">View in Shop</a>
-        </div>
-      </article>`).join("");
-  }catch(e){
-    grid.innerHTML='<div class="empty">Products could not be loaded right now. You can still browse the <a class="text-link" href="shop.html">Shop →</a></div>';
-  }
-}
-function escapeHtml(value){
-  return String(value??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-}
-function escapeAttr(value){return escapeHtml(value);}
 
-stateOptions();
-renderFeatured();
-applyFilters();
-loadProducts();
+    const {error} = await selloraSupabase
+      .from("seller_applications")
+      .insert({
+        user_id:currentUser.id,
+        business_name:document.getElementById("businessName").value.trim(),
+        seller_type:document.getElementById("sellerType").value,
+        status:"pending"
+      });
 
-db.auth.getSession().then(({data})=>{
-  const btn=document.querySelector(".nav>.btn");
-  if(data?.session){
-    btn.textContent="My Account";
-    btn.onclick=async()=>{
-      const {error}=await db.auth.signOut();
-      if(!error){btn.textContent="Sign In";btn.onclick=openAuth;}
-    };
+    if (error) throw error;
+
+    document.getElementById("sellerForm").reset();
+    document.getElementById("sellerForm").style.display = "none";
+    showMessage("sellerMessage","Application submitted. It is pending review; product selling is not enabled until approval.","success");
+    await refreshSellerButton();
+  } catch (error) {
+    showMessage("sellerMessage",error.message || "Application could not be submitted.","error");
+  } finally {
+    button.disabled = false;
   }
 });
+
+document.getElementById("listingImageFile").addEventListener("change", event => {
+  const file = event.target.files && event.target.files[0];
+  const preview = document.getElementById("listingImagePreview");
+  if (!file) {
+    preview.removeAttribute("src");
+    preview.style.display = "none";
+    return;
+  }
+  if (!file.type.startsWith("image/") || file.size > 5 * 1024 * 1024) {
+    event.target.value = "";
+    preview.removeAttribute("src");
+    preview.style.display = "none";
+    showMessage("productMessage", "Choose an image file up to 5 MB.", "error");
+    return;
+  }
+  preview.src = URL.createObjectURL(file);
+  preview.style.display = "block";
+  showMessage("productMessage", "Photo selected. It will upload when you publish the product.", "success");
+});
+
+document.getElementById("productForm").addEventListener("submit",async event => {
+  event.preventDefault();
+
+  if (!selloraSupabase || !currentUser) {
+    showMessage("productMessage","Please sign in first.","error");
+    return;
+  }
+
+  const button = document.getElementById("productSubmit");
+  button.disabled = true;
+  showMessage("productMessage","Publishing product...","");
+
+  try {
+    const {data:application,error:approvalError} = await selloraSupabase
+      .from("seller_applications")
+      .select("status")
+      .eq("user_id",currentUser.id)
+      .maybeSingle();
+
+    if (approvalError) throw approvalError;
+
+    if (!application || application.status !== "approved") {
+      throw new Error("An approved seller account is required.");
+    }
+
+    const price = Number(document.getElementById("listingPrice").value);
+    const stock = Number(document.getElementById("listingStock").value);
+    const imageFile = document.getElementById("listingImageFile").files?.[0];
+
+    if (!imageFile) {
+      throw new Error("Please upload a real product photo before publishing.");
+    }
+    if (!imageFile.type.startsWith("image/")) {
+      throw new Error("The selected file must be an image.");
+    }
+    if (imageFile.size > 5 * 1024 * 1024) {
+      throw new Error("The photo must be 5 MB or smaller.");
+    }
+
+    if (!Number.isFinite(price) || price <= 0) {
+      throw new Error("Enter a valid price greater than zero.");
+    }
+    if (!Number.isInteger(stock) || stock < 0) {
+      throw new Error("Enter a valid whole-number quantity.");
+    }
+
+    showMessage("productMessage","Uploading your product photo...","");
+
+    const safeName = imageFile.name.replace(/[^a-zA-Z0-9._-]/g, "_");
+    const storagePath = currentUser.id + "/" + Date.now() + "-" + safeName;
+    const {error:uploadError} = await selloraSupabase.storage
+      .from("product-images")
+      .upload(storagePath, imageFile, {
+        cacheControl:"3600",
+        upsert:false,
+        contentType:imageFile.type
+      });
+
+    if (uploadError) throw uploadError;
+
+    const {data:publicUrlData} = selloraSupabase.storage
+      .from("product-images")
+      .getPublicUrl(storagePath);
+    const imageUrl = publicUrlData?.publicUrl;
+
+    if (!imageUrl) {
+      await selloraSupabase.storage.from("product-images").remove([storagePath]);
+      throw new Error("Could not create a public link for the uploaded photo.");
+    }
+
+    const {error:insertError} = await selloraSupabase
+      .from("products")
+      .insert({
+        seller_id:currentUser.id,
+        name:document.getElementById("listingName").value.trim(),
+        description:document.getElementById("listingDescription").value.trim(),
+        price,
+        category:document.getElementById("listingCategory").value.trim(),
+        festival:document.getElementById("listingFestival").value,
+        image_url:imageUrl,
+        stock,
+        is_active:true
+      });
+
+    if (insertError) {
+      await selloraSupabase.storage.from("product-images").remove([storagePath]);
+      throw insertError;
+    }
+
+    showMessage("productMessage","Product and photo published successfully!","success");
+    await loadProducts();
+    await refreshSellerButton();
+    setTimeout(() => closeModal("productModal"),1000);
+  } catch (error) {
+    showMessage("productMessage","Could not publish product: " + error.message,"error");
+  } finally {
+    button.disabled = false;
+  }
+});
+
+function safeText(value) {
+  return String(value ?? "").replace(/[&<>"']/g,char => ({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#39;"
+  }[char]));
+}
+
+function renderProducts() {
+  const search = document.getElementById("searchInput").value.trim().toLowerCase();
+  const festival = document.getElementById("festivalFilter").value;
+
+  const products = databaseProducts.filter(product => {
+    const matchesFestival =
+      festival === "All" ||
+      String(product.festival || "Other").toLowerCase() === festival.toLowerCase();
+
+    const searchable = [
+      product.name,product.description,product.category,product.festival
+    ].join(" ").toLowerCase();
+
+    return matchesFestival && searchable.includes(search);
+  });
+
+  const grid = document.getElementById("productGrid");
+
+  if (!products.length) {
+    grid.innerHTML = '<div class="empty">No products match your search. Try another keyword or festival.</div>';
+    return;
+  }
+
+  grid.innerHTML = products.map(product => {
+    const image = product.image_url && /^https?:\/\//i.test(product.image_url)
+      ? '<img src="' + safeText(product.image_url) + '" alt="' + safeText(product.name) + '" loading="lazy" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'">'
+      : '';
+
+    const icon = product.sampleIcon || "🎁";
+    const isSample = String(product.id).startsWith("sample-");
+
+    return '<article class="product">' +
+      '<div class="product-image">' + image +
+      '<div class="product-placeholder" style="' + (image ? 'display:none' : 'display:flex') + '">' + icon + '</div></div>' +
+      '<div class="product-body">' +
+      '<div class="product-tag">' + safeText(product.festival || "Festive collection") + '</div>' +
+      '<h3>' + safeText(product.name) + '</h3>' +
+      '<p class="product-desc">' + safeText(product.description || "A festive find from Sellora.") + '</p>' +
+      '<div class="product-bottom"><span class="price">' + money(product.price) + '</span>' +
+      '<button class="add-btn" onclick="addToCart(\'' + safeText(product.id) + '\')">Add to cart</button></div>' +
+      (isSample ? '<div style="font-size:10px;color:#8a8075;margin-top:9px">Illustrative sample product</div>' : '') +
+      '</div></article>';
+  }).join("");
+}
+
+async function loadProducts() {
+  try {
+    if (!selloraSupabase) throw new Error("Supabase client unavailable");
+
+    const {data,error} = await selloraSupabase
+      .from("products")
+      .select("id,name,description,price,category,festival,image_url,stock")
+      .eq("is_active",true)
+      .order("created_at",{ascending:false});
+
+    if (error) throw error;
+
+    if (data && data.length) {
+      databaseProducts = data;
+      document.getElementById("productSubtitle").textContent = "Products listed by sellers on Sellora.";
+      document.getElementById("dataNotice").textContent = "These listings are loaded from the Sellora database.";
+    } else {
+      databaseProducts = [];
+      document.getElementById("productSubtitle").textContent = "Products listed by approved sellers on Sellora.";
+      document.getElementById("dataNotice").textContent = "No active seller products are available yet. Products published by approved sellers will appear here.";
+    }
+  } catch (error) {
+    console.error("Could not load products:",error);
+    databaseProducts = [];
+    document.getElementById("productSubtitle").textContent = "Products listed by approved sellers on Sellora.";
+    document.getElementById("dataNotice").textContent = "The marketplace could not load products. Please refresh and try again.";
+  }
+
+  renderProducts();
+}
+
+
+function addToCart(productId) {
+  const product = databaseProducts.find(item => String(item.id) === String(productId));
+  if (!product) return;
+
+  const existing = cart.find(item => String(item.id) === String(productId));
+  if (existing) existing.quantity += 1;
+  else cart.push({...product,quantity:1});
+
+  updateCart();
+}
+
+function updateCart() {
+  document.getElementById("cartCount").textContent =
+    cart.reduce((sum,item) => sum + item.quantity,0);
+
+  const list = document.getElementById("cartList");
+
+  if (!cart.length) {
+    list.innerHTML = '<div class="empty">Your cart is empty. Explore the marketplace to add products.</div>';
+  } else {
+    list.innerHTML = cart.map(item =>
+      '<div class="cart-row"><div><strong>' + safeText(item.name) + '</strong><br>' +
+      '<span>' + money(item.price) + ' × ' + item.quantity + '</span></div>' +
+      '<div style="text-align:right"><strong>' + money(Number(item.price) * item.quantity) + '</strong><br>' +
+      '<button onclick="removeFromCart(\'' + safeText(item.id) + '\')">Remove</button></div></div>'
+    ).join("");
+  }
+
+  const total = cart.reduce((sum,item) => sum + Number(item.price) * item.quantity,0);
+  document.getElementById("cartTotal").textContent = money(total);
+}
+
+function removeFromCart(productId) {
+  cart = cart.filter(item => String(item.id) !== String(productId));
+  updateCart();
+}
+
+function openCart() {
+  showMessage("cartMessage","","");
+  updateCart();
+  openModal("cartModal");
+}
+
+function startCheckout() {
+  showMessage(
+    "cartMessage",
+    "Checkout is not connected yet. Secure order creation, stock checks and payment processing still need to be implemented before accepting real orders.",
+    "error"
+  );
+}
+
+async function initialiseSellora() {
+  try {
+    if (!window.supabase || !window.supabase.createClient) {
+      throw new Error("Supabase library did not load. Check your internet connection.");
+    }
+
+    selloraSupabase = window.supabase.createClient(
+      SELLORA_SUPABASE_URL,
+      SELLORA_SUPABASE_KEY
+    );
+
+    const {data,error} = await selloraSupabase.auth.getSession();
+    if (error) throw error;
+
+    currentUser = data.session?.user || null;
+    updateAccountUI();
+
+    selloraSupabase.auth.onAuthStateChange((_event,session) => {
+      currentUser = session?.user || null;
+      updateAccountUI();
+    });
+
+    console.log("Sellora initialized.");
+  } catch (error) {
+    console.error("Sellora setup error:",error);
+    currentUser = null;
+    updateAccountUI();
+    databaseProducts = [];
+  }
+}
+
+updateCart();
+initialiseSellora();
 </script>
+<script>
+(function(){const festival=document.getElementById('homeFestival');const button=document.getElementById('findFestivalButton');if(festival&&button){const budget=document.getElementById('homeBudget');const recipient=document.getElementById('homeRecipient');const update=()=>{const params=new URLSearchParams();params.set('festival',festival.value);if(budget&&budget.value)params.set('budget',budget.value);if(recipient&&recipient.value&&recipient.value!=='everyone')params.set('recipient',recipient.value);button.href='shop.html?'+params.toString()};festival.addEventListener('change',update);if(budget)budget.addEventListener('change',update);if(recipient)recipient.addEventListener('change',update);update();}})();
+</script>
+
+<script>
+(function(){
+ const regions = {"Andhra Pradesh": ["Ugadi", "Sankranti", "Tirumala Brahmotsavam", "Tirupati Gangamma Jatara", "Lumbini Festival"], "Arunachal Pradesh": ["Losar", "Solung", "Nyokum", "Dree Festival", "Mopin", "Si-Donyi"], "Assam": ["Bohag Bihu", "Kongali Bihu", "Bhogali Bihu", "Ambubachi Mela", "Majuli Raas Mahotsav", "Baishagu"], "Bihar": ["Chhath Puja", "Jitiya", "Sama Chakeva", "Bihula", "Pitrapaksha Mela", "Sonepur Mela"], "Chhattisgarh": ["Bastar Dussehra", "Madai Festival", "Hareli", "Teeja", "Goncha Festival", "Bhoramdeo Mahotsav"], "Goa": ["Goa Carnival", "Shigmo", "Sao Joao", "Bonderam", "Chikhal Kalo", "Saptah Festival"], "Gujarat": ["Uttarayan", "Navratri Garba", "Rann Utsav", "Tarnetar Fair", "Bhavnath Mahadev Mela", "Janmashtami at Dwarka"], "Haryana": ["Teej", "Surajkund International Crafts Mela", "Baisakhi", "Gugga Naumi", "Pinjore Heritage Festival"], "Himachal Pradesh": ["Kullu Dussehra", "Mandi Shivratri", "Minjar Fair", "Losar", "Halda Festival", "Renuka Fair"], "Jharkhand": ["Sarhul", "Karma", "Tusu Parab", "Sohrai", "Bhagta Parab", "Chhath Puja"], "Karnataka": ["Mysuru Dasara", "Bengaluru Karaga", "Ugadi", "Vairamudi Festival", "Kambala", "Hampi Utsav", "Makara Sankranti"], "Kerala": ["Onam", "Vishu", "Thrissur Pooram", "Attukal Pongala", "Theyyam season", "Aranmula Vallam Kali", "Vallam Kali boat festivals"], "Madhya Pradesh": ["Khajuraho Dance Festival", "Bhagoria Haat", "Lokrang Festival", "Tansen Samaroh", "Narmada Jayanti", "Simhastha Kumbh (Ujjain)"], "Maharashtra": ["Ganesh Chaturthi", "Gudi Padwa", "Makar Sankranti", "Gokulashtami/Dahi Handi", "Pola", "Ashadhi Ekadashi Wari", "Ellora Festival", "Narali Purnima"], "Manipur": ["Yaoshang", "Lai Haraoba", "Ningol Chakouba", "Cheiraoba", "Kang Chingba", "Kut Festival"], "Meghalaya": ["Wangala", "Nongkrem Dance Festival", "Shad Suk Mynsiem", "Behdienkhlam", "Strawberry Festival"], "Mizoram": ["Chapchar Kut", "Pawl Kut", "Mim Kut", "Thalfavang Kut"], "Nagaland": ["Hornbill Festival", "Moatsu", "Sekrenyi", "Aoling", "Tuluni", "Tokhu Emong"], "Odisha": ["Rath Yatra", "Raja Parba", "Nuakhai", "Bali Jatra", "Dhanu Jatra", "Boita Bandana", "Durga Puja"], "Punjab": ["Baisakhi", "Lohri", "Hola Mohalla", "Teej/Tiyan", "Gurpurab", "Maghi"], "Rajasthan": ["Gangaur", "Teej", "Pushkar Camel Fair", "Desert Festival Jaisalmer", "Mewar Festival", "Brij Holi", "Kaila Devi Fair"], "Sikkim": ["Losar", "Pang Lhabsol", "Saga Dawa", "Losoong/Namsoong", "Bumchu", "Indra Jatra"], "Tamil Nadu": ["Pongal", "Puthandu", "Thaipusam", "Karthigai Deepam", "Chithirai Festival", "Aadi Perukku", "Jallikattu season"], "Telangana": ["Bathukamma", "Bonalu", "Sammakka Saralamma Jatara", "Ugadi", "Medaram Jatara", "Peerla Panduga"], "Tripura": ["Kharchi Puja", "Garia Puja", "Ker Puja", "Durga Puja", "Neermahal Water Festival"], "Uttar Pradesh": ["Holi in Braj", "Dev Deepawali", "Kumbh/Ardh Kumbh Mela", "Ram Leela of Ramnagar", "Janmashtami in Mathura", "Taj Mahotsav", "Ganga Mahotsav"], "Uttarakhand": ["Harela", "Phool Dei", "Nanda Devi Raj Jat", "Kumbh Mela (Haridwar)", "Uttarayani Mela", "Bikhauti Mela"], "West Bengal": ["Durga Puja", "Kali Puja", "Poila Boishakh", "Saraswati Puja", "Jagaddhatri Puja", "Poush Mela", "Gangasagar Mela", "Rash Mela"], "Andaman and Nicobar Islands": ["Island Tourism Festival", "Subhash Mela", "Durga Puja"], "Chandigarh": ["Rose Festival", "Baisakhi", "Chandigarh Carnival"], "Dadra and Nagar Haveli and Daman and Diu": ["Tarpa Festival", "Nariyal Poornima", "Daman Ganga Fair"], "Delhi": ["Phool Walon Ki Sair", "Delhi International Kite Festival", "Luv Kush Ramleela", "Chhath Puja"], "Jammu and Kashmir": ["Tulip Festival", "Navreh", "Eid celebrations", "Kheer Bhawani Mela", "Hemis-style regional Buddhist celebrations"], "Ladakh": ["Hemis Festival", "Losar", "Dosmoche", "Sindhu Darshan Festival", "Ladakh Festival"], "Lakshadweep": ["Eid al-Fitr", "Eid al-Adha", "Milad-un-Nabi"], "Puducherry": ["Masi Magam", "Pongal", "Villianur Temple Car Festival", "Bastille Day celebrations"]};
+ const directory=document.getElementById('festivalDirectory');
+ const search=document.getElementById('festivalDirectorySearch');
+ const stateFilter=document.getElementById('festivalStateFilter');
+ if(!directory||!search||!stateFilter)return;
+ const states=Object.keys(regions);
+ states.forEach(state=>{const o=document.createElement('option');o.value=state;o.textContent=state;stateFilter.appendChild(o)});
+ function render(){
+   const q=search.value.trim().toLocaleLowerCase();const selected=stateFilter.value;
+   const rows=states.filter(state=>selected==='All'||state===selected).map(state=>({state,festivals:regions[state].filter(f=>!q||f.toLocaleLowerCase().includes(q)||state.toLocaleLowerCase().includes(q))})).filter(row=>row.festivals.length);
+   if(!rows.length){directory.innerHTML='<div class="festival-empty">No matching festival found. Try another spelling or choose a different state.</div>';return;}
+   directory.innerHTML=rows.map(row=>'<article class="festival-state-card"><h3>'+escapeHtml(row.state)+'</h3><div class="festival-chip-list">'+row.festivals.map(f=>'<a class="festival-chip" href="shop.html?festival='+encodeURIComponent(f)+'" title="Browse '+escapeHtml(f)+' listings">'+escapeHtml(f)+'</a>').join('')+'</div></article>').join('');
+ }
+ function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+ search.addEventListener('input',render);stateFilter.addEventListener('change',render);render();
+})();
+</script>
+
 </body>
 </html>
