@@ -1,0 +1,634 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Explore Indian Festivals | Sellora</title>
+<style>
+:root {
+  --cream: #fffaf2;
+  --pink: #e97878;
+  --teal: #174d49;
+  --ink: #293b39;
+  --muted: #777b75;
+  --line: #eee5d9;
+  --white: #ffffff;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--cream);
+  color: var(--ink);
+  font-family: Arial, sans-serif;
+}
+header {
+  background: var(--white);
+  border-bottom: 1px solid var(--line);
+  padding: 18px 6%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.logo {
+  color: var(--teal);
+  font-family: Georgia, serif;
+  font-size: 30px;
+  font-weight: bold;
+  text-decoration: none;
+}
+nav { display: flex; gap: 22px; flex-wrap: wrap; }
+nav a {
+  color: var(--ink);
+  text-decoration: none;
+  font-size: 14px;
+}
+nav a:hover { color: var(--pink); }
+.hero {
+  padding: 55px 6% 35px;
+  text-align: center;
+}
+.eyebrow {
+  color: var(--pink);
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+h1 {
+  font-family: Georgia, serif;
+  color: var(--teal);
+  font-size: clamp(34px, 5vw, 52px);
+  margin: 14px 0;
+}
+.hero p {
+  max-width: 650px;
+  margin: 0 auto;
+  line-height: 1.7;
+  color: var(--muted);
+}
+.filters {
+  background: #f9eae5;
+  margin: 10px auto 35px;
+  padding: 24px;
+  max-width: 1050px;
+  width: 88%;
+  border-radius: 18px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+.filters input, .filters select {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid #ead9d1;
+  border-radius: 9px;
+  background: white;
+  font-size: 14px;
+  color: var(--ink);
+  min-width: 0;
+}
+.section {
+  padding: 10px 6% 55px;
+  max-width: 1400px;
+  margin: auto;
+}
+.section-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin-bottom: 22px;
+}
+h2 {
+  color: var(--teal);
+  font-family: Georgia, serif;
+  font-size: 30px;
+  margin: 0;
+}
+#resultCount { color: var(--muted); font-size: 13px; }
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+}
+.card {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 15px;
+  overflow: hidden;
+  transition: transform .2s, box-shadow .2s;
+}
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px #174d4910;
+}
+.card img {
+  width: 100%;
+  height: 190px;
+  object-fit: cover;
+  display: block;
+  background: #f1e5d7;
+}
+.card-body { padding: 18px; }
+.tag {
+  color: #b85e5e;
+  background: #fff0ec;
+  padding: 6px 9px;
+  display: inline-block;
+  border-radius: 20px;
+  font-size: 11px;
+  margin-bottom: 10px;
+}
+.card h3 {
+  color: var(--teal);
+  font-family: Georgia, serif;
+  font-size: 21px;
+  margin: 0 0 8px;
+}
+.card p {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.65;
+  margin: 0 0 14px;
+}
+.card .location {
+  font-size: 12px;
+  color: var(--teal);
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+.details {
+  border: 0;
+  border-radius: 8px;
+  background: var(--pink);
+  color: white;
+  padding: 10px 14px;
+  cursor: pointer;
+  font-weight: bold;
+}
+.details:hover { background: #d96369; }
+.empty {
+  display: none;
+  text-align: center;
+  padding: 40px 15px;
+  color: var(--muted);
+  grid-column: 1 / -1;
+}
+footer {
+  background: var(--teal);
+  color: white;
+  padding: 28px 6%;
+  text-align: center;
+  line-height: 1.8;
+}
+footer a { color: white; }
+.modal {
+  position: fixed;
+  inset: 0;
+  background: #102b29bb;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 10;
+}
+.modal.open { display: flex; }
+.modal-content {
+  background: var(--cream);
+  border-radius: 16px;
+  max-width: 520px;
+  width: 100%;
+  max-height: 90vh;
+  overflow: auto;
+  padding: 22px;
+}
+.modal-content img {
+  width: 100%;
+  height: 230px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+.modal-content h2 { margin: 16px 0 10px; }
+.modal-content p { line-height: 1.7; color: var(--muted); }
+.close {
+  float: right;
+  background: none;
+  border: 0;
+  font-size: 25px;
+  cursor: pointer;
+  color: var(--teal);
+}
+@media (max-width: 750px) {
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .card img { height: 155px; }
+}
+@media (max-width: 480px) {
+  header { padding: 16px 5%; }
+  nav { gap: 13px; }
+  .hero { padding: 38px 5% 25px; }
+  .filters { grid-template-columns: 1fr; width: 90%; }
+  .section { padding-left: 5%; padding-right: 5%; }
+  .grid { grid-template-columns: 1fr; }
+  .card img { height: 210px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <a class="logo" href="index.html">Sellora</a>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="shop.html">Shop</a>
+    <a href="festivals.html">Festivals</a>
+    <a href="sell.html">Sell with Us</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="eyebrow">INDIA'S FESTIVAL DIRECTORY</div>
+  <h1>Every State. Every Celebration.</h1>
+  <p>Discover India's beautiful traditions, from famous festivals to small regional celebrations. Choose a state or search for a festival to explore its story and traditions.</p>
+</section>
+
+<div class="filters">
+  <input id="search" type="search" placeholder="Search festivals, traditions or states...">
+  <select id="state">
+    <option value="">All States and Union Territories</option>
+    <option>Andhra Pradesh</option>
+    <option>Arunachal Pradesh</option>
+    <option>Assam</option>
+    <option>Bihar</option>
+    <option>Chhattisgarh</option>
+    <option>Goa</option>
+    <option>Gujarat</option>
+    <option>Haryana</option>
+    <option>Himachal Pradesh</option>
+    <option>Jharkhand</option>
+    <option>Karnataka</option>
+    <option>Kerala</option>
+    <option>Madhya Pradesh</option>
+    <option>Maharashtra</option>
+    <option>Manipur</option>
+    <option>Meghalaya</option>
+    <option>Mizoram</option>
+    <option>Nagaland</option>
+    <option>Odisha</option>
+    <option>Punjab</option>
+    <option>Rajasthan</option>
+    <option>Sikkim</option>
+    <option>Tamil Nadu</option>
+    <option>Telangana</option>
+    <option>Tripura</option>
+    <option>Uttar Pradesh</option>
+    <option>Uttarakhand</option>
+    <option>West Bengal</option>
+    <option>Andaman and Nicobar Islands</option>
+    <option>Chandigarh</option>
+    <option>Dadra and Nagar Haveli and Daman and Diu</option>
+    <option>Delhi</option>
+    <option>Jammu and Kashmir</option>
+    <option>Ladakh</option>
+    <option>Lakshadweep</option>
+    <option>Puducherry</option>
+  </select>
+</div>
+
+<main class="section">
+  <div class="section-heading">
+    <h2>Explore Festivals</h2>
+    <span id="resultCount"></span>
+  </div>
+  <div class="grid" id="festivalGrid"></div>
+  <div class="empty" id="empty">
+    No matching festivals found. Try another search or select a different state.
+  </div>
+</main>
+
+<div class="modal" id="festivalModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal-content">
+    <button class="close" id="closeModal" aria-label="Close">&times;</button>
+    <img id="modalImage" src="" alt="">
+    <h2 id="modalTitle"></h2>
+    <div class="location" id="modalLocation"></div>
+    <p id="modalDescription"></p>
+    <p id="modalTraditions"></p>
+    <button class="details" id="modalCloseButton">Close</button>
+  </div>
+</div>
+
+<footer>
+  <strong style="font-family:Georgia,serif;font-size:25px">Sellora</strong><br>
+  Celebrating India, Together<br>
+  <a href="index.html">Home</a> · <a href="shop.html">Shop</a> · <a href="sell.html">Sell with Us</a>
+</footer>
+
+<script>
+const festivals = [
+  {
+    name:"Diwali",state:"Pan-India",type:"Major festival",
+    image:"https://images.unsplash.com/photo-1605379399642-870262d3d051?auto=format&fit=crop&w=900&q=85",
+    description:"The festival of lights celebrates the triumph of light over darkness and good over evil. Families decorate homes, light lamps and share festive food.",
+    traditions:"Traditions: diyas, rangoli, prayers, sweets and exchanging gifts."
+  },
+  {
+    name:"Holi",state:"Uttar Pradesh",type:"Major festival",
+    image:"https://images.unsplash.com/photo-1616422285623-13ff0162193c?auto=format&fit=crop&w=900&q=85",
+    description:"Holi welcomes spring with colours, music and gatherings. Braj, Mathura and Vrindavan are especially known for their Holi celebrations.",
+    traditions:"Traditions: coloured powders, songs, community gatherings and festive foods."
+  },
+  {
+    name:"Ganesh Chaturthi",state:"Maharashtra",type:"Major festival",
+    image:"https://images.unsplash.com/photo-1567591414240-e9c1e6b1e9b4?auto=format&fit=crop&w=900&q=85",
+    description:"A celebration honouring Lord Ganesha, widely celebrated in Maharashtra and many other parts of India.",
+    traditions:"Traditions: Ganesha idols, prayers, decorations, modak and community processions."
+  },
+  {
+    name:"Onam",state:"Kerala",type:"Harvest festival",
+    image:"https://images.unsplash.com/photo-1606293926075-69a00dbfde81?auto=format&fit=crop&w=900&q=85",
+    description:"Kerala's harvest celebration welcomes King Mahabali through colourful cultural events and community feasts.",
+    traditions:"Traditions: pookalam flower designs, Onam sadya, traditional games and boat races."
+  },
+  {
+    name:"Raksha Bandhan",state:"Pan-India",type:"Family festival",
+    image:"https://images.unsplash.com/photo-1620034949504-339b8a6c9ce3?auto=format&fit=crop&w=900&q=85",
+    description:"A festival celebrating affection and bonds between siblings, marked by the tying of a rakhi.",
+    traditions:"Traditions: rakhi tying, blessings, family visits and sharing sweets."
+  },
+  {
+    name:"Navratri and Garba",state:"Gujarat",type:"Cultural festival",
+    image:"https://images.unsplash.com/photo-1604608672516-8e6e7f9d2a3b?auto=format&fit=crop&w=900&q=85",
+    description:"Nine nights dedicated to the worship of the Goddess, celebrated with music, dance and colourful traditional clothing.",
+    traditions:"Traditions: garba, dandiya raas, devotional songs and community gatherings."
+  },
+  {
+    name:"Pongal",state:"Tamil Nadu",type:"Harvest festival",
+    image:"https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?auto=format&fit=crop&w=900&q=85",
+    description:"A Tamil harvest festival expressing gratitude to the Sun, nature, cattle and farmers.",
+    traditions:"Traditions: cooking pongal, kolam designs, sugarcane and honouring cattle."
+  },
+  {
+    name:"Bihu",state:"Assam",type:"Regional festival",
+    image:"https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=900&q=85",
+    description:"Assam celebrates three Bihu festivals across the agricultural calendar. Rongali Bihu marks the Assamese New Year and the arrival of spring.",
+    traditions:"Traditions: Bihu dance, dhol music, traditional clothing and festive foods."
+  },
+  {
+    name:"Durga Puja",state:"West Bengal",type:"Regional festival",
+    image:"https://images.unsplash.com/photo-1606293926075-69a00dbfde81?auto=format&fit=crop&w=900&q=85",
+    description:"A major Bengali celebration honouring Goddess Durga, known for artistic pandals, cultural performances and community gatherings.",
+    traditions:"Traditions: pandal visits, dhak drums, worship and sharing festive meals."
+  },
+  {
+    name:"Chhath Puja",state:"Bihar",type:"Regional festival",
+    image:"https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=900&q=85",
+    description:"A devotional festival dedicated to the Sun, observed with prayers beside rivers, ponds and other bodies of water.",
+    traditions:"Traditions: offerings to the setting and rising Sun, fasting and family rituals."
+  },
+  {
+    name:"Bathukamma",state:"Telangana",type:"Regional festival",
+    image:"https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=900&q=85",
+    description:"A floral festival celebrated by women in Telangana, honouring nature and the Goddess through beautifully arranged flowers.",
+    traditions:"Traditions: stacked flower arrangements, folk songs, circle dances and community gatherings."
+  },
+  {
+    name:"Bonalu",state:"Telangana",type:"Regional festival",
+    image:"https://images.unsplash.com/photo-1604608672516-8e6e7f9d2a3b?auto=format&fit=crop&w=900&q=85",
+    description:"A traditional Telangana festival honouring Goddess Mahakali, especially celebrated in Hyderabad and nearby areas.",
+    traditions:"Traditions: decorated offerings, temple visits, processions and folk performances."
+  },
+  {
+    name:"Thrissur Pooram",state:"Kerala",type:"Regional festival",
+    image:"https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=900&q=85",
+    description:"A famous temple festival in Thrissur known for grand processions, decorated elephants and percussion performances.",
+    traditions:"Traditions: temple celebrations, chenda melam and the colourful kudamattom ceremony."
+  },
+  {
+    name:"Vishu",state:"Kerala",type:"Regional festival",
+    image:"https://images.unsplash.com/photo-1606293926075-69a00dbfde81?auto=format&fit=crop&w=900&q=85",
+    description:"The Malayalam New Year celebration associated with new beginnings and the auspicious Vishukkani arrangement.",
+    traditions:"Traditions: Vishukkani, giving kaineettam and preparing festive meals."
+  },
+  {
+    name:"Ugadi",state:"Andhra Pradesh",type:"Regional festival",
+    image:"https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?auto=format&fit=crop&w=900&q=85",
+    description:"The traditional New Year celebrated in Andhra Pradesh and neighbouring regions, welcoming a fresh beginning.",
+    traditions:"Traditions: house decorations, prayers, festive meals and Ugadi pachadi."
+  },
+  {
+    name:"Gudi Padwa",state:"Maharashtra",type:"Regional festival",
+    image:"https://images.unsplash.com/photo-1605379399642-870262d3d051?auto=format&fit=crop&w=900&q=85",
+    description:"The Marathi New Year, celebrated with decorated entrances and a traditional Gudi raised outside homes.",
+    traditions:"Traditions: Gudi decorations, rangoli, neem leaves and festive food."
+  },
+  {
+    name:"Mysuru Dasara",state:"Karnataka",type:"Regional festival",
+    image:"https://images.unsplash.com/photo-1604608672516-8e6e7f9d2a3b?auto=format&fit=crop&w=900&q=85",
+    description:"A celebrated Karnataka festival featuring the royal Dasara procession, illuminated landmarks and cultural programmes in Mysuru.",
+    traditions:"Traditions: palace illumination, cultural performances and the Jamboo Savari procession."
+  },
+  {
+    name:"Hampi Utsav",state:"Karnataka",type:"Cultural festival",
+    image:"https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=900&q=85",
+    description:"A cultural festival in the historic Hampi region showcasing Karnataka's music, dance, heritage and arts.",
+    traditions:"Traditions: folk performances, music, dance and heritage celebrations."
+  },
+  {
+    name:"Hornbill Festival",state:"Nagaland",type:"Cultural festival",
+    image:"https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=900&q=85",
+    description:"Nagaland's annual cultural festival showcases the heritage and traditions of its many Naga communities.",
+    traditions:"Traditions: folk dances, music, crafts, traditional games and local food."
+  },
+  {
+    name:"Wangala",state:"Meghalaya",type:"Harvest festival",
+    image:"https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=900&q=85",
+    description:"The Garo harvest festival gives thanks after the harvest and celebrates community identity and traditions.",
+    traditions:"Traditions: drum performances, traditional dancing and ceremonial gatherings."
+  },
+  {
+    name:"Chapchar Kut",state:"Mizoram",type:"Regional festival",
+    image:"https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=900&q=85",
+    description:"A spring festival in Mizoram traditionally associated with the completion of jungle clearing for cultivation.",
+    traditions:"Traditions: Cheraw bamboo dance, music, traditional dress and community celebrations."
+  },
+  {
+    name:"Lai Haraoba",state:"Manipur",type:"Traditional festival",
+    image:"https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=900&q=85",
+    description:"A traditional Meitei ritual festival preserving stories, ceremonies and cultural performances.",
+    traditions:"Traditions: ritual dances, music, storytelling and community ceremonies."
+  },
+  {
+    name:"Losar",state:"Sikkim",type:"New Year festival",
+    image:"https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=900&q=85",
+    description:"Tibetan Buddhist communities celebrate Losar as the New Year with prayers, gatherings and traditional food.",
+    traditions:"Traditions: monastery visits, prayer ceremonies, family gatherings and festive meals."
+  },
+  {
+    name:"Nuakhai",state:"Odisha",type:"Harvest festival",
+    image:"https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?auto=format&fit=crop&w=900&q=85",
+    description:"A harvest festival particularly important in western Odisha, centred on offering the season's new rice.",
+    traditions:"Traditions: new rice offerings, family gatherings and folk celebrations."
+  },
+  {
+    name:"Rath Yatra",state:"Odisha",type:"Religious festival",
+    image:"https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=900&q=85",
+    description:"The famous Puri procession honours Lord Jagannath, Balabhadra and Subhadra as their chariots travel through the city.",
+    traditions:"Traditions: decorated chariots, devotional music, prayers and community participation."
+  },
+  {
+    name:"Teej",state:"Rajasthan",type:"Regional festival",
+    image:"https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=900&q=85",
+    description:"Teej is a monsoon festival celebrated in Rajasthan with traditional clothing, songs and community festivities.",
+    traditions:"Traditions: swings, folk songs, festive processions and traditional sweets."
+  },
+  {
+    name:"Gangaur",state:"Rajasthan",type:"Regional festival",
+    image:"https://images.unsplash.com/photo-1605379399642-870262d3d051?auto=format&fit=crop&w=900&q=85",
+    description:"A spring festival honouring Gauri, associated with devotion, marriage traditions and colourful processions.",
+    traditions:"Traditions: decorated images, folk songs, processions and traditional dress."
+  },
+  {
+    name:"Lohri",state:"Punjab",type:"Seasonal festival",
+    image:"https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=900&q=85",
+    description:"A winter festival celebrating the harvest season, especially associated with Punjab.",
+    traditions:"Traditions: bonfires, bhangra, gidda, peanuts, popcorn and community gatherings."
+  },
+  {
+    name:"Bastar Dussehra",state:"Chhattisgarh",type:"Regional festival",
+    image:"https://images.unsplash.com/photo-1604608672516-8e6e7f9d2a3b?auto=format&fit=crop&w=900&q=85",
+    description:"A distinctive, long-running festival of Bastar with local rituals and traditions centred on the region's revered goddess.",
+    traditions:"Traditions: community ceremonies, processions and local cultural observances."
+  },
+  {
+    name:"Sarhul",state:"Jharkhand",type:"Nature festival",
+    image:"https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=900&q=85",
+    description:"A spring festival among several Adivasi communities in Jharkhand, celebrating nature and the sal tree.",
+    traditions:"Traditions: community prayers, traditional music, dancing and seasonal gatherings."
+  },
+  {
+    name:"Chhapar Mela",state:"Punjab",type:"Regional fair",
+    image:"https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=900&q=85",
+    description:"A traditional fair held in Chhapar village in Punjab, bringing people together for religious observances and local festivities.",
+    traditions:"Traditions: fairground activities, community gatherings and local cultural events."
+  },
+  {
+    name:"Kullu Dussehra",state:"Himachal Pradesh",type:"Regional festival",
+    image:"https://images.unsplash.com/photo-1604608672516-8e6e7f9d2a3b?auto=format&fit=crop&w=900&q=85",
+    description:"A distinctive Dussehra celebration in Himachal Pradesh featuring local deities and a large gathering in Kullu.",
+    traditions:"Traditions: deity processions, folk music, dancing and cultural gatherings."
+  },
+  {
+    name:"Lathmar Holi",state:"Uttar Pradesh",type:"Local tradition",
+    image:"https://images.unsplash.com/photo-1616422285623-13ff0162193c?auto=format&fit=crop&w=900&q=85",
+    description:"A well-known local Holi tradition in Barsana and Nandgaon, in the Braj region.",
+    traditions:"Traditions: playful stick-and-shield performances, folk songs and colourful gatherings."
+  },
+  {
+    name:"Ambubachi Mela",state:"Assam",type:"Regional fair",
+    image:"https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=900&q=85",
+    description:"An annual gathering at Kamakhya Temple in Assam that draws pilgrims and visitors for a major religious observance.",
+    traditions:"Traditions: temple rituals, pilgrimage and spiritual gatherings."
+  }
+];
+
+const grid = document.getElementById("festivalGrid");
+const search = document.getElementById("search");
+const stateSelect = document.getElementById("state");
+const resultCount = document.getElementById("resultCount");
+const empty = document.getElementById("empty");
+const modal = document.getElementById("festivalModal");
+
+function renderFestivals() {
+  const query = search.value.trim().toLowerCase();
+  const selectedState = stateSelect.value;
+
+  const filtered = festivals.filter(f => {
+    const matchesState = !selectedState ||
+      f.state === selectedState ||
+      f.state === "Pan-India";
+    const matchesSearch = !query ||
+      [f.name, f.state, f.type, f.description, f.traditions]
+        .join(" ").toLowerCase().includes(query);
+    return matchesState && matchesSearch;
+  });
+
+  grid.innerHTML = "";
+  resultCount.textContent = filtered.length + " festivals";
+
+  filtered.forEach(f => {
+    const card = document.createElement("article");
+    card.className = "card";
+
+    const img = document.createElement("img");
+    img.src = f.image;
+    img.alt = f.name;
+    img.loading = "lazy";
+    img.onerror = () => {
+      img.onerror = null;
+      img.src = "https://placehold.co/800x450/fff0ec/174d49?text=" +
+        encodeURIComponent(f.name);
+    };
+
+    const body = document.createElement("div");
+    body.className = "card-body";
+
+    const tag = document.createElement("span");
+    tag.className = "tag";
+    tag.textContent = f.type;
+
+    const title = document.createElement("h3");
+    title.textContent = f.name;
+
+    const location = document.createElement("div");
+    location.className = "location";
+    location.textContent = f.state;
+
+    const description = document.createElement("p");
+    description.textContent = f.description;
+
+    const button = document.createElement("button");
+    button.className = "details";
+    button.textContent = "Explore Festival";
+    button.addEventListener("click", () => openDetails(f));
+
+    body.append(tag, title, location, description, button);
+    card.append(img, body);
+    grid.appendChild(card);
+  });
+
+  empty.style.display = filtered.length ? "none" : "block";
+}
+
+function openDetails(f) {
+  document.getElementById("modalImage").src = f.image;
+  document.getElementById("modalImage").alt = f.name;
+  document.getElementById("modalTitle").textContent = f.name;
+  document.getElementById("modalLocation").textContent =
+    f.state + " · " + f.type;
+  document.getElementById("modalDescription").textContent = f.description;
+  document.getElementById("modalTraditions").textContent = f.traditions;
+  modal.classList.add("open");
+}
+
+function closeDetails() {
+  modal.classList.remove("open");
+}
+
+search.addEventListener("input", renderFestivals);
+stateSelect.addEventListener("change", renderFestivals);
+document.getElementById("closeModal").addEventListener("click", closeDetails);
+document.getElementById("modalCloseButton").addEventListener("click", closeDetails);
+modal.addEventListener("click", e => {
+  if (e.target === modal) closeDetails();
+});
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape") closeDetails();
+});
+
+renderFestivals();
+</script>
+</body>
+</html>
