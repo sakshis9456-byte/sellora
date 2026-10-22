@@ -1,0 +1,1239 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sellora | India's Festival Marketplace</title>
+<meta name="description" content="Discover festival essentials, handmade gifts and traditional products from Indian home sellers and artisans.">
+
+<style>
+:root {
+  --ink:#172b4d;
+  --muted:#667085;
+  --paper:#faf8f2;
+  --white:#fff;
+  --line:#e4e2dc;
+  --accent:#203f70;
+  --accent-dark:#152d52;
+  --soft:#eaf0f8;
+  --gold:#b89a5a;
+  --navy:#203f70;
+}
+* { box-sizing:border-box; }
+body {
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:Arial,Helvetica,sans-serif;
+}
+button,input,select,textarea { font:inherit; }
+button { cursor:pointer; }
+a { color:inherit;text-decoration:none; }
+.topbar {
+  background:var(--ink);
+  color:white;
+  text-align:center;
+  padding:10px 16px;
+  font-size:12px;
+  letter-spacing:.5px;
+}
+header {
+  background:var(--paper);
+  border-bottom:1px solid var(--line);
+  position:sticky;
+  top:0;
+  z-index:10;
+}
+.nav {
+  max-width:1200px;
+  margin:auto;
+  padding:17px 22px;
+  display:flex;
+  align-items:center;
+  gap:25px;
+}
+.logo {
+  font-family:Georgia,serif;
+  font-size:29px;
+  font-weight:bold;
+  letter-spacing:-1px;
+  color:var(--accent);
+}
+.logo span { color:var(--gold); }
+.navlinks {
+  display:flex;
+  gap:22px;
+  margin-left:auto;
+  font-size:13px;
+}
+.navlinks a:hover { color:var(--accent); }
+.navactions {
+  display:flex;
+  align-items:center;
+  gap:9px;
+}
+.btn {
+  border:1px solid var(--line);
+  border-radius:5px;
+  padding:11px 15px;
+  background:white;
+  color:var(--ink);
+  font-weight:600;
+  font-size:13px;
+}
+.btn-primary {
+  background:var(--accent);
+  border-color:var(--accent);
+  color:white;
+}
+.btn-primary:hover { background:var(--accent-dark); }
+.btn:disabled { opacity:.5;cursor:not-allowed; }
+.account-status {
+  font-size:11px;
+  color:var(--muted);
+  max-width:120px;
+  overflow-wrap:anywhere;
+}
+main {
+  max-width:1200px;
+  margin:auto;
+  padding:0 22px;
+}
+.hero {
+  margin:30px 0 48px;
+  display:grid;
+  grid-template-columns:1.05fr .95fr;
+  min-height:390px;
+  background:#eaf0f8;
+  border-radius:8px;
+  overflow:hidden;
+}
+.hero-copy {
+  padding:48px 40px;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  justify-content:center;
+}
+.eyebrow {
+  text-transform:uppercase;
+  letter-spacing:2px;
+  font-size:11px;
+  font-weight:bold;
+  color:var(--accent);
+}
+h1,h2,h3,p { margin-top:0; }
+h1 {
+  font-family:Georgia,serif;
+  font-size:clamp(38px,5vw,62px);
+  line-height:1.08;
+  letter-spacing:-1.5px;
+  font-weight:normal;
+  margin:18px 0;
+}
+.hero-copy p {
+  font-size:15px;
+  line-height:1.8;
+  color:#536078;
+  max-width:440px;
+}
+.hero-actions {
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:12px;
+}
+.hero-art {
+  min-height:330px;
+  background:linear-gradient(145deg,#dce5f1,#8fa7c7);
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+}
+.hero-art:before,.hero-art:after {
+  content:"";
+  position:absolute;
+  border-radius:50%;
+  border:1px solid #ffffff80;
+}
+.hero-art:before { width:290px;height:290px; }
+.hero-art:after { width:220px;height:220px; }
+.art-card {
+  z-index:1;
+  width:65%;
+  max-width:330px;
+  background:#fffdf8;
+  padding:25px 22px;
+  text-align:center;
+  transform:rotate(-3deg);
+  box-shadow:0 18px 40px #172b4d20;
+}
+.art-symbol { font-size:72px;margin:5px 0 12px; }
+.art-card strong {
+  font-family:Georgia,serif;
+  font-size:26px;
+  font-weight:normal;
+  display:block;
+}
+.art-card small {
+  display:block;
+  margin-top:8px;
+  color:#6b7280;
+  letter-spacing:2px;
+  font-size:10px;
+}
+.section { margin:0 0 50px; }
+.section-head {
+  display:flex;
+  align-items:end;
+  justify-content:space-between;
+  gap:16px;
+  margin-bottom:22px;
+}
+.section-head h2 {
+  font-family:Georgia,serif;
+  font-size:32px;
+  font-weight:normal;
+  margin-bottom:6px;
+}
+.section-head p {
+  font-size:13px;
+  color:var(--muted);
+  margin:0;
+}
+.text-link { font-size:13px;color:var(--accent);font-weight:bold; }
+.categories {
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:14px;
+}
+.category {
+  border:1px solid var(--line);
+  border-radius:7px;
+  padding:22px 12px;
+  background:white;
+  text-align:center;
+  color:var(--ink);
+  min-width:0;
+  transition:background .2s,border-color .2s,transform .2s;
+}
+.category:hover,.category.active {
+  border-color:var(--accent);
+  background:var(--soft);
+}
+.category:hover { transform:translateY(-2px); }
+.category-icon { font-size:31px;margin-bottom:12px; }
+.category strong { display:block;font-size:13px;margin-bottom:5px; }
+.category small { font-size:11px;color:var(--muted); }
+.toolbar {
+  display:flex;
+  gap:12px;
+  align-items:center;
+  margin:20px 0;
+}
+.search { flex:1;min-width:0; }
+.search input,.toolbar select {
+  width:100%;
+  padding:13px;
+  border:1px solid var(--line);
+  border-radius:5px;
+  background:white;
+}
+.toolbar select { width:240px; }
+.products {
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:18px;
+}
+.product {
+  background:white;
+  border:1px solid var(--line);
+  border-radius:7px;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  min-width:0;
+}
+.product-image {
+  height:190px;
+  background:#edf1f7;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+}
+.product-image img { width:100%;height:100%;object-fit:cover; }
+.product-placeholder { font-size:58px; }
+.product-body {
+  padding:16px;
+  display:flex;
+  flex-direction:column;
+  flex:1;
+}
+.product-tag {
+  font-size:10px;
+  color:var(--accent);
+  text-transform:uppercase;
+  letter-spacing:1px;
+  margin-bottom:9px;
+}
+.product h3 { font-size:15px;margin-bottom:7px;line-height:1.4; }
+.product-desc {
+  font-size:12px;
+  line-height:1.6;
+  color:var(--muted);
+  margin-bottom:12px;
+}
+.product-bottom {
+  margin-top:auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+}
+.price { font-size:17px;font-weight:bold; }
+.add-btn {
+  border:1px solid var(--accent);
+  background:white;
+  color:var(--accent);
+  padding:9px 11px;
+  border-radius:4px;
+  font-size:12px;
+  font-weight:bold;
+}
+.add-btn:hover { background:var(--accent);color:white; }
+.empty {
+  grid-column:1/-1;
+  text-align:center;
+  padding:35px;
+  color:var(--muted);
+  border:1px dashed var(--line);
+  border-radius:6px;
+}
+.notice {
+  padding:15px 17px;
+  background:#edf1f7;
+  border-radius:5px;
+  font-size:13px;
+  line-height:1.7;
+  color:#536078;
+  margin-top:18px;
+}
+.seller-banner {
+  background:#e9eef6;
+  padding:32px;
+  border-radius:7px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:25px;
+}
+.seller-banner h2 {
+  font-family:Georgia,serif;
+  font-weight:normal;
+  font-size:30px;
+  margin:10px 0;
+}
+.seller-banner p {
+  font-size:13px;
+  color:var(--muted);
+  line-height:1.7;
+  margin-bottom:0;
+  max-width:570px;
+}
+footer {
+  margin-top:60px;
+  background:#172b4d;
+  color:white;
+  padding:38px 22px;
+}
+.footer-inner {
+  max-width:1200px;
+  margin:auto;
+  display:flex;
+  justify-content:space-between;
+  gap:25px;
+  flex-wrap:wrap;
+}
+footer .logo { color:white; }
+footer p {
+  color:#d3dbea;
+  font-size:12px;
+  line-height:1.7;
+  max-width:420px;
+  margin:12px 0 0;
+}
+.footer-links {
+  display:flex;
+  gap:20px;
+  align-items:center;
+  flex-wrap:wrap;
+  font-size:12px;
+}
+.modal {
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:30;
+  background:#172b4db3;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+}
+.modal.open { display:flex; }
+.modal-card {
+  width:100%;
+  max-width:470px;
+  max-height:90vh;
+  overflow:auto;
+  background:var(--paper);
+  padding:27px;
+  border-radius:8px;
+  position:relative;
+}
+.modal-card h2 {
+  font-family:Georgia,serif;
+  font-size:29px;
+  font-weight:normal;
+  margin-bottom:8px;
+}
+.modal-card>p { color:var(--muted);font-size:13px;line-height:1.6; }
+.close {
+  position:absolute;
+  right:17px;
+  top:13px;
+  border:0;
+  background:transparent;
+  font-size:26px;
+  color:var(--muted);
+}
+.field { margin:15px 0; }
+.field label {
+  display:block;
+  font-size:12px;
+  font-weight:bold;
+  margin-bottom:7px;
+}
+.field input,.field select,.field textarea {
+  width:100%;
+  padding:12px;
+  border:1px solid var(--line);
+  border-radius:4px;
+  background:white;
+}
+.field textarea { min-height:75px;resize:vertical; }
+.form-actions { display:flex;gap:10px;flex-wrap:wrap;margin-top:18px; }
+.form-actions .btn { flex:1; }
+.form-message {
+  font-size:13px;
+  line-height:1.6;
+  margin-top:13px;
+  overflow-wrap:anywhere;
+}
+.form-message.error { color:#a22d24; }
+.form-message.success { color:var(--green); }
+.cart-list { margin:18px 0; }
+.cart-row {
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  padding:12px 0;
+  border-bottom:1px solid var(--line);
+  font-size:13px;
+}
+.cart-row button {
+  border:0;
+  background:none;
+  color:var(--accent);
+  font-size:12px;
+}
+.cart-total {
+  display:flex;
+  justify-content:space-between;
+  font-weight:bold;
+  padding:15px 0;
+}
+@media(max-width:850px) {
+  .nav { gap:13px;flex-wrap:wrap; }
+  .navlinks { order:3;width:100%;justify-content:center;margin:0; }
+  .hero { grid-template-columns:1fr; }
+  .hero-copy { padding:36px 28px; }
+  .hero-art { min-height:280px; }
+  .categories { grid-template-columns:repeat(3,minmax(0,1fr)); }
+  .products { grid-template-columns:repeat(2,minmax(0,1fr)); }
+}
+@media(max-width:480px) {
+  .nav { padding:14px; }
+  .logo { font-size:25px; }
+  .navactions { margin-left:auto; }
+  .navlinks { font-size:11px;gap:12px; }
+  .navactions .btn { padding:9px;font-size:11px; }
+  main { padding:0 14px; }
+  .hero { margin-top:18px; }
+  .hero-copy { padding:30px 22px; }
+  .hero-art { min-height:240px; }
+  .section-head h2 { font-size:26px; }
+  .categories { grid-template-columns:repeat(2,minmax(0,1fr));gap:9px; }
+  .toolbar { flex-direction:column;align-items:stretch; }
+  .toolbar select { width:100%; }
+  .products { gap:10px; }
+  .product-image { height:140px; }
+  .product-body { padding:11px; }
+  .product h3 { font-size:13px; }
+  .product-bottom { align-items:flex-start;flex-direction:column; }
+  .seller-banner { padding:22px;align-items:flex-start;flex-direction:column; }
+}
+
+.seller-page-hero{min-height:390px}
+.steps-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.step-card{padding:24px;border:1px solid var(--line);border-radius:7px;background:#fffdf8}
+.step-card>span{color:var(--gold);font:normal 24px Georgia,serif}
+.step-card h3{font-size:17px;margin:16px 0 8px}
+.step-card p,.seller-note{font-size:13px;line-height:1.7;color:var(--muted);margin-bottom:0}
+.seller-note{margin-top:18px}
+@media(max-width:650px){.steps-grid{grid-template-columns:1fr}.seller-page-hero{min-height:0}}
+</style>
+</head>
+
+<body>
+<div class="topbar">A marketplace celebrating India's festivals, makers and traditions</div>
+
+<header>
+  <nav class="nav">
+    <a class="logo" href="index.html">sellora<span>.</span></a>
+    <div class="navlinks">
+      <a href="shop.html">Shop</a>
+      <a href="shop.html">Festivals</a>
+      <a href="sell.html">Sell with us</a>
+    </div>
+    <div class="navactions">
+      <span class="account-status" id="accountStatus">Guest</span>
+      <button class="btn" id="accountButton" onclick="openAuth()">Sign in</button>
+      <button class="btn btn-primary" onclick="openCart()">Cart (<span id="cartCount">0</span>)</button>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <section class="hero seller-page-hero">
+    <div class="hero-copy">
+      <span class="eyebrow">For home sellers, artisans and small businesses</span>
+      <h1>Your craft deserves a wider audience.</h1>
+      <p>Bring your festival products to Sellora. Apply to become a seller, and once your account is approved, you can publish product photos, prices, descriptions and stock for customers to discover.</p>
+      <div class="hero-actions"><button class="btn btn-primary" id="sellerActionButton" onclick="openSeller()">Apply to sell</button><a class="btn" href="shop.html">Browse the marketplace</a></div>
+    </div>
+    <div class="hero-art"><div class="art-card"><div class="art-symbol">✦</div><strong>Made by you. Found on Sellora.</strong><small>INDEPENDENT MAKERS · FESTIVE FINDS</small></div></div>
+  </section>
+  <section class="section seller-steps">
+    <div class="section-head"><div><h2>How selling works</h2><p>A simple process to get your products onto the marketplace.</p></div></div>
+    <div class="steps-grid">
+      <div class="step-card"><span>01</span><h3>Create an account</h3><p>Sign in or register with your email address.</p></div>
+      <div class="step-card"><span>02</span><h3>Apply to sell</h3><p>Share your business name and seller type for review.</p></div>
+      <div class="step-card"><span>03</span><h3>Publish products</h3><p>After approval, add product details, photos, prices and available stock.</p></div>
+    </div>
+    <p class="seller-note">Seller applications are reviewed before product publishing is enabled.</p>
+  </section>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <a class="logo" href="index.html">sellora<span>.</span></a>
+      <p>A festival-products marketplace helping customers discover local makers, traditional goods and thoughtful festive gifts.</p>
+    </div>
+    <div class="footer-links">
+      <a href="shop.html">Shop</a>
+      <a href="shop.html">Festivals</a>
+      <a href="sell.html">Sell with us</a>
+      <a href="#" onclick="openAuth();return false;">My account</a>
+    </div>
+  </div>
+</footer>
+
+<div class="modal" id="authModal" role="dialog" aria-modal="true">
+  <div class="modal-card">
+    <button class="close" onclick="closeModal('authModal')" aria-label="Close">&times;</button>
+    <h2 id="authTitle">Welcome to Sellora</h2>
+    <p id="authDescription">Sign in or create an account to get started.</p>
+    <form id="authForm">
+      <div class="field" id="nameField">
+        <label for="fullName">Full name</label>
+        <input id="fullName" autocomplete="name" placeholder="Your name">
+      </div>
+      <div class="field">
+        <label for="authEmail">Email address</label>
+        <input id="authEmail" type="email" autocomplete="email" required placeholder="you@example.com">
+      </div>
+      <div class="field">
+        <label for="authPassword">Password</label>
+        <input id="authPassword" type="password" autocomplete="current-password" required minlength="6" placeholder="At least 6 characters">
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-primary" type="submit" id="authSubmit">Create account</button>
+        <button class="btn" type="button" id="authSwitch" onclick="switchAuthMode()">I already have an account</button>
+      </div>
+    </form>
+    <div class="form-message" id="authMessage" aria-live="polite"></div>
+  </div>
+</div>
+
+<div class="modal" id="sellerModal" role="dialog" aria-modal="true">
+  <div class="modal-card">
+    <button class="close" onclick="closeModal('sellerModal')" aria-label="Close">&times;</button>
+    <h2>Sell with Sellora</h2>
+    <p>Submit an application to sell your festival products.</p>
+    <form id="sellerForm">
+      <div class="field">
+        <label for="businessName">Business or shop name</label>
+        <input id="businessName" required maxlength="120" placeholder="Your business name">
+      </div>
+      <div class="field">
+        <label for="sellerType">Seller type</label>
+        <select id="sellerType" required>
+          <option value="home_seller">Home seller</option>
+          <option value="artisan">Artisan or craft maker</option>
+          <option value="small_business">Small festival business</option>
+        </select>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-primary" type="submit" id="sellerSubmit">Submit application</button>
+      </div>
+    </form>
+    <div class="form-message" id="sellerMessage" aria-live="polite"></div>
+  </div>
+</div>
+
+<div class="modal" id="productModal" role="dialog" aria-modal="true">
+  <div class="modal-card">
+    <button class="close" onclick="closeModal('productModal')" aria-label="Close">&times;</button>
+    <h2>Add a festival product</h2>
+    <p>Your product will be saved to the Sellora marketplace.</p>
+    <form id="productForm">
+      <div class="field">
+        <label for="listingName">Product name</label>
+        <input id="listingName" required maxlength="120">
+      </div>
+      <div class="field">
+        <label for="listingDescription">Description</label>
+        <textarea id="listingDescription" required maxlength="1000"></textarea>
+      </div>
+      <div class="field">
+        <label for="listingPrice">Price in ₹</label>
+        <input id="listingPrice" type="number" min="0.01" step="0.01" required>
+      </div>
+      <div class="field">
+        <label for="listingCategory">Category</label>
+        <input id="listingCategory" required maxlength="80" placeholder="e.g. Home Decor">
+      </div>
+      <div class="field">
+        <label for="listingFestival">Festival</label>
+        <select id="listingFestival" required>
+          <option value="Diwali">Diwali</option>
+          <option value="Holi">Holi</option>
+          <option value="Ganesh Chaturthi">Ganesh Chaturthi</option>
+          <option value="Navratri">Navratri</option>
+          <option value="Durga Puja">Durga Puja</option>
+          <option value="Raksha Bandhan">Raksha Bandhan</option>
+          <option value="Eid">Eid</option>
+          <option value="Christmas">Christmas</option>
+          <option value="Pongal">Pongal</option>
+          <option value="Onam">Onam</option>
+          <option value="Janmashtami">Janmashtami</option>
+          <option value="Makar Sankranti">Makar Sankranti</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="listingImageFile">Real product photo (required)</label>
+        <input id="listingImageFile" type="file" accept="image/jpeg,image/png,image/webp,image/gif" required>
+        <small style="display:block;color:var(--muted);margin-top:7px;line-height:1.5">Upload a clear photo of the actual item. JPG, PNG, WEBP or GIF; maximum 5 MB.</small>
+        <img id="listingImagePreview" alt="Product photo preview" style="display:none;width:100%;max-height:220px;object-fit:contain;margin-top:12px;border:1px solid var(--line);border-radius:5px;background:white">
+      </div>
+      <div class="field">
+        <label for="listingStock">Available quantity</label>
+        <input id="listingStock" type="number" min="0" step="1" value="10" required>
+      </div>
+      <button class="btn btn-primary" type="submit" id="productSubmit">Publish product</button>
+    </form>
+    <div class="form-message" id="productMessage" aria-live="polite"></div>
+  </div>
+</div>
+
+<div class="modal" id="cartModal" role="dialog" aria-modal="true">
+  <div class="modal-card">
+    <button class="close" onclick="closeModal('cartModal')" aria-label="Close">&times;</button>
+    <h2>Your shopping cart</h2>
+    <p>Your selected products are listed below.</p>
+    <div class="cart-list" id="cartList"></div>
+    <div class="cart-total"><span>Total</span><span id="cartTotal">₹0</span></div>
+    <button class="btn btn-primary" style="width:100%" onclick="startCheckout()">Continue to checkout</button>
+    <div class="form-message" id="cartMessage" aria-live="polite"></div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+"use strict";
+
+const SELLORA_SUPABASE_URL = "https://psepulcpyxuxlmzmyqjy.supabase.co";
+const SELLORA_SUPABASE_KEY = "sb_publishable_Y9gEiisXIlswikJE3SG6Hg_Li2vWIZ5";
+
+let selloraSupabase = null;
+let currentUser = null;
+let authMode = "signup";
+let databaseProducts = [];
+let cart = [];
+
+
+
+function money(value) {
+  return new Intl.NumberFormat("en-IN", {
+    style:"currency",currency:"INR",maximumFractionDigits:2
+  }).format(Number(value)||0);
+}
+
+function showMessage(id,message,type) {
+  const element = document.getElementById(id);
+  if (!element) return;
+  element.textContent = message;
+  element.className = "form-message" + (type ? " " + type : "");
+}
+
+function openModal(id) {
+  document.getElementById(id).classList.add("open");
+}
+
+function closeModal(id) {
+  document.getElementById(id).classList.remove("open");
+}
+
+document.querySelectorAll(".modal").forEach(modal => {
+  modal.addEventListener("click",event => {
+    if (event.target === modal) modal.classList.remove("open");
+  });
+});
+
+function updateAccountUI() {
+  const status = document.getElementById("accountStatus");
+  const button = document.getElementById("accountButton");
+
+  if (currentUser) {
+    status.textContent = currentUser.email || "Signed in";
+    button.textContent = "Sign out";
+    button.onclick = signOut;
+  } else {
+    status.textContent = "Guest";
+    button.textContent = "Sign in";
+    button.onclick = openAuth;
+  }
+  refreshSellerButton();
+}
+
+async function refreshSellerButton() {
+  const button = document.getElementById("sellerActionButton");
+  if (!button) return;
+
+  if (!currentUser || !selloraSupabase) {
+    button.textContent = "Apply to sell";
+    return;
+  }
+
+  try {
+    const {data,error} = await selloraSupabase
+      .from("seller_applications")
+      .select("status")
+      .eq("user_id",currentUser.id)
+      .maybeSingle();
+
+    if (error) throw error;
+
+    if (data?.status === "approved") button.textContent = "Add product";
+    else if (data?.status === "pending") button.textContent = "Application pending";
+    else if (data?.status === "rejected") button.textContent = "Application rejected";
+    else button.textContent = "Apply to sell";
+  } catch (error) {
+    console.error("Could not check seller status:",error);
+    button.textContent = "Sell with Sellora";
+  }
+}
+
+function openAuth() {
+  document.getElementById("authForm").reset();
+  showMessage("authMessage","","");
+  setAuthMode("signup");
+  openModal("authModal");
+}
+
+function setAuthMode(mode) {
+  authMode = mode;
+  const signup = mode === "signup";
+
+  document.getElementById("authTitle").textContent =
+    signup ? "Create your Sellora account" : "Welcome back";
+  document.getElementById("authDescription").textContent =
+    signup ? "Join the marketplace to discover festive products." : "Sign in to your existing account.";
+  document.getElementById("nameField").style.display = signup ? "block" : "none";
+  document.getElementById("fullName").required = signup;
+  document.getElementById("authSubmit").textContent = signup ? "Create account" : "Sign in";
+  document.getElementById("authSwitch").textContent =
+    signup ? "I already have an account" : "Create a new account";
+  document.getElementById("authPassword").autocomplete =
+    signup ? "new-password" : "current-password";
+  showMessage("authMessage","","");
+}
+
+function switchAuthMode() {
+  setAuthMode(authMode === "signup" ? "signin" : "signup");
+}
+
+async function signOut() {
+  if (!selloraSupabase) return;
+
+  const {error} = await selloraSupabase.auth.signOut();
+  if (error) {
+    alert("Could not sign out: " + error.message);
+    return;
+  }
+
+  currentUser = null;
+  updateAccountUI();
+}
+
+document.getElementById("authForm").addEventListener("submit",async event => {
+  event.preventDefault();
+
+  if (!selloraSupabase) {
+    showMessage("authMessage","Database connection is not ready. Refresh and try again.","error");
+    return;
+  }
+
+  const email = document.getElementById("authEmail").value.trim();
+  const password = document.getElementById("authPassword").value;
+  const fullName = document.getElementById("fullName").value.trim();
+  const button = document.getElementById("authSubmit");
+
+  button.disabled = true;
+  showMessage("authMessage","Please wait...","");
+
+  try {
+    if (authMode === "signup") {
+      const {data,error} = await selloraSupabase.auth.signUp({
+        email,
+        password,
+        options:{data:{full_name:fullName}}
+      });
+
+      if (error) throw error;
+
+      if (data.session) {
+        currentUser = data.user;
+        updateAccountUI();
+        showMessage("authMessage","Your account has been created successfully.","success");
+        setTimeout(() => closeModal("authModal"),900);
+      } else {
+        showMessage("authMessage","Registration submitted. Check your email for a confirmation link if email confirmation is enabled.","success");
+      }
+    } else {
+      const {data,error} = await selloraSupabase.auth.signInWithPassword({email,password});
+      if (error) throw error;
+
+      currentUser = data.user;
+      updateAccountUI();
+      showMessage("authMessage","You are signed in successfully.","success");
+      setTimeout(() => closeModal("authModal"),700);
+    }
+  } catch (error) {
+    showMessage("authMessage",error.message || "Account action failed. Please try again.","error");
+  } finally {
+    button.disabled = false;
+  }
+});
+
+async function openSeller() {
+  if (!currentUser || !selloraSupabase) {
+    openAuth();
+    showMessage("authMessage","Please sign in first, then choose Sell with Sellora again.","");
+    return;
+  }
+
+  const button = document.getElementById("sellerActionButton");
+  button.disabled = true;
+
+  try {
+    const {data,error} = await selloraSupabase
+      .from("seller_applications")
+      .select("status")
+      .eq("user_id",currentUser.id)
+      .maybeSingle();
+
+    if (error) throw error;
+
+    if (data?.status === "approved") {
+      document.getElementById("productForm").reset();
+      showMessage("productMessage","","");
+      openModal("productModal");
+    } else if (data?.status === "pending") {
+      document.getElementById("sellerForm").style.display = "none";
+      showMessage("sellerMessage","Your application is pending review. You cannot submit another application.","");
+      openModal("sellerModal");
+    } else if (data?.status === "rejected") {
+      document.getElementById("sellerForm").style.display = "none";
+      showMessage("sellerMessage","Your application was rejected. Please contact the Sellora team for guidance.","error");
+      openModal("sellerModal");
+    } else {
+      document.getElementById("sellerForm").style.display = "block";
+      showMessage("sellerMessage","","");
+      openModal("sellerModal");
+    }
+  } catch (error) {
+    alert("Could not check seller approval: " + error.message);
+  } finally {
+    button.disabled = false;
+  }
+}
+
+document.getElementById("sellerForm").addEventListener("submit",async event => {
+  event.preventDefault();
+
+  if (!selloraSupabase || !currentUser) {
+    showMessage("sellerMessage","Please sign in before submitting your application.","error");
+    return;
+  }
+
+  const button = document.getElementById("sellerSubmit");
+  button.disabled = true;
+
+  try {
+    const {data:existing,error:checkError} = await selloraSupabase
+      .from("seller_applications")
+      .select("status")
+      .eq("user_id",currentUser.id)
+      .maybeSingle();
+
+    if (checkError) throw checkError;
+
+    if (existing) {
+      showMessage("sellerMessage","You already have a seller application. Current status: " + existing.status + ".","error");
+      await refreshSellerButton();
+      return;
+    }
+
+    const {error} = await selloraSupabase
+      .from("seller_applications")
+      .insert({
+        user_id:currentUser.id,
+        business_name:document.getElementById("businessName").value.trim(),
+        seller_type:document.getElementById("sellerType").value,
+        status:"pending"
+      });
+
+    if (error) throw error;
+
+    document.getElementById("sellerForm").reset();
+    document.getElementById("sellerForm").style.display = "none";
+    showMessage("sellerMessage","Application submitted. It is pending review; product selling is not enabled until approval.","success");
+    await refreshSellerButton();
+  } catch (error) {
+    showMessage("sellerMessage",error.message || "Application could not be submitted.","error");
+  } finally {
+    button.disabled = false;
+  }
+});
+
+document.getElementById("listingImageFile").addEventListener("change", event => {
+  const file = event.target.files && event.target.files[0];
+  const preview = document.getElementById("listingImagePreview");
+  if (!file) {
+    preview.removeAttribute("src");
+    preview.style.display = "none";
+    return;
+  }
+  if (!file.type.startsWith("image/") || file.size > 5 * 1024 * 1024) {
+    event.target.value = "";
+    preview.removeAttribute("src");
+    preview.style.display = "none";
+    showMessage("productMessage", "Choose an image file up to 5 MB.", "error");
+    return;
+  }
+  preview.src = URL.createObjectURL(file);
+  preview.style.display = "block";
+  showMessage("productMessage", "Photo selected. It will upload when you publish the product.", "success");
+});
+
+document.getElementById("productForm").addEventListener("submit",async event => {
+  event.preventDefault();
+
+  if (!selloraSupabase || !currentUser) {
+    showMessage("productMessage","Please sign in first.","error");
+    return;
+  }
+
+  const button = document.getElementById("productSubmit");
+  button.disabled = true;
+  showMessage("productMessage","Publishing product...","");
+
+  try {
+    const {data:application,error:approvalError} = await selloraSupabase
+      .from("seller_applications")
+      .select("status")
+      .eq("user_id",currentUser.id)
+      .maybeSingle();
+
+    if (approvalError) throw approvalError;
+
+    if (!application || application.status !== "approved") {
+      throw new Error("An approved seller account is required.");
+    }
+
+    const price = Number(document.getElementById("listingPrice").value);
+    const stock = Number(document.getElementById("listingStock").value);
+    const imageFile = document.getElementById("listingImageFile").files?.[0];
+
+    if (!imageFile) {
+      throw new Error("Please upload a real product photo before publishing.");
+    }
+    if (!imageFile.type.startsWith("image/")) {
+      throw new Error("The selected file must be an image.");
+    }
+    if (imageFile.size > 5 * 1024 * 1024) {
+      throw new Error("The photo must be 5 MB or smaller.");
+    }
+
+    if (!Number.isFinite(price) || price <= 0) {
+      throw new Error("Enter a valid price greater than zero.");
+    }
+    if (!Number.isInteger(stock) || stock < 0) {
+      throw new Error("Enter a valid whole-number quantity.");
+    }
+
+    showMessage("productMessage","Uploading your product photo...","");
+
+    const safeName = imageFile.name.replace(/[^a-zA-Z0-9._-]/g, "_");
+    const storagePath = currentUser.id + "/" + Date.now() + "-" + safeName;
+    const {error:uploadError} = await selloraSupabase.storage
+      .from("product-images")
+      .upload(storagePath, imageFile, {
+        cacheControl:"3600",
+        upsert:false,
+        contentType:imageFile.type
+      });
+
+    if (uploadError) throw uploadError;
+
+    const {data:publicUrlData} = selloraSupabase.storage
+      .from("product-images")
+      .getPublicUrl(storagePath);
+    const imageUrl = publicUrlData?.publicUrl;
+
+    if (!imageUrl) {
+      await selloraSupabase.storage.from("product-images").remove([storagePath]);
+      throw new Error("Could not create a public link for the uploaded photo.");
+    }
+
+    const {error:insertError} = await selloraSupabase
+      .from("products")
+      .insert({
+        seller_id:currentUser.id,
+        name:document.getElementById("listingName").value.trim(),
+        description:document.getElementById("listingDescription").value.trim(),
+        price,
+        category:document.getElementById("listingCategory").value.trim(),
+        festival:document.getElementById("listingFestival").value,
+        image_url:imageUrl,
+        stock,
+        is_active:true
+      });
+
+    if (insertError) {
+      await selloraSupabase.storage.from("product-images").remove([storagePath]);
+      throw insertError;
+    }
+
+    showMessage("productMessage","Product and photo published successfully!","success");
+    await loadProducts();
+    await refreshSellerButton();
+    setTimeout(() => closeModal("productModal"),1000);
+  } catch (error) {
+    showMessage("productMessage","Could not publish product: " + error.message,"error");
+  } finally {
+    button.disabled = false;
+  }
+});
+
+function safeText(value) {
+  return String(value ?? "").replace(/[&<>"']/g,char => ({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#39;"
+  }[char]));
+}
+
+function renderProducts() {
+  const search = document.getElementById("searchInput").value.trim().toLowerCase();
+  const festival = document.getElementById("festivalFilter").value;
+
+  const products = databaseProducts.filter(product => {
+    const matchesFestival =
+      festival === "All" ||
+      String(product.festival || "Other").toLowerCase() === festival.toLowerCase();
+
+    const searchable = [
+      product.name,product.description,product.category,product.festival
+    ].join(" ").toLowerCase();
+
+    return matchesFestival && searchable.includes(search);
+  });
+
+  const grid = document.getElementById("productGrid");
+
+  if (!products.length) {
+    grid.innerHTML = '<div class="empty">No products match your search. Try another keyword or festival.</div>';
+    return;
+  }
+
+  grid.innerHTML = products.map(product => {
+    const image = product.image_url && /^https?:\/\//i.test(product.image_url)
+      ? '<img src="' + safeText(product.image_url) + '" alt="' + safeText(product.name) + '" loading="lazy" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'">'
+      : '';
+
+    const icon = product.sampleIcon || "🎁";
+    const isSample = String(product.id).startsWith("sample-");
+
+    return '<article class="product">' +
+      '<div class="product-image">' + image +
+      '<div class="product-placeholder" style="' + (image ? 'display:none' : 'display:flex') + '">' + icon + '</div></div>' +
+      '<div class="product-body">' +
+      '<div class="product-tag">' + safeText(product.festival || "Festive collection") + '</div>' +
+      '<h3>' + safeText(product.name) + '</h3>' +
+      '<p class="product-desc">' + safeText(product.description || "A festive find from Sellora.") + '</p>' +
+      '<div class="product-bottom"><span class="price">' + money(product.price) + '</span>' +
+      '<button class="add-btn" onclick="addToCart(\'' + safeText(product.id) + '\')">Add to cart</button></div>' +
+      (isSample ? '<div style="font-size:10px;color:#8a8075;margin-top:9px">Illustrative sample product</div>' : '') +
+      '</div></article>';
+  }).join("");
+}
+
+async function loadProducts() {
+  try {
+    if (!selloraSupabase) throw new Error("Supabase client unavailable");
+
+    const {data,error} = await selloraSupabase
+      .from("products")
+      .select("id,name,description,price,category,festival,image_url,stock")
+      .eq("is_active",true)
+      .order("created_at",{ascending:false});
+
+    if (error) throw error;
+
+    if (data && data.length) {
+      databaseProducts = data;
+      document.getElementById("productSubtitle").textContent = "Products listed by sellers on Sellora.";
+      document.getElementById("dataNotice").textContent = "These listings are loaded from the Sellora database.";
+    } else {
+      databaseProducts = [];
+      document.getElementById("productSubtitle").textContent = "Products listed by approved sellers on Sellora.";
+      document.getElementById("dataNotice").textContent = "No active seller products are available yet. Products published by approved sellers will appear here.";
+    }
+  } catch (error) {
+    console.error("Could not load products:",error);
+    databaseProducts = [];
+    document.getElementById("productSubtitle").textContent = "Products listed by approved sellers on Sellora.";
+    document.getElementById("dataNotice").textContent = "The marketplace could not load products. Please refresh and try again.";
+  }
+
+  renderProducts();
+}
+
+
+function addToCart(productId) {
+  const product = databaseProducts.find(item => String(item.id) === String(productId));
+  if (!product) return;
+
+  const existing = cart.find(item => String(item.id) === String(productId));
+  if (existing) existing.quantity += 1;
+  else cart.push({...product,quantity:1});
+
+  updateCart();
+}
+
+function updateCart() {
+  document.getElementById("cartCount").textContent =
+    cart.reduce((sum,item) => sum + item.quantity,0);
+
+  const list = document.getElementById("cartList");
+
+  if (!cart.length) {
+    list.innerHTML = '<div class="empty">Your cart is empty. Explore the marketplace to add products.</div>';
+  } else {
+    list.innerHTML = cart.map(item =>
+      '<div class="cart-row"><div><strong>' + safeText(item.name) + '</strong><br>' +
+      '<span>' + money(item.price) + ' × ' + item.quantity + '</span></div>' +
+      '<div style="text-align:right"><strong>' + money(Number(item.price) * item.quantity) + '</strong><br>' +
+      '<button onclick="removeFromCart(\'' + safeText(item.id) + '\')">Remove</button></div></div>'
+    ).join("");
+  }
+
+  const total = cart.reduce((sum,item) => sum + Number(item.price) * item.quantity,0);
+  document.getElementById("cartTotal").textContent = money(total);
+}
+
+function removeFromCart(productId) {
+  cart = cart.filter(item => String(item.id) !== String(productId));
+  updateCart();
+}
+
+function openCart() {
+  showMessage("cartMessage","","");
+  updateCart();
+  openModal("cartModal");
+}
+
+function startCheckout() {
+  showMessage(
+    "cartMessage",
+    "Checkout is not connected yet. Secure order creation, stock checks and payment processing still need to be implemented before accepting real orders.",
+    "error"
+  );
+}
+
+async function initialiseSellora() {
+  try {
+    if (!window.supabase || !window.supabase.createClient) {
+      throw new Error("Supabase library did not load. Check your internet connection.");
+    }
+
+    selloraSupabase = window.supabase.createClient(
+      SELLORA_SUPABASE_URL,
+      SELLORA_SUPABASE_KEY
+    );
+
+    const {data,error} = await selloraSupabase.auth.getSession();
+    if (error) throw error;
+
+    currentUser = data.session?.user || null;
+    updateAccountUI();
+
+    selloraSupabase.auth.onAuthStateChange((_event,session) => {
+      currentUser = session?.user || null;
+      updateAccountUI();
+    });
+
+    console.log("Sellora initialized.");
+  } catch (error) {
+    console.error("Sellora setup error:",error);
+    currentUser = null;
+    updateAccountUI();
+    databaseProducts = [];
+  }
+}
+
+updateCart();
+initialiseSellora();
+</script>
+</body>
+</html>
