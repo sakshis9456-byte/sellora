@@ -1,11 +1,10 @@
-```html
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Explore Indian Festivals | Sellora</title>
-
 <style>
 :root {
   --cream:#fffaf2;
@@ -14,7 +13,6 @@
   --ink:#293b39;
   --muted:#777b75;
   --line:#eee5d9;
-  --white:#fff;
 }
 *{box-sizing:border-box}
 body{margin:0;background:var(--cream);color:var(--ink);font-family:Arial,sans-serif}
@@ -44,7 +42,6 @@ h2{color:var(--teal);font-family:Georgia,serif;font-size:30px;margin:0}
 .location{font-size:12px;color:var(--teal);margin-bottom:10px;font-weight:bold}
 .details{border:0;border-radius:8px;background:var(--pink);color:#fff;padding:10px 14px;cursor:pointer;font-weight:bold}
 .details:hover{background:#d96369}
-.details:disabled{opacity:.65;cursor:wait}
 .empty{display:none;text-align:center;padding:40px 15px;color:var(--muted);grid-column:1/-1}
 footer{background:var(--teal);color:#fff;padding:28px 6%;text-align:center;line-height:1.8}
 footer a{color:#fff}
@@ -71,7 +68,6 @@ footer a{color:#fff}
 }
 </style>
 </head>
-
 <body>
 <header>
   <a class="logo" href="index.html">Sellora</a>
@@ -93,42 +89,20 @@ footer a{color:#fff}
   <input id="search" type="search" placeholder="Search festivals, traditions or states...">
   <select id="state">
     <option value="">All States and Union Territories</option>
-    <option>Andhra Pradesh</option>
-    <option>Arunachal Pradesh</option>
-    <option>Assam</option>
-    <option>Bihar</option>
-    <option>Chhattisgarh</option>
-    <option>Goa</option>
-    <option>Gujarat</option>
-    <option>Haryana</option>
-    <option>Himachal Pradesh</option>
-    <option>Jharkhand</option>
-    <option>Karnataka</option>
-    <option>Kerala</option>
-    <option>Madhya Pradesh</option>
-    <option>Maharashtra</option>
-    <option>Manipur</option>
-    <option>Meghalaya</option>
-    <option>Mizoram</option>
-    <option>Nagaland</option>
-    <option>Odisha</option>
-    <option>Punjab</option>
-    <option>Rajasthan</option>
-    <option>Sikkim</option>
-    <option>Tamil Nadu</option>
-    <option>Telangana</option>
-    <option>Tripura</option>
-    <option>Uttar Pradesh</option>
-    <option>Uttarakhand</option>
-    <option>West Bengal</option>
-    <option>Andaman and Nicobar Islands</option>
-    <option>Chandigarh</option>
-    <option>Dadra and Nagar Haveli and Daman and Diu</option>
-    <option>Delhi</option>
-    <option>Jammu and Kashmir</option>
-    <option>Ladakh</option>
-    <option>Lakshadweep</option>
-    <option>Puducherry</option>
+    <option>Andhra Pradesh</option><option>Arunachal Pradesh</option>
+    <option>Assam</option><option>Bihar</option><option>Chhattisgarh</option>
+    <option>Goa</option><option>Gujarat</option><option>Haryana</option>
+    <option>Himachal Pradesh</option><option>Jharkhand</option>
+    <option>Karnataka</option><option>Kerala</option><option>Madhya Pradesh</option>
+    <option>Maharashtra</option><option>Manipur</option><option>Meghalaya</option>
+    <option>Mizoram</option><option>Nagaland</option><option>Odisha</option>
+    <option>Punjab</option><option>Rajasthan</option><option>Sikkim</option>
+    <option>Tamil Nadu</option><option>Telangana</option><option>Tripura</option>
+    <option>Uttar Pradesh</option><option>Uttarakhand</option><option>West Bengal</option>
+    <option>Andaman and Nicobar Islands</option><option>Chandigarh</option>
+    <option>Dadra and Nagar Haveli and Daman and Diu</option><option>Delhi</option>
+    <option>Jammu and Kashmir</option><option>Ladakh</option>
+    <option>Lakshadweep</option><option>Puducherry</option>
   </select>
 </div>
 
@@ -378,66 +352,69 @@ const empty = document.getElementById("empty");
 const modal = document.getElementById("festivalModal");
 const imageCache = new Map();
 
-/*
-  Search Wikimedia Commons separately for each festival.
-  Each result is selected using that festival's own search terms.
-*/
+/* Search Wikimedia Commons for festival photographs.
+   If the service fails, show a neutral placeholder instead. */
 async function findFestivalImage(f) {
   if (imageCache.has(f.name)) return imageCache.get(f.name);
 
   const url = new URL("https://commons.wikimedia.org/w/api.php");
   url.search = new URLSearchParams({
-    action: "query",
-    generator: "search",
-    gsrsearch: "filetype:bitmap " + f.searchTerms,
-    gsrnamespace: "6",
-    gsrlimit: "8",
-    prop: "imageinfo",
-    iiprop: "url",
-    iiurlwidth: "900",
-    format: "json",
-    origin: "*"
+    action:"query",
+    generator:"search",
+    gsrsearch:"filetype:bitmap " + f.searchTerms,
+    gsrnamespace:"6",
+    gsrlimit:"8",
+    prop:"imageinfo",
+    iiprop:"url",
+    iiurlwidth:"900",
+    format:"json",
+    origin:"*"
   }).toString();
 
   try {
     const response = await fetch(url.toString());
-    if (!response.ok) throw new Error("Image search unavailable");
+    if (!response.ok) throw new Error("Image search failed");
+
     const data = await response.json();
     const pages = Object.values(data.query?.pages || {});
 
     const usable = pages.find(page => {
       const title = (page.title || "").toLowerCase();
       const info = page.imageinfo?.[0];
-      return info && info.thumburl &&
-        !title.endsWith(".svg") &&
-        !title.endsWith(".gif") &&
-        !title.endsWith(".webm") &&
-        !title.endsWith(".ogv");
+      return info && (info.thumburl || info.url) &&
+        /\.(jpg|jpeg|png|webp)$/i.test(title);
     });
 
-    const image = usable?.imageinfo?.[0]?.thumburl || "";
+    const image = usable?.imageinfo?.[0]?.thumburl ||
+      usable?.imageinfo?.[0]?.url || "";
+
     imageCache.set(f.name, image);
     return image;
   } catch (error) {
-    console.warn("Could not load image for " + f.name, error);
+    console.warn("Image search failed for " + f.name, error);
     imageCache.set(f.name, "");
     return "";
   }
 }
 
+function placeholderFor(f) {
+  return "https://placehold.co/900x500/fff0ec/174d49?text=" +
+    encodeURIComponent(f.name);
+}
+
 function setImage(img, f) {
   img.alt = f.name + " festival";
   img.loading = "lazy";
-  img.src = "https://placehold.co/900x500/fff0ec/174d49?text=" +
-    encodeURIComponent("Loading " + f.name);
+  img.src = placeholderFor(f);
 
   findFestivalImage(f).then(imageUrl => {
-    if (imageUrl) {
-      img.src = imageUrl;
-    } else {
-      img.src = "https://placehold.co/900x500/fff0ec/174d49?text=" +
-        encodeURIComponent(f.name + " image unavailable");
-    }
+    if (!imageUrl) return;
+
+    img.onerror = () => {
+      img.onerror = null;
+      img.src = placeholderFor(f);
+    };
+    img.src = imageUrl;
   });
 }
 
@@ -451,7 +428,7 @@ function renderFestivals() {
       f.state === "Pan-India";
 
     const matchesSearch = !query ||
-      [f.name, f.state, f.type, f.description, f.traditions]
+      [f.name, f.state, f.type, f.description, f.traditions, f.searchTerms]
         .join(" ").toLowerCase().includes(query);
 
     return matchesState && matchesSearch;
@@ -500,8 +477,11 @@ function renderFestivals() {
 function openDetails(f) {
   const img = document.getElementById("modalImage");
   img.alt = f.name + " festival";
-  img.src = "https://placehold.co/900x500/fff0ec/174d49?text=" +
-    encodeURIComponent("Loading " + f.name);
+  img.src = placeholderFor(f);
+  img.onerror = () => {
+    img.onerror = null;
+    img.src = placeholderFor(f);
+  };
 
   document.getElementById("modalTitle").textContent = f.name;
   document.getElementById("modalLocation").textContent =
@@ -509,15 +489,10 @@ function openDetails(f) {
   document.getElementById("modalDescription").textContent = f.description;
   document.getElementById("modalTraditions").textContent = f.traditions;
   document.getElementById("modalImageNote").textContent =
-    "Photograph search provided by Wikimedia Commons.";
+    "Festival information and traditions.";
 
   findFestivalImage(f).then(imageUrl => {
-    if (imageUrl) {
-      img.src = imageUrl;
-    } else {
-      img.src = "https://placehold.co/900x500/fff0ec/174d49?text=" +
-        encodeURIComponent(f.name + " image unavailable");
-    }
+    if (imageUrl) img.src = imageUrl;
   });
 
   modal.classList.add("open");
@@ -544,4 +519,3 @@ renderFestivals();
 </script>
 </body>
 </html>
-```
