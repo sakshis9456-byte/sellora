@@ -1118,7 +1118,7 @@ document.getElementById("productForm").addEventListener("submit",async event => 
     }
 
     showMessage("productMessage","Product and photo published successfully!","success");
-    await loadProducts();
+
     await refreshSellerButton();
     setTimeout(() => closeModal("productModal"),1000);
   } catch (error) {
